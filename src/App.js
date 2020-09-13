@@ -1,26 +1,40 @@
-import React from 'react'
-import logo from './logo.svg'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Switch, Route, Redirect } from 'react-router-dom'
+
+import { initializeApp } from './redux/actions/appActions'
+
+import { Privacy } from './components/Privacy/Privacy'
+import { Header } from './components/Header/Header'
+import { Cabinet } from './components/Cabinet/Cabinet'
+import { Login } from './components/Login/Login'
+
 import './App.css'
 
-const App = () => {
+export const App = () => {
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(initializeApp())
+  },[])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Header />
+      <Switch>
+        <Route path="/cabinet">
+          <Cabinet />
+        </Route>
+        <Route path="/login">
+          <Login />
+        </Route>
+        <Route path="/registration">
+          <span>registration</span>
+        </Route>
+        <Route path="/privacy">
+          <Privacy />
+        </Route>
+        <Redirect from="/" to="/cabinet" />
+      </Switch>
+    </>
   )
 }
-
-export default App
