@@ -7,7 +7,4 @@ export const authAPI = {
   verifyToken(token) {
     return instance.post('/auth/jwt/verify/', { token }).then((res) => res)
   },
-  me() {
-    return instance.get('/auth/users/me/').then((res) => res)
-  }
 }
