@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { Switch, Route, Redirect } from 'react-router-dom'
 
 import { initializeApp } from './redux/actions/appActions'
