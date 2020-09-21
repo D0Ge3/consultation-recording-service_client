@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom'
 
 import { Container, Row } from 'react-bootstrap'
 import { UserProfile } from './UserProfile/UserProfile'
-import { WrotesWidget } from './WrotesWidget/WrotesWidget'
+import { ConsultationsWidget } from './ConsultationsWidget/ConsultationsWidget'
 
 export const Cabinet = () => {
   const isAuth = useSelector((state) => state.auth.isAuth)
@@ -13,7 +13,7 @@ export const Cabinet = () => {
     <Container className="mt-4">
       <Row>
         <UserProfile />
-        <WrotesWidget />
+        <ConsultationsWidget />
       </Row>
     </Container>
   ) : (

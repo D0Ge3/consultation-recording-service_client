@@ -5,6 +5,6 @@ export const profileAPI = {
     return instance.get('/auth/users/me/').then((res) => res)
   },
   getSubjects() {
-    return instance.get('/subjects/').then((res) => res)
+    return instance.get('/subjects/my').then((res) => res)
   },
 }
