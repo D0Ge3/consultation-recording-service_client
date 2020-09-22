@@ -1,3 +1,3 @@
 export { authAPI } from './auth'
-export { scheduleAPI } from './schedule'
+export { consultationsAPI } from './consultations'
 export { profileAPI } from './profile'

@@ -8,10 +8,12 @@ import { Privacy } from './components/Privacy/Privacy'
 import { Header } from './components/Header/Header'
 import { Cabinet } from './components/Cabinet/Cabinet'
 import { Login } from './components/Login/Login'
+import { Schedule } from './components/Schedule/Schedule'
 
 import './App.css'
 
 export const App = () => {
+  require('moment/locale/ru.js')
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(initializeApp())
@@ -29,6 +31,9 @@ export const App = () => {
         </Route>
         <Route path="/registration">
           <span>registration</span>
+        </Route>
+        <Route path="/schedule">
+          <Schedule />
         </Route>
         <Route path="/privacy">
           <Privacy />

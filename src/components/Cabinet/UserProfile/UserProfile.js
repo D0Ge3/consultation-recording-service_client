@@ -9,10 +9,6 @@ export const UserProfile = () => {
   const dispatch = useDispatch()
   const profile = useSelector((state) => state.profile)
 
-  useEffect(() => {
-    dispatch(getUserData())
-  }, [])
-
   let subjectsList = profile.subjects.map((s) => (
     <li key={s.teacher_subject}>{s.subject}</li>
   ))
