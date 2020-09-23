@@ -1,12 +1,9 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-
-import { getUserData } from '../../../redux/actions/profileActions'
+import React from 'react'
+import { useSelector } from 'react-redux'
 
 import s from './UserProfile.module.css'
 
 export const UserProfile = () => {
-  const dispatch = useDispatch()
   const profile = useSelector((state) => state.profile)
 
   let subjectsList = profile.subjects.map((s) => (

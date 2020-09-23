@@ -15,3 +15,11 @@ export const getConsultations = (filter) => async (dispatch) => {
     console.log('err')
   }
 }
+export const takeTicket = (id_consultation) => async (dispatch) =>  {
+  try {
+    const res = consultationsAPI.takeTicket(id_consultation)
+    dispatch(getConsultations())
+  } catch (error) {
+    console.log('err')
+  }
+}

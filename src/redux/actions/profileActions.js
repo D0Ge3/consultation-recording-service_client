@@ -21,7 +21,7 @@ export const getUserData = () => async (dispatch) => {
 export const getSubjects = () => async (dispatch) => {
   try {
     const res = await profileAPI.getSubjects()
-    dispatch(setSubjects(res.data))
+    dispatch(setSubjects(res.data.results))
   } catch (error) {
     console.log('err')
   }

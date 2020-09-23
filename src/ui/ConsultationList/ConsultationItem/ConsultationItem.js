@@ -16,7 +16,7 @@ export const ConsultationItem = ({ consultation, type = 'schedule', role, takeTi
     note,
     consultation_location,
     method_wrote,
-    teacher_subject,
+    subjects,
   } = consultation
 
   return (
@@ -24,7 +24,7 @@ export const ConsultationItem = ({ consultation, type = 'schedule', role, takeTi
       <Row className="ml-3">
         <ConsultationDate start_time={start_time} end_time={end_time} />
         <ConsultationParams
-          teacher_subject={teacher_subject}
+          subjects={subjects}
           note={note}
           consultation_location={consultation_location}
         />
