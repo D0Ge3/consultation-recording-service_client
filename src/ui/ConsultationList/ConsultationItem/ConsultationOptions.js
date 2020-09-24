@@ -12,13 +12,14 @@ export const ConsultationOptions = ({
   count_ticketed,
   recommended_number_students,
   takeTicket,
+  is_visit,
 }) => {
   return (
     <div>
       <span className={s.count}>
         {count_ticketed}/{recommended_number_students}
       </span>
-      {role === 'student' && (
+      {role === 'student' && type === 'schedule' && (
         <Button
           size="sm"
           variant="success"
@@ -28,7 +29,17 @@ export const ConsultationOptions = ({
           Записаться
         </Button>
       )}
-      {role === 'teacher' && type === 'visits' && (
+      {role === 'student' && type === 'info' && (
+        <span className={s.isVisit}>
+          Присутствие:{' '}
+          {is_visit ? (
+            <span className="text-success">Да</span>
+          ) : (
+            <span className="text-danger">Нет</span>
+          )}
+        </span>
+      )}
+      {role === 'teacher' && type === 'info' && (
         <Button size="sm" variant="success">
           Подробнее...
         </Button>

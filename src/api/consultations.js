@@ -14,4 +14,7 @@ export const consultationsAPI = {
   deleteTicket(id_consultation) {
     return instance.delete(`/tickets/${id_consultation}`)
   },
+  getMyTickets(filter) {
+    return instance.get(`/tickets/${filter}/my`)
+  },
 }

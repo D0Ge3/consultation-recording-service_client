@@ -15,9 +15,15 @@ export const getConsultations = (filter) => async (dispatch) => {
     console.log('err')
   }
 }
-export const getMyConsultations = (filter) => async (dispatch) => {
+export const getMyConsultations = (filter) => async (dispatch, getState) => {
   try {
-    const res = await consultationsAPI.getMyConsultations(filter)
+    const role = getState().profile.role
+    let res
+    if (role === 'teacher') {
+      res = await consultationsAPI.getMyConsultations(filter)
+    } else if (role === 'student') {
+      res = await consultationsAPI.getMyTickets(filter)
+    }
     dispatch(setCount(res.data.count))
     dispatch(setConsultations(res.data.results))
   } catch (error) {

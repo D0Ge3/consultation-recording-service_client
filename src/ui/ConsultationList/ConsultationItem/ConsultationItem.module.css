@@ -49,3 +49,7 @@
   color: grey;
   border-bottom: 1px dashed grey;
 }
+
+.isVisit {
+  font-size: 15px;
+}

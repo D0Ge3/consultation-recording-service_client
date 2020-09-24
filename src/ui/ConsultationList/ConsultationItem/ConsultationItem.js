@@ -17,6 +17,7 @@ export const ConsultationItem = ({ consultation, type = 'schedule', role, takeTi
     consultation_location,
     method_wrote,
     subjects,
+    is_visit,
   } = consultation
 
   return (
@@ -36,6 +37,7 @@ export const ConsultationItem = ({ consultation, type = 'schedule', role, takeTi
           type={type}
           is_ticket={is_ticket}
           takeTicket={takeTicket}
+          is_visit={is_visit}
         />
       </Row>
     </ListGroup.Item>
