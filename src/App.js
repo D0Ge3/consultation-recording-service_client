@@ -9,6 +9,7 @@ import { Header } from './components/Header/Header'
 import { Cabinet } from './components/Cabinet/Cabinet'
 import { Login } from './components/Login/Login'
 import { Schedule } from './components/Schedule/Schedule'
+import { Consultations } from './components/Consultations/Consultations'
 
 import './App.css'
 
@@ -34,6 +35,9 @@ export const App = () => {
         </Route>
         <Route path="/schedule">
           <Schedule />
+        </Route>
+        <Route path="/consultations">
+          <Consultations />
         </Route>
         <Route path="/privacy">
           <Privacy />
