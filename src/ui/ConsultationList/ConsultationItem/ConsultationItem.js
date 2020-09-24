@@ -35,6 +35,7 @@ export const ConsultationItem = ({ consultation, type = 'schedule', role, takeTi
           role={role}
           type={type}
           is_ticket={is_ticket}
+          takeTicket={takeTicket}
         />
       </Row>
     </ListGroup.Item>

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { getConsultations } from '../../redux/actions/consultationsActions'
+import { getConsultations, takeTicket } from '../../redux/actions/consultationsActions'
 
 import { Container } from 'react-bootstrap'
 import { ConsultationsList } from '../../ui/ConsultationList/ConsultationsList'
@@ -16,7 +16,11 @@ export const Schedule = () => {
   return (
     <Container className="mt-4">
       <h5 className="text-center">Расписание консультаций</h5>
-      <ConsultationsList consultations={consultations} role={role} />
+      <ConsultationsList
+        consultations={consultations}
+        role={role}
+        takeTicket={(id_consultation) => dispatch(takeTicket(id_consultation))}
+      />
     </Container>
   )
 }

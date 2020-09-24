@@ -5,7 +5,12 @@ import { ConsultationItem } from './ConsultationItem/ConsultationItem'
 
 export const ConsultationsList = ({ type = 'schedule', role, consultations, takeTicket }) => {
   const items = consultations.map((c) => (
-    <ConsultationItem key={c.id_consultation} consultation={c} role={role} />
+    <ConsultationItem
+      key={c.id_consultation}
+      consultation={c}
+      role={role}
+      takeTicket={takeTicket}
+    />
   ))
   return <ListGroup>{items}</ListGroup>
 }

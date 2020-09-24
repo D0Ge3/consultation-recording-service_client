@@ -11,6 +11,7 @@ export const ConsultationOptions = ({
   id_consultation,
   count_ticketed,
   recommended_number_students,
+  takeTicket,
 }) => {
   return (
     <div>
@@ -18,7 +19,12 @@ export const ConsultationOptions = ({
         {count_ticketed}/{recommended_number_students}
       </span>
       {role === 'student' && (
-        <Button size="sm" variant="success" disabled={is_ticket}>
+        <Button
+          size="sm"
+          variant="success"
+          onClick={() => takeTicket(id_consultation)}
+          disabled={is_ticket}
+        >
           Записаться
         </Button>
       )}
