@@ -1,16 +1,20 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { getMyConsultations, deleteTicket, deleteConsultation } from '../../../redux/actions/consultationsActions'
+import {
+  getMyConsultations,
+  deleteTicket,
+  deleteConsultation,
+} from '../../../redux/actions/consultationsActions'
 import { ConsultationsList } from '../../../ui/ConsultationList/ConsultationsList'
 
 export const ConsultationsWidget = () => {
   const dispatch = useDispatch()
-  const consultations = useSelector((state) => state.consultations.consultations)
-  const role = useSelector((state) => state.profile.role)
   useEffect(() => {
     dispatch(getMyConsultations('future'))
   }, [])
+  const consultations = useSelector((state) => state.consultations.consultations)
+  const role = useSelector((state) => state.profile.role)
   const deleteItem = (id_consultation) => {
     if (role === 'student') {
       dispatch(deleteTicket(id_consultation))

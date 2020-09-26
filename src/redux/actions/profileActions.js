@@ -1,4 +1,5 @@
 import { profileAPI } from '../../api'
+import { setAuth } from './authActions'
 
 export const SET_USER_DATA = 'profile/SET_USER_DATA'
 export const SET_SUBJECTS = 'profile/SET_SUBJECTS'

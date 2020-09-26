@@ -32,8 +32,7 @@ export const verify = () => async (dispatch) => {
     : sessionStorage.getItem('access')
   try {
     const res = await authAPI.verifyToken(token)
-    dispatch(setAuth(true))
-    dispatch(getUserData())
+    dispatch(getUserData()).then(() => dispatch(setAuth(true)))
   } catch (error) {
     // if (error.status === )
   }
