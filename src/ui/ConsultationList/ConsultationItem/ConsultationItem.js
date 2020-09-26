@@ -5,7 +5,7 @@ import { ConsultationDate } from './ConsultationDate'
 import { ConsultationParams } from './ConsultationParams'
 import { ConsultationOptions } from './ConsultationOptions'
 
-export const ConsultationItem = ({ consultation, type = 'schedule', role, takeTicket }) => {
+export const ConsultationItem = ({ consultation, type = 'schedule', role, takeTicket, deleteItem }) => {
   const {
     id_consultation,
     count_ticketed,
@@ -25,11 +25,14 @@ export const ConsultationItem = ({ consultation, type = 'schedule', role, takeTi
       <Row className="ml-3">
         <ConsultationDate start_time={start_time} end_time={end_time} />
         <ConsultationParams
+          role={role}
+          type={type}
           subjects={subjects}
           note={note}
           consultation_location={consultation_location}
         />
         <ConsultationOptions
+          deleteItem={deleteItem}
           count_ticketed={count_ticketed}
           recommended_number_students={recommended_number_students}
           id_consultation={id_consultation}

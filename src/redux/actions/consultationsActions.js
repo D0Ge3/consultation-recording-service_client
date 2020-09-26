@@ -30,10 +30,28 @@ export const getMyConsultations = (filter) => async (dispatch, getState) => {
     console.log('err')
   }
 }
-export const takeTicket = (id_consultation) => async (dispatch) =>  {
+export const takeTicket = (id_consultation) => async (dispatch) => {
   try {
     const res = consultationsAPI.takeTicket(id_consultation)
     dispatch(getConsultations('future'))
+  } catch (error) {
+    console.log('err')
+  }
+}
+
+export const deleteTicket = (id_consultation) => async (dispatch) => {
+  try {
+    const res = consultationsAPI.deleteTicket(id_consultation)
+    dispatch(getMyConsultations('future'))
+  } catch (error) {
+    console.log('err')
+  }
+}
+
+export const deleteConsultation = (id_consultation) => async (dispatch) => {
+  try {
+    const res = consultationsAPI.deleteConsultation(id_consultation)
+    dispatch(getMyConsultations('future'))
   } catch (error) {
     console.log('err')
   }

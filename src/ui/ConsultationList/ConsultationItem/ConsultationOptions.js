@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { Button } from 'react-bootstrap'
+import { PencilSquare, XCircle } from 'react-bootstrap-icons'
 
 import s from './ConsultationItem.module.css'
 
@@ -13,12 +14,20 @@ export const ConsultationOptions = ({
   recommended_number_students,
   takeTicket,
   is_visit,
+  deleteItem,
 }) => {
   return (
     <div>
-      <span className={s.count}>
-        {count_ticketed}/{recommended_number_students}
-      </span>
+      {type === 'widget' && role === 'teacher' && (
+        <span className={s.count}>
+          {count_ticketed}/{recommended_number_students}
+        </span>
+      )}
+      {(type === 'schedule' || type === 'info') && (
+        <span className={s.count}>
+          {count_ticketed}/{recommended_number_students}
+        </span>
+      )}
       {role === 'student' && type === 'schedule' && (
         <Button
           size="sm"
@@ -42,6 +51,20 @@ export const ConsultationOptions = ({
       {role === 'teacher' && type === 'info' && (
         <Button size="sm" variant="success">
           Подробнее...
+        </Button>
+      )}
+      {type === 'widget' && role === 'teacher' && (
+        <Button size="sm" className="mr-2" variant="outline-dark">
+          <PencilSquare />
+        </Button>
+      )}
+      {type === 'widget' && (
+        <Button
+          size="sm"
+          variant="outline-danger"
+          onClick={() => deleteItem(id_consultation)}
+        >
+          <XCircle />
         </Button>
       )}
     </div>
