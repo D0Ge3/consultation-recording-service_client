@@ -14,5 +14,11 @@ export const ConsultationsList = ({ type = 'schedule', role, consultations, take
       takeTicket={takeTicket}
     />
   ))
-  return <ListGroup>{items}</ListGroup>
+  return consultations.length > 0 ? (
+    <ListGroup>{items}</ListGroup>
+  ) : (
+    <div className="text-center">
+      <span className="text-secondary">Нет консультаций</span>
+    </div>
+  )
 }

@@ -18,7 +18,6 @@ export const getConsultations = (filter) => async (dispatch) => {
 export const getMyConsultations = (filter) => async (dispatch, getState) => {
   try {
     const role = getState().profile.role
-    console.log(getState())
     let res
     if (role === 'teacher') {
       res = await consultationsAPI.getMyConsultations(filter)
