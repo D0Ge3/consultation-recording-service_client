@@ -79,6 +79,7 @@ export const ConsultationsWidget = () => {
         <Paginator
           onPageChange={changePage}
           page={page}
+          count={count}
           pagesCount={Math.ceil(count / pageSize)}
           pageSize={pageSize}
           portionSize={10}

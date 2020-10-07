@@ -6,6 +6,7 @@ import s from './Paginator.module.css'
 export const Paginator = ({
   onPageChange,
   page,
+  count,
   pagesCount,
   pageSize,
   portionSize,
@@ -69,7 +70,7 @@ export const Paginator = ({
       </>
     ) : null
 
-  return (
+  return count <= pageSize ? null : (
     <Pagination className={s.paginator}>
       <Pagination.Prev
         disabled={page === 1}
