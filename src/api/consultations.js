@@ -11,6 +11,15 @@ export const consultationsAPI = {
   deleteConsultation(id_consultation) {
     return instance.delete(`/consultation/${id_consultation}`).then((res) => res)
   },
+  createConsultation(data) {
+    return instance.post('/consultation/', data).then((res) => res)
+  },
+  getConsultation(id_consultation) {
+    return instance.get(`/consultation/${id_consultation}`).then((res) => res)
+  },
+  updateConsultation(data) {
+    return instance.put(`/consultation/${data.id_consultation}`, data).then((res) => res)
+  },
   takeTicket(id_consultation) {
     return instance.post(`/tickets/${id_consultation}`).then((res) => res)
   },

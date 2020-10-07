@@ -6,6 +6,7 @@ import { PencilSquare, XCircle } from 'react-bootstrap-icons'
 import s from './ConsultationItem.module.css'
 
 export const ConsultationOptions = ({
+  edit,
   role,
   type,
   is_ticket,
@@ -54,7 +55,12 @@ export const ConsultationOptions = ({
         </Button>
       )}
       {type === 'widget' && role === 'teacher' && (
-        <Button size="sm" className="mr-2" variant="outline-dark">
+        <Button
+          onClick={() => edit(id_consultation)}
+          size="sm"
+          className="mr-2"
+          variant="outline-dark"
+        >
           <PencilSquare />
         </Button>
       )}

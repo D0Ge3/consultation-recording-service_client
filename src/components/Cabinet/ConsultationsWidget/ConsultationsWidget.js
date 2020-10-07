@@ -32,7 +32,7 @@ export const ConsultationsWidget = () => {
     if (role === 'student') {
       history.push('schedule')
     } else if (role === 'teacher') {
-      console.log('Редирект на страницу создани или модалка с формой')
+      history.push('consultation/create')
     }
   }
   const btnStyle = {
@@ -63,7 +63,7 @@ export const ConsultationsWidget = () => {
       </div>
       <ConsultationsList
         deleteItem={deleteItem}
-        edit={() => {}}
+        edit={(id) => history.push(`consultation/${id}/edit`)}
         consultations={consultations}
         type="widget"
         role={role}

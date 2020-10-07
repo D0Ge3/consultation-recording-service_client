@@ -5,7 +5,7 @@ import { ConsultationDate } from './ConsultationDate'
 import { ConsultationParams } from './ConsultationParams'
 import { ConsultationOptions } from './ConsultationOptions'
 
-export const ConsultationItem = ({ consultation, type = 'schedule', role, takeTicket, deleteItem }) => {
+export const ConsultationItem = ({ consultation, type = 'schedule', role, takeTicket, deleteItem, edit }) => {
   const {
     id_consultation,
     count_ticketed,
@@ -32,6 +32,7 @@ export const ConsultationItem = ({ consultation, type = 'schedule', role, takeTi
           consultation_location={consultation_location}
         />
         <ConsultationOptions
+          edit={edit}
           deleteItem={deleteItem}
           count_ticketed={count_ticketed}
           recommended_number_students={recommended_number_students}
