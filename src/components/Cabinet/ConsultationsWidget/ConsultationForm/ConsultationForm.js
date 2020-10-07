@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
 import { useFormik } from 'formik'
 import { useSelector, useDispatch } from 'react-redux'
@@ -20,12 +20,16 @@ import s from './ConsultationForm.module.css'
 import 'react-datetime/css/react-datetime.css'
 
 export const ConsultationForm = ({ mode }) => {
+  let multiselectRef = useRef(null)
+
   let { id_consultation } = useParams()
   const [status, setStatus] = useState(null)
 
   const dispatch = useDispatch()
   const subjects = useSelector((state) => state.profile.subjects)
-  const selectedConsultation = useSelector((state) => state.consultations.selectedConsultation)
+  const selectedConsultation = useSelector(
+    (state) => state.consultations.selectedConsultation
+  )
 
   const formik = useFormik({
     initialValues: {
@@ -41,13 +45,44 @@ export const ConsultationForm = ({ mode }) => {
     onSubmit: (values) => {
       setStatus(null)
       if (mode === 'create') {
-        dispatch(createConsultation(values, formik))
+        dispatch(createConsultation(values))
+          .then(() => onSave())
+          .catch((error) => onError(error))
       } else if (mode === 'edit') {
-        dispatch(updateConsultation(values, formik))
+        dispatch(updateConsultation(values))
+          .then(() => onSave())
+          .catch((error) => onError(error))
       }
     },
   })
-
+  const onSave = () => {
+    if (mode === 'create') {
+      multiselectRef.current.resetSelectedValues()
+      formik.resetForm()
+      formik.setStatus({
+        status: 'ok',
+        msg: 'Консультация успешно создана',
+      })
+    } else if (mode === 'edit') {
+      formik.setStatus({
+        status: 'ok',
+        msg: 'Консультация успешно сохранена',
+      })
+    }
+  }
+  const onError = (error) => {
+    if (error.response) {
+      formik.setStatus({
+        status: 'error',
+        msg: 'Произошла ошибка на сервере',
+      })
+    } else if (error.request) {
+      formik.setStatus({
+        status: 'error',
+        msg: 'Ошибка соединения. Повторите попытку',
+      })
+    }
+  }
   useEffect(() => {
     if (mode === 'edit') {
       dispatch(getConsultation(id_consultation))
@@ -85,6 +120,7 @@ export const ConsultationForm = ({ mode }) => {
             <Form.Group controlId="teacher_subject">
               <Form.Label>Дисциплины</Form.Label>
               <Multiselect
+                ref={multiselectRef}
                 options={subjects}
                 placeholder="Выберите дисциплины"
                 selectedValues={formik.values.teacher_subject}

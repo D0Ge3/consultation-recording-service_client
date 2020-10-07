@@ -60,34 +60,21 @@ export const deleteConsultation = (id_consultation) => async (dispatch) => {
   }
 }
 
-export const createConsultation = (data, formik) => async (dispatch) => {
-  try {
-    const end_time = moment().set({
-      year: data.start_time.get('year'),
-      month: data.start_time.get('month'),
-      date: data.start_time.get('date'),
-      hour: data.end_time.get('hour'),
-      minute: data.end_time.get('minute'),
-    })
-    const consultationData = {
-      ...data,
-      start_time: data.start_time,
-      end_time: end_time,
-      teacher_subject: data.teacher_subject.map((s) => s.teacher_subject),
-    }
-    const res = await consultationsAPI.createConsultation(consultationData)
-    formik.resetForm()
-    formik.setStatus({ status: 'ok', msg: 'Консультация успешно создана' })
-  } catch (error) {
-    if (error.response) {
-      formik.setStatus({ status: 'error', msg: 'Произошла ошибка на сервере' })
-    } else if (error.request) {
-      formik.setStatus({
-        status: 'error',
-        msg: 'Ошибка соединения. Повторите попытку',
-      })
-    }
+export const createConsultation = (data) => async (dispatch) => {
+  const end_time = moment().set({
+    year: data.start_time.get('year'),
+    month: data.start_time.get('month'),
+    date: data.start_time.get('date'),
+    hour: data.end_time.get('hour'),
+    minute: data.end_time.get('minute'),
+  })
+  const consultationData = {
+    ...data,
+    start_time: data.start_time,
+    end_time: end_time,
+    teacher_subject: data.teacher_subject.map((s) => s.teacher_subject),
   }
+  return await consultationsAPI.createConsultation(consultationData)
 }
 
 export const getConsultation = (id_consultation) => async (dispatch) => {
@@ -99,32 +86,19 @@ export const getConsultation = (id_consultation) => async (dispatch) => {
   }
 }
 
-export const updateConsultation = (data, formik) => async (dispatch) => {
-  try {
-    const end_time = moment().set({
-      year: data.start_time.get('year'),
-      month: data.start_time.get('month'),
-      date: data.start_time.get('date'),
-      hour: data.end_time.get('hour'),
-      minute: data.end_time.get('minute'),
-    })
-    const consultationData = {
-      ...data,
-      start_time: data.start_time,
-      end_time: end_time,
-      teacher_subject: data.teacher_subject.map((s) => s.teacher_subject),
-    }
-    const res = await consultationsAPI.updateConsultation(consultationData)
-    formik.resetForm()
-    formik.setStatus({ status: 'ok', msg: 'Консультация успешно сохранена' })
-  } catch (error) {
-    if (error.response) {
-      formik.setStatus({ status: 'error', msg: 'Произошла ошибка на сервере' })
-    } else if (error.request) {
-      formik.setStatus({
-        status: 'error',
-        msg: 'Ошибка соединения. Повторите попытку',
-      })
-    }
+export const updateConsultation = (data) => async (dispatch) => {
+  const end_time = moment().set({
+    year: data.start_time.get('year'),
+    month: data.start_time.get('month'),
+    date: data.start_time.get('date'),
+    hour: data.end_time.get('hour'),
+    minute: data.end_time.get('minute'),
+  })
+  const consultationData = {
+    ...data,
+    start_time: data.start_time,
+    end_time: end_time,
+    teacher_subject: data.teacher_subject.map((s) => s.teacher_subject),
   }
+  return await consultationsAPI.updateConsultation(consultationData)
 }
