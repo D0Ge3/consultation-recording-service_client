@@ -4,10 +4,12 @@ import moment from 'moment'
 export const SET_CONSULTATIONS = 'consultations/SET_CONSULTATIONS'
 export const SET_COUNT = 'consultations/SET_COUNT'
 export const SET_SELECTED_CONSULTATION = 'consultations/SET_SELECTED_CONSULTATION'
+export const SET_PAGE = 'consultations/SET_PAGE'
 
 export const setConsultations = (consultations) => ({ type: SET_CONSULTATIONS, consultations })
 export const setSelectedConsultation = (consultation) => ({ type: SET_SELECTED_CONSULTATION, consultation })
 export const setCount = (count) => ({ type: SET_COUNT, count })
+export const setPage = (page) => ({ type: SET_PAGE, page })
 
 export const getConsultations = (filter) => async (dispatch) => {
   try {
@@ -18,16 +20,17 @@ export const getConsultations = (filter) => async (dispatch) => {
     console.log('err')
   }
 }
-export const getMyConsultations = (filter) => async (dispatch, getState) => {
+export const getMyConsultations = (filter, page, pageSize = 5) => async (dispatch, getState) => {
   try {
     const role = getState().profile.role
     let res
     if (role === 'teacher') {
-      res = await consultationsAPI.getMyConsultations(filter)
+      res = await consultationsAPI.getMyConsultations(filter, page, pageSize)
     } else if (role === 'student') {
-      res = await consultationsAPI.getMyTickets(filter)
+      res = await consultationsAPI.getMyTickets(filter, page, pageSize)
     }
     dispatch(setCount(res.data.count))
+    dispatch(setPage(page))
     dispatch(setConsultations(res.data.results))
   } catch (error) {
     console.log('err')

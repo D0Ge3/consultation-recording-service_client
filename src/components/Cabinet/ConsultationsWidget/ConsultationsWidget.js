@@ -9,18 +9,26 @@ import {
 } from '../../../redux/actions/consultationsActions'
 
 import { Button } from 'react-bootstrap'
+import { Paginator } from '../../../ui/Paginator/Paginator'
 
 import { ConsultationsList } from '../../../ui/ConsultationList/ConsultationsList'
 import { Plus } from 'react-bootstrap-icons'
 
 export const ConsultationsWidget = () => {
+  
   let history = useHistory()
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(getMyConsultations('future'))
+    changePage(1)
   }, [])
+  const changePage = (page) => {
+    dispatch(getMyConsultations('future', page, pageSize))
+  }
   const consultations = useSelector((state) => state.consultations.consultations)
   const role = useSelector((state) => state.profile.role)
+  const count = useSelector((state) => state.consultations.count)
+  const page = useSelector((state) => state.consultations.page)
+  const pageSize = 5
   const deleteItem = (id_consultation) => {
     if (role === 'student') {
       dispatch(deleteTicket(id_consultation))
@@ -68,6 +76,15 @@ export const ConsultationsWidget = () => {
         type="widget"
         role={role}
       />
+      <div className="mt-3">
+        <Paginator
+          onPageChange={changePage}
+          page={page}
+          pagesCount={Math.ceil(count / pageSize)}
+          pageSize={pageSize}
+          portionSize={10}
+        />
+      </div>
     </>
   )
 }

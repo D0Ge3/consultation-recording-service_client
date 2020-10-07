@@ -5,8 +5,10 @@ export const consultationsAPI = {
     // filter may be 'future' or 'latest'
     return instance.get(`/consultations/${filter}`).then((res) => res)
   },
-  getMyConsultations(filter) {
-    return instance.get(`/consultations/${filter}/my`).then((res) => res)
+  getMyConsultations(filter, page, pageSize) {
+    return instance
+      .get(`/consultations/${filter}/my?page_size=${pageSize}&page=${page}`)
+      .then((res) => res)
   },
   deleteConsultation(id_consultation) {
     return instance.delete(`/consultation/${id_consultation}`).then((res) => res)
@@ -26,7 +28,9 @@ export const consultationsAPI = {
   deleteTicket(id_consultation) {
     return instance.delete(`/tickets/${id_consultation}`).then((res) => res)
   },
-  getMyTickets(filter) {
-    return instance.get(`/tickets/${filter}/my`).then((res) => res)
+  getMyTickets(filter, page, pageSize) {
+    return instance
+      .get(`/tickets/${filter}/my?page_size=${pageSize}&page=${page}`)
+      .then((res) => res)
   },
 }
