@@ -1,9 +1,11 @@
 import { instance } from './axiosInstance'
 
 export const consultationsAPI = {
-  getConsultations(filter) {
+  getConsultations(filter, page, pageSize) {
     // filter may be 'future' or 'latest'
-    return instance.get(`/consultations/${filter}`).then((res) => res)
+    return instance
+      .get(`/consultations/${filter}?page_size=${pageSize}&page=${page}`)
+      .then((res) => res)
   },
   getMyConsultations(filter, page, pageSize) {
     return instance

@@ -7,6 +7,5 @@ export const setInitialized = () => ({ type: SET_INITIALIZED })
 export const setError = (error) => ({ type: SET_ERROR, error })
 
 export const initializeApp = () => async (dispatch) => {
-  dispatch(verify())
-  dispatch(setInitialized())
+  dispatch(verify()).then(() => dispatch(setInitialized()))
 }

@@ -11,10 +11,11 @@ export const setSelectedConsultation = (consultation) => ({ type: SET_SELECTED_C
 export const setCount = (count) => ({ type: SET_COUNT, count })
 export const setPage = (page) => ({ type: SET_PAGE, page })
 
-export const getConsultations = (filter) => async (dispatch) => {
+export const getConsultations = (filter, page, pageSize) => async (dispatch) => {
   try {
-    const res = await consultationsAPI.getConsultations(filter)
+    const res = await consultationsAPI.getConsultations(filter, page, pageSize)
     dispatch(setCount(res.data.count))
+    dispatch(setPage(page))
     dispatch(setConsultations(res.data.results))
   } catch (error) {
     console.log('err')

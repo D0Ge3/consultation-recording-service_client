@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Switch, Route, Redirect } from 'react-router-dom'
 
 import { initializeApp } from './redux/actions/appActions'
@@ -17,11 +17,12 @@ import './App.css'
 export const App = () => {
   require('moment/locale/ru.js')
   const dispatch = useDispatch()
+  const isInitialized = useSelector((state) => state.app.isInitialized)
   useEffect(() => {
     dispatch(initializeApp())
   },[])
 
-  return (
+  return isInitialized ? (
     <>
       <Header />
       <Switch>
@@ -52,5 +53,5 @@ export const App = () => {
         <Redirect from="/" to="/cabinet" />
       </Switch>
     </>
-  )
+  ) : (<p>loading...</p>)
 }
