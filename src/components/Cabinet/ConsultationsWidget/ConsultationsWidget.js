@@ -15,7 +15,6 @@ import { ConsultationsList } from '../../../ui/ConsultationList/ConsultationsLis
 import { Plus } from 'react-bootstrap-icons'
 
 export const ConsultationsWidget = () => {
-  
   let history = useHistory()
   const dispatch = useDispatch()
   useEffect(() => {

@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Pagination } from 'react-bootstrap'
-import * as cn from 'classnames'
 
 import s from './Paginator.module.css'
 
@@ -9,7 +8,7 @@ export const Paginator = ({
   page,
   pagesCount,
   pageSize,
-  portionSize
+  portionSize,
 }) => {
   let pages = Array.from({ length: pagesCount }, (v, k) => k + 1)
 
@@ -29,9 +28,6 @@ export const Paginator = ({
     setPortionNumber(portion)
   }
 
-  // let pageStyles = (p) =>
-  //   cn(classes.page, { [classes.selectedPage]: currentPage === p })
-
   let endPage = pagesCount > 10 ? portionNumber * pageSize : pagesCount
   let startPage = pagesCount > 10 ? endPage - (pageSize - 1) : 1
 
@@ -39,7 +35,11 @@ export const Paginator = ({
     .filter((p) => p >= startPage && p <= endPage)
     .map((p) => {
       return (
-        <Pagination.Item active={p === page} key={p} onClick={() => onPageChange(p)}>
+        <Pagination.Item
+          active={p === page}
+          key={p}
+          onClick={() => onPageChange(p)}
+        >
           {p}
         </Pagination.Item>
       )
@@ -71,11 +71,17 @@ export const Paginator = ({
 
   return (
     <Pagination className={s.paginator}>
-      <Pagination.Prev disabled={page === 1} onClick={() => onPageChange(page - 1)} />
+      <Pagination.Prev
+        disabled={page === 1}
+        onClick={() => onPageChange(page - 1)}
+      />
       {firstPageBtn}
       {showPages}
       {lastPageBtn}
-      <Pagination.Next disabled={page === pagesCount} onClick={() => onPageChange(page + 1)} />
+      <Pagination.Next
+        disabled={page === pagesCount}
+        onClick={() => onPageChange(page + 1)}
+      />
     </Pagination>
   )
 }
