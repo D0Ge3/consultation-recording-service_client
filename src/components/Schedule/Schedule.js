@@ -1,7 +1,11 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { getConsultations, takeTicket } from '../../redux/actions/consultationsActions'
+import {
+  getConsultations,
+  takeTicket,
+  resetConsultations,
+} from '../../redux/actions/consultationsActions'
 
 import { Container } from 'react-bootstrap'
 import { ConsultationsList } from '../../ui/ConsultationList/ConsultationsList'
@@ -16,6 +20,7 @@ export const Schedule = () => {
   const pageSize = 10
   useEffect(() => {
     changePage(1)
+    return () => dispatch(resetConsultations())
   }, [])
   const changePage = (page) => {
     dispatch(getConsultations('future', page, pageSize))

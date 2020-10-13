@@ -6,6 +6,7 @@ import {
   getMyConsultations,
   deleteTicket,
   deleteConsultation,
+  resetConsultations,
 } from '../../../redux/actions/consultationsActions'
 
 import { Button } from 'react-bootstrap'
@@ -19,6 +20,7 @@ export const ConsultationsWidget = () => {
   const dispatch = useDispatch()
   useEffect(() => {
     changePage(1)
+    return () => dispatch(resetConsultations())
   }, [])
   const changePage = (page) => {
     dispatch(getMyConsultations('future', page, pageSize))

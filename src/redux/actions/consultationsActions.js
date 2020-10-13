@@ -106,3 +106,9 @@ export const updateConsultation = (data) => async (dispatch) => {
   }
   return await consultationsAPI.updateConsultation(consultationData)
 }
+
+export const resetConsultations = () => async (dispatch) => {
+  dispatch(setConsultations([]))
+  dispatch(setCount(null))
+  dispatch(setPage(null))
+}

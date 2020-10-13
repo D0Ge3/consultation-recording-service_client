@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { ConsultationsList } from '../../ui/ConsultationList/ConsultationsList'
-import { getMyConsultations } from '../../redux/actions/consultationsActions'
+import {
+  getMyConsultations,
+  resetConsultations,
+} from '../../redux/actions/consultationsActions'
 
 import { Container, ButtonGroup, Button } from 'react-bootstrap'
 import { Paginator } from '../../ui/Paginator/Paginator'
@@ -16,8 +19,8 @@ export const Consultations = () => {
   const page = useSelector((state) => state.consultations.page)
   const pageSize = 10
   useEffect(() => {
-    console.log('useeefect[]')
     changePage(1)
+    return () => dispatch(resetConsultations())
   }, [])
   useEffect(() => changePage(1), [mode])
   const changePage = (page) => {
