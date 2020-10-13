@@ -125,6 +125,7 @@ export const ConsultationForm = ({ mode }) => {
       getTimeTickets(start_time, end_time, recommended_number_students)
     }
   }, [start_time, end_time, recommended_number_students, method_wrote])
+
   const getTimeTickets = (start_time, end_time, recommended_number_students) => {
     setShowTimeInfo(false)
     const timeTickets = generateTimeTickets(start_time, end_time, recommended_number_students)
@@ -166,7 +167,10 @@ export const ConsultationForm = ({ mode }) => {
               <Datetime
                 value={formik.values.start_time}
                 onChange={(v) => formik.setFieldValue('start_time', v)}
-                inputProps={{ placeholder: 'дд.мм.гггг чч:мм' }}
+                inputProps={{
+                  disabled: mode === 'edit' && method_wrote === 'по времени',
+                  placeholder: 'дд.мм.гггг чч:мм',
+                }}
                 locale="ru"
                 isValidDate={isFuture}
               />
@@ -178,7 +182,10 @@ export const ConsultationForm = ({ mode }) => {
               <Datetime
                 value={formik.values.end_time}
                 onChange={(v) => formik.setFieldValue('end_time', v)}
-                inputProps={{ placeholder: 'чч:мм' }}
+                inputProps={{
+                  disabled: mode === 'edit' && method_wrote === 'по времени',
+                  placeholder: 'чч:мм',
+                }}
                 locale="ru"
                 dateFormat={false}
               />
@@ -202,6 +209,7 @@ export const ConsultationForm = ({ mode }) => {
               <Form.Control
                 name="recommended_number_students"
                 type="number"
+                disabled={mode === 'edit' && method_wrote === 'по времени'}
                 placeholder="Кол-во студентов"
                 onChange={formik.handleChange}
                 value={formik.values.recommended_number_students}
@@ -215,6 +223,7 @@ export const ConsultationForm = ({ mode }) => {
                 id="свободный"
                 name="method_wrote"
                 type="radio"
+                disabled={mode === 'edit'}
                 label="Свободный"
                 value="свободный"
                 onChange={formik.handleChange}
@@ -224,6 +233,7 @@ export const ConsultationForm = ({ mode }) => {
                 id="по времени"
                 name="method_wrote"
                 type="radio"
+                disabled={mode === 'edit'}
                 label="По времени"
                 value="по времени"
                 onChange={formik.handleChange}
