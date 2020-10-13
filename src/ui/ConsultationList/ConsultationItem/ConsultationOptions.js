@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { Button } from 'react-bootstrap'
 import { PencilSquare, XCircle } from 'react-bootstrap-icons'
+import { ModalSelectTime } from './ModalSelectTime/ModalSelectTime'
 
 import s from './ConsultationItem.module.css'
 
@@ -16,7 +17,18 @@ export const ConsultationOptions = ({
   takeTicket,
   is_visit,
   deleteItem,
+  method_wrote,
 }) => {
+  const [showModal, setShowModal] = useState(false)
+
+  const onTicket = (id_consultation) => {
+    if (method_wrote === 'по времени') {
+      setShowModal(true)
+    } else {
+      takeTicket(id_consultation)
+    }
+  }
+
   return (
     <div>
       {type === 'widget' && role === 'teacher' && (
@@ -30,14 +42,21 @@ export const ConsultationOptions = ({
         </span>
       )}
       {role === 'student' && type === 'schedule' && (
-        <Button
-          size="sm"
-          variant="success"
-          onClick={() => takeTicket(id_consultation)}
-          disabled={is_ticket}
-        >
-          Записаться
-        </Button>
+        <>
+          <Button
+            size="sm"
+            variant="success"
+            onClick={() => onTicket(id_consultation)}
+            disabled={is_ticket}
+          >
+            Записаться
+          </Button>
+          <ModalSelectTime
+            handleClose={() => setShowModal(false)}
+            id_consultation={id_consultation}
+            showModal={showModal}
+          />
+        </>
       )}
       {role === 'student' && type === 'info' && (
         <span className={s.isVisit}>

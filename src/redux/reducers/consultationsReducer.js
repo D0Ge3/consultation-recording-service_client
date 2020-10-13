@@ -5,6 +5,7 @@ const initialState = {
   selectedConsultation: null,
   count: null,
   page: null,
+  freeTimes: [],
 }
 
 export const consultationsReducer = (state = initialState, action) => {
@@ -17,6 +18,8 @@ export const consultationsReducer = (state = initialState, action) => {
       return { ...state, page: action.page }
     case actionTypes.SET_SELECTED_CONSULTATION:
       return { ...state, selectedConsultation: action.consultation }
+    case actionTypes.SET_FREE_TIMES:
+      return { ...state, freeTimes: action.times }
     default:
       return state
   }

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { ListGroup, Row } from 'react-bootstrap'
+import { ListGroup, Row, Button } from 'react-bootstrap'
 import { ConsultationDate } from './ConsultationDate'
 import { ConsultationParams } from './ConsultationParams'
 import { ConsultationOptions } from './ConsultationOptions'
@@ -18,12 +18,17 @@ export const ConsultationItem = ({ consultation, type = 'schedule', role, takeTi
     method_wrote,
     subjects,
     is_visit,
+    time,
   } = consultation
 
   return (
     <ListGroup.Item>
       <Row className="ml-3">
-        <ConsultationDate start_time={start_time} end_time={end_time} />
+        <ConsultationDate
+          ticket_time={time}
+          start_time={start_time}
+          end_time={end_time}
+        />
         <ConsultationParams
           role={role}
           type={type}
@@ -42,6 +47,7 @@ export const ConsultationItem = ({ consultation, type = 'schedule', role, takeTi
           is_ticket={is_ticket}
           takeTicket={takeTicket}
           is_visit={is_visit}
+          method_wrote={method_wrote}
         />
       </Row>
     </ListGroup.Item>

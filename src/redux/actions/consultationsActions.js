@@ -5,11 +5,13 @@ export const SET_CONSULTATIONS = 'consultations/SET_CONSULTATIONS'
 export const SET_COUNT = 'consultations/SET_COUNT'
 export const SET_SELECTED_CONSULTATION = 'consultations/SET_SELECTED_CONSULTATION'
 export const SET_PAGE = 'consultations/SET_PAGE'
+export const SET_FREE_TIMES = 'consultations/SET_FREE_TIMES'
 
 export const setConsultations = (consultations) => ({ type: SET_CONSULTATIONS, consultations })
 export const setSelectedConsultation = (consultation) => ({ type: SET_SELECTED_CONSULTATION, consultation })
 export const setCount = (count) => ({ type: SET_COUNT, count })
 export const setPage = (page) => ({ type: SET_PAGE, page })
+export const setFreeTimes = (times) => ({ type: SET_FREE_TIMES, times })
 
 export const getConsultations = (filter, page, pageSize) => async (dispatch) => {
   try {
@@ -37,10 +39,11 @@ export const getMyConsultations = (filter, page, pageSize = 5) => async (dispatc
     console.log('err')
   }
 }
-export const takeTicket = (id_consultation) => async (dispatch) => {
+export const takeTicket = (id_consultation, data = {}) => async (dispatch, getState) => {
   try {
-    const res = await consultationsAPI.takeTicket(id_consultation)
-    dispatch(getConsultations('future'))
+    const page = getState().consultations.page
+    const res = await consultationsAPI.takeTicket(id_consultation, data)
+    dispatch(getConsultations('future', page))
   } catch (error) {
     console.log('err')
   }
@@ -113,4 +116,13 @@ export const resetConsultations = () => async (dispatch) => {
   dispatch(setConsultations([]))
   dispatch(setCount(null))
   dispatch(setPage(null))
+}
+
+export const getFreeTimes = (id_consultation) => async (dispatch) => {
+  try {
+    const res = await consultationsAPI.getFreeTimes(id_consultation)
+    dispatch(setFreeTimes(res.data))
+  } catch (error) {
+    console.log('err')
+  }
 }
