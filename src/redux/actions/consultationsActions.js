@@ -46,19 +46,21 @@ export const takeTicket = (id_consultation) => async (dispatch) => {
   }
 }
 
-export const deleteTicket = (id_consultation) => async (dispatch) => {
+export const deleteTicket = (id_consultation) => async (dispatch, getState) => {
   try {
+    const page = getState().consultations.page
     const res = await consultationsAPI.deleteTicket(id_consultation)
-    dispatch(getMyConsultations('future'))
+    dispatch(getMyConsultations('future', page)) // page в reducer
   } catch (error) {
     console.log('err')
   }
 }
 
-export const deleteConsultation = (id_consultation) => async (dispatch) => {
+export const deleteConsultation = (id_consultation) => async (dispatch, getState) => {
   try {
+    const page = getState().consultations.page
     const res = await consultationsAPI.deleteConsultation(id_consultation)
-    dispatch(getMyConsultations('future'))
+    dispatch(getMyConsultations('future', page))
   } catch (error) {
     console.log('err')
   }

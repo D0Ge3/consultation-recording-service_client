@@ -15,11 +15,14 @@ import { Form, Button, Container, Row, Col } from 'react-bootstrap'
 import { Multiselect } from 'multiselect-react-dropdown'
 import Datetime from 'react-datetime'
 import { ConsultationStatusAlert } from './ConsultationStatusAlert'
+import { ConsultationTimeInfo } from './ConsultationTimeInfo'
 
 import s from './ConsultationForm.module.css'
 import 'react-datetime/css/react-datetime.css'
+import { generateTimeTickets } from './utils/generateTimeTickets'
 
 export const ConsultationForm = ({ mode }) => {
+  const [showTimeInfo, setShowTimeInfo] = useState(false)
   let multiselectRef = useRef(null)
 
   let { id_consultation } = useParams()
@@ -41,6 +44,7 @@ export const ConsultationForm = ({ mode }) => {
       time_on_one_student: null,
       consultation_location: '',
       teacher_subject: [],
+      times: [],
     },
     onSubmit: (values) => {
       setStatus(null)
@@ -69,6 +73,7 @@ export const ConsultationForm = ({ mode }) => {
         msg: 'Консультация успешно сохранена',
       })
     }
+    setShowTimeInfo(false)
   }
   const onError = (error) => {
     if (error.response) {
@@ -82,6 +87,7 @@ export const ConsultationForm = ({ mode }) => {
         msg: 'Ошибка соединения. Повторите попытку',
       })
     }
+    setShowTimeInfo(false)
   }
   useEffect(() => {
     if (mode === 'edit') {
@@ -105,6 +111,26 @@ export const ConsultationForm = ({ mode }) => {
   const isFuture = (date) => {
     let yesterday = Datetime.moment().subtract(1, 'day')
     return date.isAfter(yesterday)
+  }
+  const {
+    start_time,
+    end_time,
+    recommended_number_students,
+    method_wrote,
+    time_on_one_student,
+  } = formik.values
+  useEffect(() => {
+    if (start_time && end_time && recommended_number_students 
+      && method_wrote === 'по времени') {
+      getTimeTickets(start_time, end_time, recommended_number_students)
+    }
+  }, [start_time, end_time, recommended_number_students, method_wrote])
+  const getTimeTickets = (start_time, end_time, recommended_number_students) => {
+    setShowTimeInfo(false)
+    const timeTickets = generateTimeTickets(start_time, end_time, recommended_number_students)
+    formik.setFieldValue('times', timeTickets.time)
+    formik.setFieldValue('time_on_one_student', timeTickets.timeOneStudent)
+      .then(() => setShowTimeInfo(true))
   }
 
   return (
@@ -200,11 +226,13 @@ export const ConsultationForm = ({ mode }) => {
                 type="radio"
                 label="По времени"
                 value="по времени"
-                disabled //временно
                 onChange={formik.handleChange}
                 checked={formik.values.method_wrote === 'по времени'}
               />
             </Form.Group>
+            {showTimeInfo && (
+              <ConsultationTimeInfo time_on_one_student={time_on_one_student} />
+            )}
           </Col>
         </Row>
         <Form.Group controlId="note">
@@ -217,7 +245,6 @@ export const ConsultationForm = ({ mode }) => {
             rows="5"
           />
         </Form.Group>
-
         <Button
           disabled={formik.isSubmitting && !status}
           variant="primary"
