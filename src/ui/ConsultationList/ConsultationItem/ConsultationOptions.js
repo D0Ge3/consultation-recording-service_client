@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { Button } from 'react-bootstrap'
 import { PencilSquare, XCircle } from 'react-bootstrap-icons'
 import { ModalSelectTime } from './ModalSelectTime/ModalSelectTime'
+import { ModalConfirm } from './ModalConfirm/ModalConfirm'
 
 import s from './ConsultationItem.module.css'
 
@@ -19,11 +20,12 @@ export const ConsultationOptions = ({
   deleteItem,
   method_wrote,
 }) => {
-  const [showModal, setShowModal] = useState(false)
+  const [showSelectModal, setShowSelectModal] = useState(false)
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
 
   const onTicket = (id_consultation) => {
     if (method_wrote === 'по времени') {
-      setShowModal(true)
+      setShowSelectModal(true)
     } else {
       takeTicket(id_consultation)
     }
@@ -52,9 +54,9 @@ export const ConsultationOptions = ({
             Записаться
           </Button>
           <ModalSelectTime
-            handleClose={() => setShowModal(false)}
+            handleClose={() => setShowSelectModal(false)}
             id_consultation={id_consultation}
-            showModal={showModal}
+            showModal={showSelectModal}
           />
         </>
       )}
@@ -84,13 +86,26 @@ export const ConsultationOptions = ({
         </Button>
       )}
       {type === 'widget' && (
-        <Button
-          size="sm"
-          variant="outline-danger"
-          onClick={() => deleteItem(id_consultation)}
-        >
-          <XCircle />
-        </Button>
+        <>
+          <Button
+            size="sm"
+            variant="outline-danger"
+            onClick={() => setShowDeleteModal(true)}
+          >
+            <XCircle />
+          </Button>
+          <ModalConfirm
+            title={role === 'teacher' ? 'Удаление консультации' : 'Отмена записи'}
+            body={
+              role === 'teacher'
+                ? 'Вы уверены что хотите удалить консультацию?'
+                : 'Вы уверены что хотите отменить запись на консультацию?'
+            }
+            setAnswer={(answer) => answer && deleteItem(id_consultation)}
+            showModal={showDeleteModal}
+            handleClose={() => setShowDeleteModal(false)}
+          />
+        </>
       )}
     </div>
   )
