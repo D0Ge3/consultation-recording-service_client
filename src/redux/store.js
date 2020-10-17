@@ -5,12 +5,14 @@ import { authReducer } from './reducers/authReducer'
 import { appReducer } from './reducers/appReducer'
 import { profileReducer } from './reducers/profileReducer'
 import { consultationsReducer } from './reducers/consultationsReducer'
+import { visitsReducer } from './reducers/visitsReducer'
 
 let reducers = combineReducers({
   app: appReducer,
   auth: authReducer,
   profile: profileReducer,
   consultations: consultationsReducer,
+  visits: visitsReducer,
 })
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 export const store = createStore(reducers, composeEnhancers(applyMiddleware(thunkMiddleware)))

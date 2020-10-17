@@ -1,6 +1,7 @@
 import React from 'react'
+import moment from 'moment'
 
-import { Person, GeoAlt, InfoCircle, JournalCheck, JournalText } from 'react-bootstrap-icons'
+import { Person, GeoAlt, InfoCircle, JournalCheck, JournalText, CalendarEvent } from 'react-bootstrap-icons'
 
 import s from './ConsultationInfo.module.css'
 
@@ -16,10 +17,13 @@ export const ConsultationInfo = ({ consultation }) => {
   let subjectsList = subjects.map((s) => (
     <p className="mb-0" key={s.teacher_subject}> {s.subject}</p>
   ))
-  const subjectWordEnd = subjects.length > 1 ? 'ы' : 'а'
+  const date = moment(start_time).format('DD MMMM')
+  const time_start = moment(start_time).format('HH:mm')
+  const time_end = moment(end_time).format('HH:mm')
+
   return (
     <>
-      <h6>Информация о консультации</h6>
+      <h5>Информация о консультации</h5>
       <div className={s.param}><Person /> <span>{subjects[0].teacher_fio}</span></div>
       <div className={s.subjectListWrapper}>
         <JournalText className={s.subjectIcon}/>
@@ -34,6 +38,10 @@ export const ConsultationInfo = ({ consultation }) => {
             ? ` Запись ${method_wrote}`
             : ' Свободная запись'}
         </span>
+      </div>
+      <div className={s.param}>
+        <CalendarEvent />{' '}
+        <span>{date} {time_start} - {time_end}</span>
       </div>
     </>
   )

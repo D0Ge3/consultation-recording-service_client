@@ -5,9 +5,7 @@
 .subjectListWrapper {
   position: relative;
   margin-left: 20px;
-  /* padding: 0;
-  list-style: none;
-  margin-bottom: 2px; */
+  font-size: 17px;
 }
 .subjectIcon {
   position: absolute;
@@ -16,4 +14,5 @@
 }
 .param {
   margin-bottom: 2px;
+  font-size: 17px;
 }
