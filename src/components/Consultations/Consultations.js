@@ -29,6 +29,7 @@ export const Consultations = () => {
   const changeMode = (mode) => {
     setMode(mode)
   }
+
   return (
     <Container className="mt-4">
       <ButtonGroup

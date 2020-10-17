@@ -1,0 +1,19 @@
+.subjectList {
+  margin-bottom: 2px;
+  margin-left: 20px;
+}
+.subjectListWrapper {
+  position: relative;
+  margin-left: 20px;
+  /* padding: 0;
+  list-style: none;
+  margin-bottom: 2px; */
+}
+.subjectIcon {
+  position: absolute;
+  top: 4px;
+  left: -20px;
+}
+.param {
+  margin-bottom: 2px;
+}

@@ -11,6 +11,7 @@ import { Login } from './components/Login/Login'
 import { Schedule } from './components/Schedule/Schedule'
 import { Consultations } from './components/Consultations/Consultations'
 import { ConsultationForm } from './components/Cabinet/ConsultationsWidget/ConsultationForm/ConsultationForm'
+import { ConsultationVisits } from './components/Consultations/ConsultationVisits/ConsultationVisits'
 
 import './App.css'
 
@@ -46,6 +47,9 @@ export const App = () => {
         </Route>
         <Route path="/consultation/:id_consultation/edit">
           <ConsultationForm mode="edit" />
+        </Route>
+        <Route path="/consultation/:id_consultation/visits">
+          <ConsultationVisits />
         </Route>
         <Route path="/privacy">
           <Privacy />

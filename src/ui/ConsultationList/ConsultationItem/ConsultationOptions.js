@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 
 import { Button } from 'react-bootstrap'
 import { PencilSquare, XCircle } from 'react-bootstrap-icons'
@@ -20,6 +21,7 @@ export const ConsultationOptions = ({
   deleteItem,
   method_wrote,
 }) => {
+  const history = useHistory()
   const [showSelectModal, setShowSelectModal] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
 
@@ -71,8 +73,12 @@ export const ConsultationOptions = ({
         </span>
       )}
       {role === 'teacher' && type === 'info' && (
-        <Button size="sm" variant="success">
-          Подробнее...
+        <Button
+          size="sm"
+          variant="success"
+          onClick={() => history.push(`consultation/${id_consultation}/visits`)}
+        >
+          Посещения
         </Button>
       )}
       {type === 'widget' && role === 'teacher' && (
