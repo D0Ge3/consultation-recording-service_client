@@ -14,7 +14,9 @@ export const VisitBtn = ({ is_visit, id_wrote }) => {
       drop="down"
       size="sm"
     >
-      <Dropdown.Item onClick={() => dispatch(updateVisit(id_wrote, !is_visit))}>{is_visit ? 'Нет' : 'Да'}</Dropdown.Item>
+      <Dropdown.Item onClick={() => dispatch(updateVisit(id_wrote, !is_visit))}>
+        {is_visit ? 'Нет' : 'Да'}
+      </Dropdown.Item>
     </DropdownButton>
   )
 }
