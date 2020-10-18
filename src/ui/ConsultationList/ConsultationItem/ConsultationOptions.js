@@ -15,7 +15,7 @@ export const ConsultationOptions = ({
   is_ticket,
   id_consultation,
   count_ticketed,
-  recommended_number_students,
+  recommended_qnt_students,
   takeTicket,
   is_visit,
   deleteItem,
@@ -37,12 +37,12 @@ export const ConsultationOptions = ({
     <div>
       {type === 'widget' && role === 'teacher' && (
         <span className={s.count}>
-          {count_ticketed}/{recommended_number_students}
+          {count_ticketed}/{recommended_qnt_students}
         </span>
       )}
       {(type === 'schedule' || type === 'info') && (
         <span className={s.count}>
-          {count_ticketed}/{recommended_number_students}
+          {count_ticketed}/{recommended_qnt_students}
         </span>
       )}
       {role === 'student' && type === 'schedule' && (

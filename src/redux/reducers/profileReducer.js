@@ -8,7 +8,7 @@ const initialState = {
   middle_name: '',
   tel: '',
   role: '',
-  group_number: '',
+  group: '',
   email: '',
   subjects: [],
 }

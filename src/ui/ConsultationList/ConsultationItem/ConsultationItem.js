@@ -12,9 +12,9 @@ export const ConsultationItem = ({ consultation, type = 'schedule', role, takeTi
     end_time,
     start_time,
     is_ticket,
-    recommended_number_students,
+    recommended_qnt_students,
     note,
-    consultation_location,
+    location,
     method_wrote,
     subjects,
     is_visit,
@@ -34,13 +34,13 @@ export const ConsultationItem = ({ consultation, type = 'schedule', role, takeTi
           type={type}
           subjects={subjects}
           note={note}
-          consultation_location={consultation_location}
+          location={location}
         />
         <ConsultationOptions
           edit={edit}
           deleteItem={deleteItem}
           count_ticketed={count_ticketed}
-          recommended_number_students={recommended_number_students}
+          recommended_qnt_students={recommended_qnt_students}
           id_consultation={id_consultation}
           role={role}
           type={type}

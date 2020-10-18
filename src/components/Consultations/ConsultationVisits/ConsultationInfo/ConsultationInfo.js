@@ -9,7 +9,7 @@ export const ConsultationInfo = ({ consultation }) => {
   const {
     start_time,
     end_time,
-    consultation_location,
+    location,
     note,
     subjects,
     method_wrote
@@ -29,7 +29,7 @@ export const ConsultationInfo = ({ consultation }) => {
         <JournalText className={s.subjectIcon}/>
         {subjectsList}
       </div>
-      <div className={s.param}><GeoAlt /> <span>{consultation_location}</span></div>
+      <div className={s.param}><GeoAlt /> <span>{location}</span></div>
       {note && <div className={s.param}><InfoCircle /> <span>{note}</span></div>}
       <div className={s.param}>
         <JournalCheck />

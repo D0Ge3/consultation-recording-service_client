@@ -38,11 +38,11 @@ export const ConsultationForm = ({ mode }) => {
     initialValues: {
       start_time: '',
       end_time: '',
-      recommended_number_students: '',
+      recommended_qnt_students: '',
       note: '',
       method_wrote: 'свободный', //временно
       time_on_one_student: null,
-      consultation_location: '',
+      location: '',
       teacher_subject: [],
       times: [],
     },
@@ -115,20 +115,20 @@ export const ConsultationForm = ({ mode }) => {
   const {
     start_time,
     end_time,
-    recommended_number_students,
+    recommended_qnt_students,
     method_wrote,
     time_on_one_student,
   } = formik.values
   useEffect(() => {
-    if (start_time && end_time && recommended_number_students 
+    if (start_time && end_time && recommended_qnt_students 
       && method_wrote === 'по времени') {
-      getTimeTickets(start_time, end_time, recommended_number_students)
+      getTimeTickets(start_time, end_time, recommended_qnt_students)
     }
-  }, [start_time, end_time, recommended_number_students, method_wrote])
+  }, [start_time, end_time, recommended_qnt_students, method_wrote])
 
-  const getTimeTickets = (start_time, end_time, recommended_number_students) => {
+  const getTimeTickets = (start_time, end_time, recommended_qnt_students) => {
     setShowTimeInfo(false)
-    const timeTickets = generateTimeTickets(start_time, end_time, recommended_number_students)
+    const timeTickets = generateTimeTickets(start_time, end_time, recommended_qnt_students)
     formik.setFieldValue('times', timeTickets.time)
     formik.setFieldValue('time_on_one_student', timeTickets.timeOneStudent)
       .then(() => setShowTimeInfo(true))
@@ -194,25 +194,25 @@ export const ConsultationForm = ({ mode }) => {
         </Row>
         <Row>
           <Col>
-            <Form.Group controlId="consultation_location">
+            <Form.Group controlId="location">
               <Form.Label>Место проведения</Form.Label>
               <Form.Control
-                name="consultation_location"
+                name="location"
                 type="text"
                 placeholder="Место проведения или ссылка"
                 onChange={formik.handleChange}
-                value={formik.values.consultation_location}
+                value={formik.values.location}
               />
             </Form.Group>
-            <Form.Group controlId="recommended_number_students">
+            <Form.Group controlId="recommended_qnt_students">
               <Form.Label>Рекомендуемое кол-во студентов</Form.Label>
               <Form.Control
-                name="recommended_number_students"
+                name="recommended_qnt_students"
                 type="number"
                 disabled={mode === 'edit' && method_wrote === 'по времени'}
                 placeholder="Кол-во студентов"
                 onChange={formik.handleChange}
-                value={formik.values.recommended_number_students}
+                value={formik.values.recommended_qnt_students}
               />
             </Form.Group>
           </Col>

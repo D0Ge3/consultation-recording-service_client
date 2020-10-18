@@ -1,6 +1,6 @@
 import moment from 'moment'
 
-export const generateTimeTickets = (startTime, endTime, recommended_number_students) => {
+export const generateTimeTickets = (startTime, endTime, recommended_qnt_students) => {
 
   let start = moment(startTime)
 
@@ -16,13 +16,13 @@ export const generateTimeTickets = (startTime, endTime, recommended_number_stude
 
   let duration = end.diff(start, 'minutes')
 
-  let timeOneStudent = Math.floor(duration / recommended_number_students)
+  let timeOneStudent = Math.floor(duration / recommended_qnt_students)
 
   let time = []
 
   time[0] = start
 
-  for (let i = 1; i < recommended_number_students; i++) {
+  for (let i = 1; i < recommended_qnt_students; i++) {
     time[i] = moment(time[i - 1]).add(timeOneStudent, 'm')
   }
   for (let i = 0; i < time.length; i++) {

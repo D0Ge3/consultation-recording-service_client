@@ -20,7 +20,7 @@ export const UserProfile = () => {
       <p className="mb-0">Эл. почта: {profile.email}</p>
       <p className="mb-0">
         {profile.role === 'student'
-          ? `Группа: ${profile.group_number}`
+          ? `Группа: ${profile.group}`
           : 'Дисциплины:'}
       </p>
       {profile.role === 'teacher' && (

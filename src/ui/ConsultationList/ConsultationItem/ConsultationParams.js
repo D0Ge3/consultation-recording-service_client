@@ -4,7 +4,7 @@ import { GeoAlt, InfoCircle, JournalText, PersonFill } from 'react-bootstrap-ico
 
 import s from './ConsultationItem.module.css'
 
-export const ConsultationParams = ({ subjects, note, consultation_location, type, role }) => {
+export const ConsultationParams = ({ subjects, note, location, type, role }) => {
   let [showNote, setShowNote] = useState(false)
   const paramStyle = type === 'widget' ? { width: '300px' } : {}
   const subjectsList = subjects.map((s) => (
@@ -39,7 +39,7 @@ export const ConsultationParams = ({ subjects, note, consultation_location, type
       )}
       <div className={s.location}>
         <GeoAlt className={s.locationIcon} />
-        <span>{consultation_location}</span>
+        <span>{location}</span>
       </div>
     </div>
   )
