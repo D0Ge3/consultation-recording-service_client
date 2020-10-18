@@ -19,6 +19,8 @@ export const ConsultationItem = ({ consultation, type = 'schedule', role, takeTi
     subjects,
     is_visit,
     time,
+    consultation_type,
+    link,
   } = consultation
 
   return (
@@ -34,7 +36,9 @@ export const ConsultationItem = ({ consultation, type = 'schedule', role, takeTi
           type={type}
           subjects={subjects}
           note={note}
+          consultation_type={consultation_type}
           location={location}
+          link={link}
         />
         <ConsultationOptions
           edit={edit}

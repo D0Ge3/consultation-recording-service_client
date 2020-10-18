@@ -40,9 +40,11 @@ export const ConsultationForm = ({ mode }) => {
       end_time: '',
       recommended_qnt_students: '',
       note: '',
-      method_wrote: 'свободный', //временно
+      method_wrote: '',
+      consultation_type: 'Очная',
       time_on_one_student: null,
       location: '',
+      link: '',
       teacher_subject: [],
       times: [],
     },
@@ -99,6 +101,7 @@ export const ConsultationForm = ({ mode }) => {
     if (selectedConsultation) {
       formik.setValues({
         ...selectedConsultation,
+        teacher_subject: selectedConsultation.subjects,
         start_time: moment(selectedConsultation.start_time),
         end_time: moment(selectedConsultation.end_time),
       })
@@ -133,7 +136,7 @@ export const ConsultationForm = ({ mode }) => {
     formik.setFieldValue('time_on_one_student', timeTickets.timeOneStudent)
       .then(() => setShowTimeInfo(true))
   }
-
+  const { type } = formik.values
   return (
     <Container className="mt-4">
       <h5 className="text-center">
@@ -194,14 +197,81 @@ export const ConsultationForm = ({ mode }) => {
         </Row>
         <Row>
           <Col>
-            <Form.Group controlId="location">
-              <Form.Label>Место проведения</Form.Label>
+            <div className="d-flex">
+              <Form.Group
+                controlId="consultation_type"
+                className={s.typeCheckBox}
+              >
+                <Form.Label>Тип консультации</Form.Label>
+                <Form.Check
+                  id="Очная"
+                  name="consultation_type"
+                  type="radio"
+                  label="Очная"
+                  value="Очная"
+                  onChange={(v) => {
+                    formik.handleChange(v)
+                    formik.setFieldValue('link', '')
+                  }}
+                  checked={formik.values.consultation_type === 'Очная'}
+                />
+                <Form.Check
+                  id="Дистанционная"
+                  name="consultation_type"
+                  type="radio"
+                  label="Дистанционная"
+                  value="Дистанционная"
+                  onChange={(v) => {
+                    formik.handleChange(v)
+                    formik.setFieldValue('location', '')
+                  }}
+                  checked={formik.values.consultation_type === 'Дистанционная'}
+                />
+              </Form.Group>
+              <Form.Group
+                controlId="method_wrote"
+                className={s.methodWroteCheckBox}
+              >
+                <Form.Label>Тип записи</Form.Label>
+                <Form.Check
+                  id="свободный"
+                  name="method_wrote"
+                  type="radio"
+                  disabled={mode === 'edit'}
+                  label="Свободный"
+                  value="свободный"
+                  onChange={formik.handleChange}
+                  checked={formik.values.method_wrote === 'свободный'}
+                />
+                <Form.Check
+                  id="по времени"
+                  name="method_wrote"
+                  type="radio"
+                  disabled={mode === 'edit'}
+                  label="По времени"
+                  value="по времени"
+                  onChange={formik.handleChange}
+                  checked={formik.values.method_wrote === 'по времени'}
+                />
+              </Form.Group>
+            </div>
+            {showTimeInfo && (
+              <ConsultationTimeInfo time_on_one_student={time_on_one_student} />
+            )}
+          </Col>
+          <Col>
+            <Form.Group controlId={type === 'Очная' ? 'location' : 'link'}>
+              <Form.Label>
+                {type === 'Очная' ? 'Место проведения' : 'Cсылка'}
+              </Form.Label>
               <Form.Control
-                name="location"
+                name={type === 'Очная' ? 'location' : 'link'}
                 type="text"
-                placeholder="Место проведения или ссылка"
+                placeholder={type === 'Очная' ? 'Место проведения' : 'Cсылка'}
                 onChange={formik.handleChange}
-                value={formik.values.location}
+                value={
+                  type === 'Очная' ? formik.values.location : formik.values.link
+                }
               />
             </Form.Group>
             <Form.Group controlId="recommended_qnt_students">
@@ -216,34 +286,7 @@ export const ConsultationForm = ({ mode }) => {
               />
             </Form.Group>
           </Col>
-          <Col>
-            <Form.Group controlId="method_wrote">
-              <Form.Label>Тип записи</Form.Label>
-              <Form.Check
-                id="свободный"
-                name="method_wrote"
-                type="radio"
-                disabled={mode === 'edit'}
-                label="Свободный"
-                value="свободный"
-                onChange={formik.handleChange}
-                checked={formik.values.method_wrote === 'свободный'}
-              />
-              <Form.Check
-                id="по времени"
-                name="method_wrote"
-                type="radio"
-                disabled={mode === 'edit'}
-                label="По времени"
-                value="по времени"
-                onChange={formik.handleChange}
-                checked={formik.values.method_wrote === 'по времени'}
-              />
-            </Form.Group>
-            {showTimeInfo && (
-              <ConsultationTimeInfo time_on_one_student={time_on_one_student} />
-            )}
-          </Col>
+
         </Row>
         <Form.Group controlId="note">
           <Form.Label>Примечание</Form.Label>

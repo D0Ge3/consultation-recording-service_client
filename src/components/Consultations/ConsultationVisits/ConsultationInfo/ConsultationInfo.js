@@ -1,7 +1,14 @@
 import React from 'react'
 import moment from 'moment'
 
-import { Person, GeoAlt, InfoCircle, JournalCheck, JournalText, CalendarEvent } from 'react-bootstrap-icons'
+import {
+  Person,
+  GeoAlt,
+  InfoCircle,
+  JournalCheck,
+  JournalText,
+  CalendarEvent,
+} from 'react-bootstrap-icons'
 
 import s from './ConsultationInfo.module.css'
 
@@ -12,7 +19,9 @@ export const ConsultationInfo = ({ consultation }) => {
     location,
     note,
     subjects,
-    method_wrote
+    method_wrote,
+    consultation_type,
+    link,
   } = consultation
   let subjectsList = subjects.map((s) => (
     <p className="mb-0" key={s.teacher_subject}> {s.subject}</p>
@@ -29,7 +38,18 @@ export const ConsultationInfo = ({ consultation }) => {
         <JournalText className={s.subjectIcon}/>
         {subjectsList}
       </div>
-      <div className={s.param}><GeoAlt /> <span>{location}</span></div>
+      <div className={s.param}><GeoAlt />{' '}
+        {consultation_type === 'Очная' ? (
+          <span>{location}</span>
+        ) : (
+          <a
+            href={link}
+            title={!link ? 'Ссылка будет доступна после записи' : ''}
+          >
+            Дистанционно
+          </a>
+        )}
+      </div>
       {note && <div className={s.param}><InfoCircle /> <span>{note}</span></div>}
       <div className={s.param}>
         <JournalCheck />

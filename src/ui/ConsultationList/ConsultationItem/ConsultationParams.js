@@ -4,7 +4,7 @@ import { GeoAlt, InfoCircle, JournalText, PersonFill } from 'react-bootstrap-ico
 
 import s from './ConsultationItem.module.css'
 
-export const ConsultationParams = ({ subjects, note, location, type, role }) => {
+export const ConsultationParams = ({ subjects, note, location, type, role, consultation_type, link }) => {
   let [showNote, setShowNote] = useState(false)
   const paramStyle = type === 'widget' ? { width: '300px' } : {}
   const subjectsList = subjects.map((s) => (
@@ -39,7 +39,16 @@ export const ConsultationParams = ({ subjects, note, location, type, role }) => 
       )}
       <div className={s.location}>
         <GeoAlt className={s.locationIcon} />
-        <span>{location}</span>
+        {consultation_type === 'Очная' ? (
+          <span>{location}</span>
+        ) : (
+          <a
+            href={link}
+            title={!link ? 'Ссылка будет доступна после записи' : ''}
+          >
+            Дистанционно
+          </a>
+        )}
       </div>
     </div>
   )
