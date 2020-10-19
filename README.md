@@ -13,7 +13,7 @@
 
 - `/src/api` - queries for rest api (DAL)
 - `/src/components` - components folder
-- `/src/ui` - ui components folder
+- `/src/ui` - reusable components
 - `/src/redux` - redux store and reducers with business logic
 
 ## Backend (API)
