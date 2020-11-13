@@ -1,5 +1,6 @@
-import { profileAPI } from '../../api'
+import { profileAPI, settingsAPI } from '../../api'
 import { setAuth } from './authActions'
+import { authAPI } from '../../api';
 
 export const SET_USER_DATA = 'profile/SET_USER_DATA'
 export const SET_SUBJECTS = 'profile/SET_SUBJECTS'
@@ -26,4 +27,15 @@ export const getSubjects = () => async (dispatch) => {
   } catch (error) {
     console.log('err')
   }
+}
+
+export const updateUserData = (data) => async (dispatch) => {
+  const res = await settingsAPI.updateProfile(data)
+  dispatch(getUserData())
+  return res
+}
+
+export const changePassword = (new_password, current_password) => async () => {
+  const res = await settingsAPI.changePassword(new_password, current_password)
+  return res
 }

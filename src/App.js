@@ -12,6 +12,7 @@ import { Schedule } from './components/Schedule/Schedule'
 import { Consultations } from './components/Consultations/Consultations'
 import { ConsultationForm } from './components/Cabinet/ConsultationsWidget/ConsultationForm/ConsultationForm'
 import { ConsultationVisits } from './components/Consultations/ConsultationVisits/ConsultationVisits'
+import { Settings } from './components/Settings/Settings'
 
 import './App.css'
 
@@ -21,20 +22,23 @@ export const App = () => {
   const isInitialized = useSelector((state) => state.app.isInitialized)
   useEffect(() => {
     dispatch(initializeApp())
-  },[])
+  }, [])
 
   return isInitialized ? (
     <>
       <Header />
       <Switch>
-        <Route path="/cabinet">
-          <Cabinet />
-        </Route>
         <Route path="/login">
           <Login />
         </Route>
         <Route path="/registration">
           <span>registration</span>
+        </Route>
+        <Route path="/cabinet">
+          <Cabinet />
+        </Route>
+        <Route path="/settings">
+          <Settings />
         </Route>
         <Route path="/schedule">
           <Schedule />
@@ -57,5 +61,7 @@ export const App = () => {
         <Redirect from="/" to="/cabinet" />
       </Switch>
     </>
-  ) : (<p>loading...</p>)
+  ) : (
+    <p>loading...</p>
+  )
 }
