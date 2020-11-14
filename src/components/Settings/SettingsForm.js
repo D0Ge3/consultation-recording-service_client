@@ -23,7 +23,7 @@ const SettingsSchema = Yup.object().shape({
     .min(1, 'Слишком короткое!')
     .max(50, 'Слишком длинное!'),
   tel: Yup.string()
-    .matches(/[+][0-9]{11}$/, { message: 'Неправильный номер!' }),
+    .matches(/^[+][0-9]{11}$/, { message: 'Неправильный номер!' }),
 })
 
 export const SettingsForm = () => {
