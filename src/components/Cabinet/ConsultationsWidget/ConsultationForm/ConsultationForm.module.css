@@ -6,3 +6,8 @@
 .methodWroteCheckBox {
   width: 120px;
 }
+
+.submitWrapper {
+  display: flex;
+  align-items: center;
+}

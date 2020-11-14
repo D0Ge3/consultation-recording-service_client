@@ -18,6 +18,7 @@ export const login = (email, password, rememberMe = false) => async (dispatch) =
     }
   }
   dispatch(verify())
+  return res
 }
 export const logout = () => async (dispatch) => {
   localStorage.clear()

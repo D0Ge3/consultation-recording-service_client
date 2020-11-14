@@ -6,9 +6,9 @@ import * as Yup from 'yup'
 import { changePassword } from '../../redux/actions/profileActions'
 
 import { Form, Button } from 'react-bootstrap'
+import { FormAlert } from '../../ui/FormAlert/FormAlert'
 
 import s from './Settings.module.css'
-import { SettingsStatusAlert } from './SettingStatusAlert'
 
 const PasswordSchema = Yup.object().shape({
   current_password: Yup.string().required('Обязательное поле!'),
@@ -29,7 +29,6 @@ export const PasswordForm = () => {
         .then(() => onSuccess())
         .catch((error) => {
           if (error.response) {
-            console.log('USLOVIE')
             const errors = error.response.data
             Object.keys(errors).forEach((key) => {
               formik.setFieldError(key, errors[key][0])
@@ -39,6 +38,9 @@ export const PasswordForm = () => {
         })
     },
   })
+
+  const { errors, touched } = formik
+
   const errorFieldStyle = { border: '1px solid red' }
   const onSuccess = (msg = 'Пароль успешно изменен') => {
     formik.setStatus({ status: 'ok', msg })
@@ -52,32 +54,40 @@ export const PasswordForm = () => {
         <Form.Label>Текущий пароль</Form.Label>
         <Form.Control
           name="current_password"
-          style={formik.errors.current_password && errorFieldStyle}
+          style={
+            errors.current_password &&
+            touched.current_password &&
+            errorFieldStyle
+          }
           type="password"
           onChange={formik.handleChange}
           value={formik.values.current_password}
         />
-        {formik.errors.current_password ? (
-          <span className={s.error}>{formik.errors.current_password}</span>
+        {errors.current_password && touched.current_password ? (
+          <span className={s.error}>{errors.current_password}</span>
         ) : null}
       </Form.Group>
       <Form.Group controlId="new_password" className={s.fieldGroup}>
         <Form.Label>Новый пароль</Form.Label>
         <Form.Control
           name="new_password"
-          style={formik.errors.new_password && errorFieldStyle}
+          style={errors.new_password && touched.new_password && errorFieldStyle}
           type="password"
           onChange={formik.handleChange}
           value={formik.values.new_password}
         />
-        {formik.errors.new_password ? (
-          <span className={s.error}>{formik.errors.new_password}</span>
+        {errors.new_password && touched.new_password ? (
+          <span className={s.error}>{errors.new_password}</span>
         ) : null}
       </Form.Group>
-      <Button className="mt-2" variant="primary" type="submit">
-        Сменить пароль
-      </Button>
-      <SettingsStatusAlert status={formik.status} />
+      <div className={s.submitWrapper}>
+        <Button className="mt-2" variant="primary" type="submit">
+          Сменить пароль
+        </Button>
+        <div className="ml-5">
+          <FormAlert status={formik.status} />
+        </div>
+      </div>
     </Form>
   )
 }

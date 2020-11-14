@@ -14,12 +14,12 @@ import {
 import { Form, Button, Container, Row, Col } from 'react-bootstrap'
 import { Multiselect } from 'multiselect-react-dropdown'
 import Datetime from 'react-datetime'
-import { ConsultationStatusAlert } from './ConsultationStatusAlert'
 import { ConsultationTimeInfo } from './ConsultationTimeInfo'
 
 import s from './ConsultationForm.module.css'
 import 'react-datetime/css/react-datetime.css'
 import { generateTimeTickets } from './utils/generateTimeTickets'
+import { FormAlert } from '../../../../ui/FormAlert/FormAlert';
 
 export const ConsultationForm = ({ mode }) => {
   const [showTimeInfo, setShowTimeInfo] = useState(false)
@@ -136,7 +136,7 @@ export const ConsultationForm = ({ mode }) => {
     formik.setFieldValue('time_on_one_student', timeTickets.timeOneStudent)
       .then(() => setShowTimeInfo(true))
   }
-  const { type } = formik.values
+  const type = formik.values.consultation_type
   return (
     <Container className="mt-4">
       <h5 className="text-center">
@@ -298,15 +298,19 @@ export const ConsultationForm = ({ mode }) => {
             rows="5"
           />
         </Form.Group>
-        <Button
-          disabled={formik.isSubmitting && !status}
-          variant="primary"
-          type="submit"
-        >
-          {mode === 'create' && 'Создать'}
-          {mode === 'edit' && 'Сохранить'}
-        </Button>
-        <ConsultationStatusAlert status={status} />
+        <div className={s.submitWrapper}>
+          <Button
+            disabled={formik.isSubmitting && !status}
+            variant="primary"
+            type="submit"
+          >
+            {mode === 'create' && 'Создать'}
+            {mode === 'edit' && 'Сохранить'}
+          </Button>
+          <div className="ml-5">
+            <FormAlert status={status} />
+          </div>
+        </div>
       </Form>
     </Container>
   )

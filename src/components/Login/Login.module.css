@@ -3,3 +3,21 @@
   width: 330px;
   height: 190px;
 }
+
+.wrapper {
+  display: flex;
+  justify-content: space-around;
+}
+
+.fieldGroup {
+  position: relative;
+}
+
+.error {
+  position: absolute;
+  top: 37px;
+  left: 10px;
+  font-size: 12px;
+  color: red;
+}
+

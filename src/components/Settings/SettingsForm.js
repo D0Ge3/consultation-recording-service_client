@@ -8,7 +8,7 @@ import { updateUserData } from '../../redux/actions/profileActions'
 import { Form, Button } from 'react-bootstrap'
 
 import s from './Settings.module.css'
-import { SettingsStatusAlert } from './SettingStatusAlert'
+import { FormAlert } from '../../ui/FormAlert/FormAlert'
 
 const SettingsSchema = Yup.object().shape({
   first_name: Yup.string()
@@ -23,7 +23,7 @@ const SettingsSchema = Yup.object().shape({
     .min(1, 'Слишком короткое!')
     .max(50, 'Слишком длинное!'),
   tel: Yup.string()
-    .matches(/^[+][0-9]{11}$/, { message: 'Неправильный номер!' }),
+    .matches(/^[+][0-9]{11}$/, { message: 'Неправильный формат номера!' }),
 })
 
 export const SettingsForm = () => {
@@ -38,7 +38,6 @@ export const SettingsForm = () => {
     },
     validationSchema: SettingsSchema,
     onSubmit: (values) => {
-      console.log(values)
       const data = { ...profile, ...values }
       dispatch(updateUserData(data))
         .then(() => onSuccess())
@@ -53,6 +52,7 @@ export const SettingsForm = () => {
         })
     },
   })
+  const { errors, touched } = formik
 
   const errorFieldStyle = { border: '1px solid red' }
   const onSuccess = (msg = 'Настройки успешно сохранены') => {
@@ -66,65 +66,67 @@ export const SettingsForm = () => {
       <Form.Group controlId="last_name" className={s.fieldGroup}>
         <Form.Label>Фамилия<sup>*</sup></Form.Label>
         <Form.Control
-          required
-          style={formik.errors.last_name && errorFieldStyle}
+          style={errors.last_name && touched.last_name && errorFieldStyle}
           name="last_name"
           type="text"
           placeholder="Введите фамилию"
           onChange={formik.handleChange}
           value={formik.values.last_name}
         />
-        {formik.errors.last_name ? (
-          <span className={s.error}>{formik.errors.last_name}</span>
+        {errors.last_name && touched.last_name ? (
+          <span className={s.error}>{errors.last_name}</span>
         ) : null}
       </Form.Group>
       <Form.Group controlId="first_name" className={s.fieldGroup}>
         <Form.Label>Имя<sup>*</sup></Form.Label>
         <Form.Control
-          required
-          style={formik.errors.first_name && errorFieldStyle}
+          style={errors.first_name && touched.first_name && errorFieldStyle}
           name="first_name"
           type="text"
           placeholder="Введите имя"
           onChange={formik.handleChange}
           value={formik.values.first_name}
         />
-        {formik.errors.first_name ? (
-          <span className={s.error}>{formik.errors.first_name}</span>
+        {errors.first_name && touched.first_name ? (
+          <span className={s.error}>{errors.first_name}</span>
         ) : null}
       </Form.Group>
       <Form.Group controlId="middle_name" className={s.fieldGroup}>
         <Form.Label>Отчество</Form.Label>
         <Form.Control
           name="middle_name"
-          style={formik.errors.middle_name && errorFieldStyle}
+          style={errors.middle_name && touched.middle_name && errorFieldStyle}
           type="text"
           placeholder="Введите отчество"
           onChange={formik.handleChange}
           value={formik.values.middle_name}
         />
-        {formik.errors.middle_name ? (
-          <span className={s.error}>{formik.errors.middle_name}</span>
+        {errors.middle_name && touched.middle_name ? (
+          <span className={s.error}>{errors.middle_name}</span>
         ) : null}
       </Form.Group>
       <Form.Group controlId="tel" className={s.fieldGroup}>
         <Form.Label>Телефон</Form.Label>
         <Form.Control
           name="tel"
-          style={formik.errors.tel && errorFieldStyle}
+          style={errors.tel && touched.tel && errorFieldStyle}
           type="tel"
           placeholder="Введите телефон"
           onChange={formik.handleChange}
           value={formik.values.tel}
         />
-        {formik.errors.tel ? (
-          <span className={s.error}>{formik.errors.tel}</span>
+        {errors.tel && touched.tel ? (
+          <span className={s.error}>{errors.tel}</span>
         ) : null}
       </Form.Group>
-      <Button className="mt-2" variant="primary" type="submit">
-        Сохранить
-      </Button>
-      <SettingsStatusAlert status={formik.status} />
+      <div className={s.submitWrapper}>
+        <Button className="mt-2" variant="primary" type="submit">
+          Сохранить
+        </Button>
+        <div className={'ml-5'}>
+          <FormAlert status={formik.status} />
+        </div>
+      </div>
     </Form>
   )
 }

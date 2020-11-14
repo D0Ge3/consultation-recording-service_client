@@ -10,7 +10,7 @@ export const Login = () => {
   return isAuth ? (
     <Redirect to="/" />
   ) : (
-    <Container className="text-center">
+    <Container className="mt-4 text-center">
       <p className="h4 font-weight-normal">Авторизация</p>
       <LoginForm />
     </Container>
