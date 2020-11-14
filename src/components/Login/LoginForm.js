@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import * as Yup from 'yup'
 import { useFormik } from 'formik'
 import { useDispatch } from 'react-redux'
@@ -49,7 +49,7 @@ export const LoginForm = () => {
 
   return (
     <Form className={s.loginForm} onSubmit={formik.handleSubmit}>
-      <Form.Group controlId="email" className={s.fieldGroup}>
+      <Form.Group controlId="email">
         <Form.Control
           style={errors.email && touched.email && errorFieldStyle}
           name="email"
@@ -62,7 +62,7 @@ export const LoginForm = () => {
           <span className={s.error}>{errors.email}</span>
         ) : null}
       </Form.Group>
-      <Form.Group controlId="password" className={s.fieldGroup}>
+      <Form.Group controlId="password">
         <Form.Control
           style={errors.password && touched.password && errorFieldStyle}
           name="password"

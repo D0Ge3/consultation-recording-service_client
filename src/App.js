@@ -13,6 +13,7 @@ import { Consultations } from './components/Consultations/Consultations'
 import { ConsultationForm } from './components/Cabinet/ConsultationsWidget/ConsultationForm/ConsultationForm'
 import { ConsultationVisits } from './components/Consultations/ConsultationVisits/ConsultationVisits'
 import { Settings } from './components/Settings/Settings'
+import { Registration } from './components/Registration/Registration'
 
 import './App.css'
 
@@ -32,7 +33,7 @@ export const App = () => {
           <Login />
         </Route>
         <Route path="/registration">
-          <span>registration</span>
+          <Registration />
         </Route>
         <Route path="/cabinet">
           <Cabinet />

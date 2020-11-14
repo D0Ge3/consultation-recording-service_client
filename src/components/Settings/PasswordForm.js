@@ -50,7 +50,7 @@ export const PasswordForm = () => {
   }
   return (
     <Form className={s.settingsForm} onSubmit={formik.handleSubmit}>
-      <Form.Group controlId="current_password" className={s.fieldGroup}>
+      <Form.Group controlId="current_password">
         <Form.Label>Текущий пароль</Form.Label>
         <Form.Control
           name="current_password"
@@ -67,7 +67,7 @@ export const PasswordForm = () => {
           <span className={s.error}>{errors.current_password}</span>
         ) : null}
       </Form.Group>
-      <Form.Group controlId="new_password" className={s.fieldGroup}>
+      <Form.Group controlId="new_password">
         <Form.Label>Новый пароль</Form.Label>
         <Form.Control
           name="new_password"
@@ -81,7 +81,7 @@ export const PasswordForm = () => {
         ) : null}
       </Form.Group>
       <div className={s.submitWrapper}>
-        <Button className="mt-2" variant="primary" type="submit">
+        <Button variant="primary" type="submit">
           Сменить пароль
         </Button>
         <div className="ml-5">
