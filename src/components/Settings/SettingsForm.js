@@ -120,7 +120,7 @@ export const SettingsForm = () => {
         ) : null}
       </Form.Group>
       <div className={s.submitWrapper}>
-        <Button className="mt-2" variant="primary" type="submit">
+        <Button variant="primary" type="submit">
           Сохранить
         </Button>
         <div className={'ml-5'}>
