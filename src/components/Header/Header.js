@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { logout } from '../../redux/actions/authActions'
@@ -9,6 +9,7 @@ import { Navbar, Nav, Button } from 'react-bootstrap'
 export const Header = () => {
   const dispatch = useDispatch()
   const isAuth = useSelector((state) => state.auth.isAuth)
+  const history = useHistory()
   return (
     <Navbar bg="light" expand="lg">
       <Navbar.Brand as={Link} to="/">ИТМО.Консультации</Navbar.Brand>
@@ -26,7 +27,12 @@ export const Header = () => {
           </Button>
         )}
         {!isAuth && (
-          <Button onClick={() => {}} variant="primary">
+          <Button
+            onClick={() => {
+              history.push('/registration')
+            }}
+            variant="primary"
+          >
             Регистрация
           </Button>
         )}
