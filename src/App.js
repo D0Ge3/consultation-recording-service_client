@@ -16,6 +16,7 @@ import { Settings } from './components/Settings/Settings'
 import { Registration } from './components/Registration/Registration'
 
 import './App.css'
+import { Loader } from './ui/Loader/Loader'
 
 export const App = () => {
   require('moment/locale/ru.js')

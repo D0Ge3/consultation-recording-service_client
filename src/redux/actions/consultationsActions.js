@@ -1,5 +1,6 @@
 import { consultationsAPI } from '../../api'
 import moment from 'moment'
+import { setIsLoading } from './appActions'
 
 export const SET_CONSULTATIONS = 'consultations/SET_CONSULTATIONS'
 export const SET_COUNT = 'consultations/SET_COUNT'
@@ -15,16 +16,20 @@ export const setFreeTimes = (times) => ({ type: SET_FREE_TIMES, times })
 
 export const getConsultations = (filter, page, pageSize) => async (dispatch) => {
   try {
+    dispatch(setIsLoading(true))
     const res = await consultationsAPI.getConsultations(filter, page, pageSize)
     dispatch(setCount(res.data.count))
     dispatch(setPage(page))
     dispatch(setConsultations(res.data.results))
+    dispatch(setIsLoading(false))
   } catch (error) {
     console.log('err')
+    dispatch(setIsLoading(false))
   }
 }
 export const getMyConsultations = (filter, page, pageSize = 5) => async (dispatch, getState) => {
   try {
+    dispatch(setIsLoading(true))
     const role = getState().profile.role
     let res
     if (role === 'teacher') {
@@ -35,8 +40,10 @@ export const getMyConsultations = (filter, page, pageSize = 5) => async (dispatc
     dispatch(setCount(res.data.count))
     dispatch(setPage(page))
     dispatch(setConsultations(res.data.results))
+    dispatch(setIsLoading(false))
   } catch (error) {
     console.log('err')
+    dispatch(setIsLoading(false))
   }
 }
 export const takeTicket = (id_consultation, data = {}) => async (dispatch, getState) => {

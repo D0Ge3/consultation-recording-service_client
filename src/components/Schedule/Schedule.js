@@ -10,13 +10,17 @@ import {
 import { Container } from 'react-bootstrap'
 import { ConsultationsList } from '../../ui/ConsultationList/ConsultationsList'
 import { Paginator } from '../../ui/Paginator/Paginator'
+import { Loader } from '../../ui/Loader/Loader'
 
 export const Schedule = () => {
   const dispatch = useDispatch()
-  const consultations = useSelector((state) => state.consultations.consultations)
+  const consultations = useSelector(
+    (state) => state.consultations.consultations
+  )
   const role = useSelector((state) => state.profile.role)
   const count = useSelector((state) => state.consultations.count)
   const page = useSelector((state) => state.consultations.page)
+  const isLoading = useSelector((state) => state.app.isLoading)
   const pageSize = 10
   useEffect(() => {
     changePage(1)
@@ -25,6 +29,7 @@ export const Schedule = () => {
   const changePage = (page) => {
     dispatch(getConsultations('future', page, pageSize))
   }
+
   return (
     <Container className="mt-4">
       <h5 className="text-center">Расписание консультаций</h5>
@@ -38,11 +43,20 @@ export const Schedule = () => {
           portionSize={10}
         />
       </div>
-      <ConsultationsList
-        consultations={consultations}
-        role={role}
-        takeTicket={(id_consultation) => dispatch(takeTicket(id_consultation))}
-      />
+      {isLoading && (
+        <Container className="mt-4" style={{ width: '180px' }}>
+          <Loader />
+        </Container>
+      )}
+      {!isLoading && (
+        <ConsultationsList
+          consultations={consultations}
+          role={role}
+          takeTicket={(id_consultation) =>
+            dispatch(takeTicket(id_consultation))
+          }
+        />
+      )}
     </Container>
   )
 }

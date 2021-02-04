@@ -9,14 +9,18 @@ import {
 
 import { Container, ButtonGroup, Button } from 'react-bootstrap'
 import { Paginator } from '../../ui/Paginator/Paginator'
+import { Loader } from '../../ui/Loader/Loader'
 
 export const Consultations = () => {
   const dispatch = useDispatch()
   let [mode, setMode] = useState('future')
   const role = useSelector((state) => state.profile.role)
-  const consultations = useSelector((state) => state.consultations.consultations)
+  const consultations = useSelector(
+    (state) => state.consultations.consultations
+  )
   const count = useSelector((state) => state.consultations.count)
   const page = useSelector((state) => state.consultations.page)
+  const isLoading = useSelector((state) => state.app.isLoading)
   const pageSize = 10
   useEffect(() => {
     changePage(1)
@@ -59,11 +63,18 @@ export const Consultations = () => {
           portionSize={10}
         />
       </div>
-      <ConsultationsList
-        type="info"
-        role={role}
-        consultations={consultations}
-      />
+      {isLoading && (
+        <Container className="mt-4" style={{ width: '180px' }}>
+          <Loader />
+        </Container>
+      )}
+      {!isLoading && (
+        <ConsultationsList
+          type="info"
+          role={role}
+          consultations={consultations}
+        />
+      )}
     </Container>
   )
 }

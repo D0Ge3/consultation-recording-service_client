@@ -3,6 +3,7 @@ import * as actionTypes from '../actions/appActions'
 const initialState = {
   isInitialized: false,
   error: null,
+  isLoading: false,
 }
 
 export const appReducer = (state = initialState, action) => {
@@ -11,6 +12,8 @@ export const appReducer = (state = initialState, action) => {
       return { ...state, isInitialized: true }
     case actionTypes.SET_ERROR:
       return { ...state, error: action.error }
+    case actionTypes.SET_IS_LOADING:
+      return { ...state, isLoading: action.isLoading }
     default:
       return state
   }
