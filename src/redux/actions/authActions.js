@@ -2,7 +2,7 @@ import { authAPI } from '../../api'
 import { instance } from '../../api/axiosInstance'
 import { getUserData } from './profileActions'
 
-export const SET_AUTH = 'app/SET_AUTH'
+export const SET_AUTH = 'auth/SET_AUTH'
 
 export const setAuth = (isAuth) => ({ type: SET_AUTH, isAuth })
 

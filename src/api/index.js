@@ -1,4 +1,5 @@
 export { authAPI } from './auth'
+export { registrationAPI } from './registration'
 export { consultationsAPI } from './consultations'
 export { profileAPI } from './profile'
 export { visitsAPI } from './visits'

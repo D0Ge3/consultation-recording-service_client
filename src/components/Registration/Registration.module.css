@@ -1,0 +1,23 @@
+.regForm {
+  width: 300px;
+  margin: 0 auto;
+}
+
+.error {
+  display: block;
+  font-size: 14px;
+  text-align: left;
+  color: red;
+  margin-top: 0px;
+  margin-bottom: -10px;
+  padding: 0;
+}
+
+.roleTitle {
+  font-weight: bold;
+}
+
+.successAlert {
+  width: 310px;
+  margin: 0 auto;
+}

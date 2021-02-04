@@ -6,12 +6,14 @@ import { appReducer } from './reducers/appReducer'
 import { profileReducer } from './reducers/profileReducer'
 import { consultationsReducer } from './reducers/consultationsReducer'
 import { visitsReducer } from './reducers/visitsReducer'
+import { registrationReducer } from './reducers/registrationReducer'
 
 let reducers = combineReducers({
   app: appReducer,
   auth: authReducer,
   profile: profileReducer,
   consultations: consultationsReducer,
+  registration: registrationReducer,
   visits: visitsReducer,
 })
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose

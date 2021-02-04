@@ -2,6 +2,7 @@ import * as actionTypes from '../actions/authActions'
 
 const initialState = {
   isAuth: false,
+  registrationStatus: null,
 }
 
 export const authReducer = (state = initialState, action) => {
