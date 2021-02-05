@@ -14,9 +14,10 @@ import { ConsultationForm } from './components/Cabinet/ConsultationsWidget/Consu
 import { ConsultationVisits } from './components/Consultations/ConsultationVisits/ConsultationVisits'
 import { Settings } from './components/Settings/Settings'
 import { Registration } from './components/Registration/Registration'
+import { Loader } from './ui/Loader/Loader'
+import { Container } from 'react-bootstrap'
 
 import './App.css'
-import { Loader } from './ui/Loader/Loader'
 
 export const App = () => {
   require('moment/locale/ru.js')
@@ -26,44 +27,49 @@ export const App = () => {
     dispatch(initializeApp())
   }, [])
 
-  return isInitialized ? (
+  return (
     <>
       <Header />
-      <Switch>
-        <Route path="/login">
-          <Login />
-        </Route>
-        <Route path="/registration">
-          <Registration />
-        </Route>
-        <Route path="/cabinet">
-          <Cabinet />
-        </Route>
-        <Route path="/settings">
-          <Settings />
-        </Route>
-        <Route path="/schedule">
-          <Schedule />
-        </Route>
-        <Route path="/consultations">
-          <Consultations />
-        </Route>
-        <Route path="/consultation/create">
-          <ConsultationForm mode="create" />
-        </Route>
-        <Route path="/consultation/:id_consultation/edit">
-          <ConsultationForm mode="edit" />
-        </Route>
-        <Route path="/consultation/:id_consultation/visits">
-          <ConsultationVisits />
-        </Route>
-        <Route path="/privacy">
-          <Privacy />
-        </Route>
-        <Redirect from="/" to="/cabinet" />
-      </Switch>
+      {isInitialized && (
+        <Switch>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="/registration">
+            <Registration />
+          </Route>
+          <Route path="/cabinet">
+            <Cabinet />
+          </Route>
+          <Route path="/settings">
+            <Settings />
+          </Route>
+          <Route path="/schedule">
+            <Schedule />
+          </Route>
+          <Route path="/consultations">
+            <Consultations />
+          </Route>
+          <Route path="/consultation/create">
+            <ConsultationForm mode="create" />
+          </Route>
+          <Route path="/consultation/:id_consultation/edit">
+            <ConsultationForm mode="edit" />
+          </Route>
+          <Route path="/consultation/:id_consultation/visits">
+            <ConsultationVisits />
+          </Route>
+          <Route path="/privacy">
+            <Privacy />
+          </Route>
+          <Redirect from="/" to="/cabinet" />
+        </Switch>
+      )}
+      {!isInitialized && (
+        <Container className="mt-4" style={{ width: '180px' }}>
+          <Loader />
+        </Container>
+      )}
     </>
-  ) : (
-    <p>loading...</p>
   )
 }

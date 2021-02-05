@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import * as Yup from 'yup'
 import { useFormik } from 'formik'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 import { login } from '../../redux/actions/authActions'
 import { FormAlert } from '../../ui/FormAlert/FormAlert'
 
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, Spinner } from 'react-bootstrap'
 
 import s from './Login.module.css'
 
@@ -90,8 +90,18 @@ export const LoginForm = () => {
       <div className={'mb-2'}>
         <FormAlert status={formik.status} />
       </div>
-      <Button variant="primary" type="submit">
-        Войти
+      <Button disabled={formik.isSubmitting} variant="primary" type="submit">
+        {formik.isSubmitting && (
+          <Spinner
+            as="span"
+            animation="border"
+            size="sm"
+            role="status"
+            aria-hidden="true"
+            className="mr-2"
+          />
+        )}
+        <span>Войти</span>
       </Button>
     </Form>
   )

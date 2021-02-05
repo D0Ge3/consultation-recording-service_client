@@ -1,5 +1,6 @@
 import { authAPI } from '../../api'
 import { instance } from '../../api/axiosInstance'
+import { setIsLoading } from './appActions'
 import { getUserData } from './profileActions'
 
 export const SET_AUTH = 'auth/SET_AUTH'
@@ -7,7 +8,6 @@ export const SET_AUTH = 'auth/SET_AUTH'
 export const setAuth = (isAuth) => ({ type: SET_AUTH, isAuth })
 
 export const login = (email, password, rememberMe = false) => async (dispatch) => {
-  
   const res = await authAPI.getToken(email, password)
   if (res.status === 200) {
     if (rememberMe) {
