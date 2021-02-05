@@ -24,7 +24,10 @@ export const ConsultationInfo = ({ consultation }) => {
     link,
   } = consultation
   let subjectsList = subjects.map((s) => (
-    <p className="mb-0" key={s.teacher_subject}> {s.subject}</p>
+    <p className="mb-0" key={s.teacher_subject}>
+      {' '}
+      {s.subject}
+    </p>
   ))
   const date = moment(start_time).format('DD MMMM')
   const time_start = moment(start_time).format('HH:mm')
@@ -33,24 +36,33 @@ export const ConsultationInfo = ({ consultation }) => {
   return (
     <>
       <h5>Информация о консультации</h5>
-      <div className={s.param}><Person /> <span>{subjects[0].teacher_fio}</span></div>
+      <div className={s.param}>
+        <Person /> <span>{subjects[0].teacher_fio}</span>
+      </div>
       <div className={s.subjectListWrapper}>
-        <JournalText className={s.subjectIcon}/>
+        <JournalText className={s.subjectIcon} />
         {subjectsList}
       </div>
-      <div className={s.param}><GeoAlt />{' '}
-        {consultation_type === 'Очная' ? (
-          <span>{location}</span>
-        ) : (
-          <a
-            href={link}
-            title={!link ? 'Ссылка будет доступна после записи' : ''}
-          >
-            Дистанционно
-          </a>
-        )}
-      </div>
-      {note && <div className={s.param}><InfoCircle /> <span>{note}</span></div>}
+      {(link || location) && (
+        <div className={s.param}>
+          <GeoAlt />{' '}
+          {consultation_type === 'Очная' ? (
+            <span>{location}</span>
+          ) : (
+            <a
+              href={link}
+              title={!link ? 'Ссылка будет доступна после записи' : ''}
+            >
+              Дистанционно
+            </a>
+          )}
+        </div>
+      )}
+      {note && (
+        <div className={s.param}>
+          <InfoCircle /> <span>{note}</span>
+        </div>
+      )}
       <div className={s.param}>
         <JournalCheck />
         <span>
@@ -61,7 +73,9 @@ export const ConsultationInfo = ({ consultation }) => {
       </div>
       <div className={s.param}>
         <CalendarEvent />{' '}
-        <span>{date} {time_start} - {time_end}</span>
+        <span>
+          {date} {time_start} - {time_end}
+        </span>
       </div>
     </>
   )
