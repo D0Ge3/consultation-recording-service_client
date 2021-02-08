@@ -7,6 +7,7 @@ import {
   deleteTicket,
   deleteConsultation,
   resetConsultations,
+  setPageSize,
 } from '../../../redux/actions/consultationsActions'
 
 import { Button, Container } from 'react-bootstrap'
@@ -20,11 +21,12 @@ export const ConsultationsWidget = () => {
   let history = useHistory()
   const dispatch = useDispatch()
   useEffect(() => {
+    dispatch(setPageSize(5))
     changePage(1)
     return () => dispatch(resetConsultations())
   }, [])
   const changePage = (page) => {
-    dispatch(getMyConsultations('future', page, pageSize))
+    dispatch(getMyConsultations('future', page))
   }
   const consultations = useSelector(
     (state) => state.consultations.consultations
@@ -33,7 +35,7 @@ export const ConsultationsWidget = () => {
   const count = useSelector((state) => state.consultations.count)
   const page = useSelector((state) => state.consultations.page)
   const isLoading = useSelector((state) => state.app.isLoading)
-  const pageSize = 5
+  const pageSize = useSelector((state) => state.consultations.pageSize)
   const deleteItem = (id_consultation) => {
     if (role === 'student') {
       dispatch(deleteTicket(id_consultation))
@@ -74,17 +76,19 @@ export const ConsultationsWidget = () => {
           />
         </Button>
       </div>
-      <ConsultationsList
-        deleteItem={deleteItem}
-        edit={(id) => history.push(`consultation/${id}/edit`)}
-        consultations={consultations}
-        type="widget"
-        role={role}
-      />
-      {isLoading && (
+
+      {isLoading ? (
         <Container className="mt-4" style={{ width: '180px' }}>
           <Loader />
         </Container>
+      ) : (
+        <ConsultationsList
+          deleteItem={deleteItem}
+          edit={(id) => history.push(`consultation/${id}/edit`)}
+          consultations={consultations}
+          type="widget"
+          role={role}
+        />
       )}
       <div className="mt-3">
         <Paginator

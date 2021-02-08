@@ -5,6 +5,7 @@ import {
   getConsultations,
   takeTicket,
   resetConsultations,
+  setPageSize,
 } from '../../redux/actions/consultationsActions'
 
 import { Container } from 'react-bootstrap'
@@ -21,13 +22,14 @@ export const Schedule = () => {
   const count = useSelector((state) => state.consultations.count)
   const page = useSelector((state) => state.consultations.page)
   const isLoading = useSelector((state) => state.app.isLoading)
-  const pageSize = 10
+  const pageSize = useSelector((state) => state.consultations.pageSize)
   useEffect(() => {
+    dispatch(setPageSize(10))
     changePage(1)
     return () => dispatch(resetConsultations())
   }, [])
   const changePage = (page) => {
-    dispatch(getConsultations('future', page, pageSize))
+    dispatch(getConsultations('future', page))
   }
 
   return (
@@ -43,12 +45,11 @@ export const Schedule = () => {
           portionSize={10}
         />
       </div>
-      {isLoading && (
+      {isLoading ? (
         <Container className="mt-4" style={{ width: '180px' }}>
           <Loader />
         </Container>
-      )}
-      {!isLoading && (
+      ) : (
         <ConsultationsList
           consultations={consultations}
           role={role}

@@ -5,6 +5,7 @@ import { ConsultationsList } from '../../ui/ConsultationList/ConsultationsList'
 import {
   getMyConsultations,
   resetConsultations,
+  setPageSize,
 } from '../../redux/actions/consultationsActions'
 
 import { Container, ButtonGroup, Button } from 'react-bootstrap'
@@ -21,17 +22,23 @@ export const Consultations = () => {
   const count = useSelector((state) => state.consultations.count)
   const page = useSelector((state) => state.consultations.page)
   const isLoading = useSelector((state) => state.app.isLoading)
-  const pageSize = 10
+  const pageSize = useSelector((state) => state.consultations.pageSize)
   useEffect(() => {
+    dispatch(setPageSize(10))
     changePage(1)
     return () => dispatch(resetConsultations())
   }, [])
-  useEffect(() => changePage(1), [mode])
+  useEffect(() => {
+    changePage(1)
+  }, [mode])
+
   const changePage = (page) => {
-    dispatch(getMyConsultations(mode, page, pageSize))
+    dispatch(getMyConsultations(mode, page))
   }
-  const changeMode = (mode) => {
-    setMode(mode)
+  const changeMode = (newMode) => {
+    if (newMode !== mode) {
+      setMode(newMode)
+    }
   }
 
   return (
@@ -63,12 +70,11 @@ export const Consultations = () => {
           portionSize={10}
         />
       </div>
-      {isLoading && (
+      {isLoading ? (
         <Container className="mt-4" style={{ width: '180px' }}>
           <Loader />
         </Container>
-      )}
-      {!isLoading && (
+      ) : (
         <ConsultationsList
           type="info"
           role={role}

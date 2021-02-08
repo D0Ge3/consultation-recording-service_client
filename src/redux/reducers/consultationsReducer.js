@@ -5,6 +5,7 @@ const initialState = {
   selectedConsultation: null,
   count: null,
   page: null,
+  pageSize: 10,
   freeTimes: [],
 }
 
@@ -20,6 +21,8 @@ export const consultationsReducer = (state = initialState, action) => {
       return { ...state, selectedConsultation: action.consultation }
     case actionTypes.SET_FREE_TIMES:
       return { ...state, freeTimes: action.times }
+    case actionTypes.SET_PAGE_SIZE:
+      return { ...state, pageSize: action.pageSize }
     default:
       return state
   }

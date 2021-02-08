@@ -6,6 +6,7 @@ export const SET_CONSULTATIONS = 'consultations/SET_CONSULTATIONS'
 export const SET_COUNT = 'consultations/SET_COUNT'
 export const SET_SELECTED_CONSULTATION = 'consultations/SET_SELECTED_CONSULTATION'
 export const SET_PAGE = 'consultations/SET_PAGE'
+export const SET_PAGE_SIZE = 'consultations/SET_PAGE_SIZE'
 export const SET_FREE_TIMES = 'consultations/SET_FREE_TIMES'
 
 export const setConsultations = (consultations) => ({ type: SET_CONSULTATIONS, consultations })
@@ -13,10 +14,12 @@ export const setSelectedConsultation = (consultation) => ({ type: SET_SELECTED_C
 export const setCount = (count) => ({ type: SET_COUNT, count })
 export const setPage = (page) => ({ type: SET_PAGE, page })
 export const setFreeTimes = (times) => ({ type: SET_FREE_TIMES, times })
+export const setPageSize = (pageSize) => ({ type: SET_PAGE_SIZE, pageSize })
 
-export const getConsultations = (filter, page, pageSize) => async (dispatch) => {
+export const getConsultations = (filter, page, showLoader = true) => async (dispatch, getState) => {
   try {
-    dispatch(setIsLoading(true))
+    showLoader && dispatch(setIsLoading(true))
+    const pageSize = getState().consultations.pageSize
     const res = await consultationsAPI.getConsultations(filter, page, pageSize)
     dispatch(setCount(res.data.count))
     dispatch(setPage(page))
@@ -24,13 +27,14 @@ export const getConsultations = (filter, page, pageSize) => async (dispatch) => 
     dispatch(setIsLoading(false))
   } catch (error) {
     console.log('err')
-    dispatch(setIsLoading(false))
+    showLoader && dispatch(setIsLoading(false))
   }
 }
-export const getMyConsultations = (filter, page, pageSize = 5) => async (dispatch, getState) => {
+export const getMyConsultations = (filter, page, showLoader = true) => async (dispatch, getState) => {
   try {
-    dispatch(setIsLoading(true))
+    showLoader && dispatch(setIsLoading(true))
     const role = getState().profile.role
+    const pageSize = getState().consultations.pageSize
     let res
     if (role === 'teacher') {
       res = await consultationsAPI.getMyConsultations(filter, page, pageSize)
@@ -40,17 +44,17 @@ export const getMyConsultations = (filter, page, pageSize = 5) => async (dispatc
     dispatch(setCount(res.data.count))
     dispatch(setPage(page))
     dispatch(setConsultations(res.data.results))
-    dispatch(setIsLoading(false))
+    showLoader && dispatch(setIsLoading(false))
   } catch (error) {
-    console.log('err')
-    dispatch(setIsLoading(false))
+    console.log(error)
+    showLoader && dispatch(setIsLoading(false))
   }
 }
 export const takeTicket = (id_consultation, data = {}) => async (dispatch, getState) => {
   try {
     const page = getState().consultations.page
     const res = await consultationsAPI.takeTicket(id_consultation, data)
-    dispatch(getConsultations('future', page))
+    dispatch(getConsultations('future', page, false))
   } catch (error) {
     console.log('err')
   }
@@ -58,9 +62,11 @@ export const takeTicket = (id_consultation, data = {}) => async (dispatch, getSt
 
 export const deleteTicket = (id_consultation) => async (dispatch, getState) => {
   try {
-    const page = getState().consultations.page
+    const currentPage = getState().consultations.page
+    const consultationsLength = getState().consultations.consultations.length
+    const page = consultationsLength === 1 ? currentPage - 1 : currentPage
     const res = await consultationsAPI.deleteTicket(id_consultation)
-    dispatch(getMyConsultations('future', page)) // page в reducer
+    dispatch(getMyConsultations('future', page, false))
   } catch (error) {
     console.log('err')
   }
@@ -68,9 +74,11 @@ export const deleteTicket = (id_consultation) => async (dispatch, getState) => {
 
 export const deleteConsultation = (id_consultation) => async (dispatch, getState) => {
   try {
-    const page = getState().consultations.page
+    const currentPage = getState().consultations.page
+    const consultationsLength = getState().consultations.consultations.length
+    const page = consultationsLength === 1 ? currentPage - 1 : currentPage
     const res = await consultationsAPI.deleteConsultation(id_consultation)
-    dispatch(getMyConsultations('future', page))
+    dispatch(getMyConsultations('future', page, false))
   } catch (error) {
     console.log('err')
   }

@@ -53,20 +53,23 @@ export const ConsultationParams = ({
           </div>
         )
       )}
-      {(location || link) && (
+      {consultation_type === 'Дистанционная' ? (
         <div className={s.location}>
           <GeoAlt className={s.locationIcon} />
-          {consultation_type === 'Очная' ? (
-            <span>{location}</span>
-          ) : (
-            <a
-              href={link}
-              title={!link ? 'Ссылка будет доступна после записи' : ''}
-            >
-              Дистанционно
-            </a>
-          )}
+          <a
+            href={link}
+            title={!link ? 'Ссылка будет доступна после записи' : ''}
+          >
+            Дистанционно
+          </a>
         </div>
+      ) : (
+        location && (
+          <div className={s.location}>
+            <GeoAlt className={s.locationIcon} />
+            <span>{location}</span>
+          </div>
+        )
       )}
     </div>
   )
