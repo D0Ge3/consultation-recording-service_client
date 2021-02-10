@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import * as Yup from 'yup'
 import { useFormik } from 'formik'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 import { login } from '../../redux/actions/authActions'
