@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
+import * as Yup from 'yup'
 import { useParams } from 'react-router-dom'
 import { useFormik } from 'formik'
 import { useSelector, useDispatch } from 'react-redux'
@@ -11,15 +12,29 @@ import {
   updateConsultation,
 } from '../../../../redux/actions/consultationsActions'
 
-import { Form, Button, Container, Row, Col } from 'react-bootstrap'
+import { Form, Button, Container, Row, Col, Spinner } from 'react-bootstrap'
 import { Multiselect } from 'multiselect-react-dropdown'
 import Datetime from 'react-datetime'
 import { ConsultationTimeInfo } from './ConsultationTimeInfo'
-
-import s from './ConsultationForm.module.css'
-import 'react-datetime/css/react-datetime.css'
 import { generateTimeTickets } from './utils/generateTimeTickets'
-import { FormAlert } from '../../../../ui/FormAlert/FormAlert';
+import { FormAlert } from '../../../../ui/FormAlert/FormAlert'
+
+import 'react-datetime/css/react-datetime.css'
+import s from './ConsultationForm.module.css'
+
+const ConsultationSchema = Yup.object().shape({
+  teacher_subject: Yup.array()
+    .required('Не выбрана дисциплина(ы)!')
+    .min(1, 'Не выбрана дисциплина(ы)!'),
+  start_time: Yup.object().required('Обязательное поле!'),
+  end_time: Yup.object().required('Обязательное поле!'),
+  consultation_type: Yup.string().required('Не выбран тип консультации!'),
+  method_wrote: Yup.string().required('Не выбран тип!'),
+  recommended_qnt_students: Yup.number().required('Обязательное поле!'),
+  link: Yup.string(),
+  note: Yup.string(),
+  location: Yup.string(),
+})
 
 export const ConsultationForm = ({ mode }) => {
   const [showTimeInfo, setShowTimeInfo] = useState(false)
@@ -48,6 +63,7 @@ export const ConsultationForm = ({ mode }) => {
       teacher_subject: [],
       times: [],
     },
+    validationSchema: ConsultationSchema,
     onSubmit: (values) => {
       setStatus(null)
       if (mode === 'create') {
@@ -75,6 +91,7 @@ export const ConsultationForm = ({ mode }) => {
         msg: 'Консультация успешно сохранена',
       })
     }
+    formik.setSubmitting(false)
     setShowTimeInfo(false)
   }
   const onError = (error) => {
@@ -123,20 +140,43 @@ export const ConsultationForm = ({ mode }) => {
     time_on_one_student,
   } = formik.values
   useEffect(() => {
-    if (start_time && end_time && recommended_qnt_students 
-      && method_wrote === 'по времени') {
+    if (
+      start_time &&
+      end_time &&
+      recommended_qnt_students &&
+      method_wrote === 'по времени'
+    ) {
       getTimeTickets(start_time, end_time, recommended_qnt_students)
     }
   }, [start_time, end_time, recommended_qnt_students, method_wrote])
 
   const getTimeTickets = (start_time, end_time, recommended_qnt_students) => {
     setShowTimeInfo(false)
-    const timeTickets = generateTimeTickets(start_time, end_time, recommended_qnt_students)
+    const timeTickets = generateTimeTickets(
+      start_time,
+      end_time,
+      recommended_qnt_students
+    )
     formik.setFieldValue('times', timeTickets.time)
-    formik.setFieldValue('time_on_one_student', timeTickets.timeOneStudent)
+    formik
+      .setFieldValue('time_on_one_student', timeTickets.timeOneStudent)
       .then(() => setShowTimeInfo(true))
   }
   const type = formik.values.consultation_type
+  const { errors, touched } = formik
+  const errorFieldStyle = { border: '1px solid red' }
+
+  const showError = (key) =>
+    errors[key] && touched[key] ? (
+      <span className={s.error}>{errors[key]}</span>
+    ) : null
+  const showErrorBorder = (key, isClassName = false) => {
+    if (isClassName) {
+      return errors[key] && touched[key] ? s.errorDateTime : {}
+    } else {
+      return errors[key] && touched[key] && errorFieldStyle
+    }
+  }
   return (
     <Container className="mt-4">
       <h5 className="text-center">
@@ -158,8 +198,17 @@ export const ConsultationForm = ({ mode }) => {
                 onRemove={(v) => formik.setFieldValue('teacher_subject', v)}
                 emptyRecordMsg="Нет дисциплин"
                 displayValue="subject"
-                style={{ searchBox: { padding: '.375rem .75rem' } }}
+                style={{
+                  searchBox: {
+                    padding: '.375rem .75rem',
+                    border:
+                      errors.teacher_subject && touched.teacher_subject
+                        ? errorFieldStyle.border
+                        : null,
+                  },
+                }}
               />
+              {showError('teacher_subject')}
             </Form.Group>
           </Col>
         </Row>
@@ -176,7 +225,9 @@ export const ConsultationForm = ({ mode }) => {
                 }}
                 locale="ru"
                 isValidDate={isFuture}
+                className={showErrorBorder('start_time', true)}
               />
+              {showError('start_time')}
             </Form.Group>
           </Col>
           <Col>
@@ -191,7 +242,9 @@ export const ConsultationForm = ({ mode }) => {
                 }}
                 locale="ru"
                 dateFormat={false}
+                className={showErrorBorder('end_time', true)}
               />
+              {showError('end_time')}
             </Form.Group>
           </Col>
         </Row>
@@ -227,6 +280,7 @@ export const ConsultationForm = ({ mode }) => {
                   }}
                   checked={formik.values.consultation_type === 'Дистанционная'}
                 />
+                {showError('consultation_type')}
               </Form.Group>
               <Form.Group
                 controlId="method_wrote"
@@ -253,6 +307,7 @@ export const ConsultationForm = ({ mode }) => {
                   onChange={formik.handleChange}
                   checked={formik.values.method_wrote === 'по времени'}
                 />
+                {showError('method_wrote')}
               </Form.Group>
             </div>
             {showTimeInfo && (
@@ -267,45 +322,64 @@ export const ConsultationForm = ({ mode }) => {
               <Form.Control
                 name={type === 'Очная' ? 'location' : 'link'}
                 type="text"
+                style={
+                  type === 'Очная'
+                    ? showErrorBorder('location')
+                    : showErrorBorder('link')
+                }
                 placeholder={type === 'Очная' ? 'Место проведения' : 'Cсылка'}
                 onChange={formik.handleChange}
                 value={
                   type === 'Очная' ? formik.values.location : formik.values.link
                 }
               />
+              {type === 'Очная' ? showError('location') : showError('link')}
             </Form.Group>
             <Form.Group controlId="recommended_qnt_students">
               <Form.Label>Рекомендуемое кол-во студентов</Form.Label>
               <Form.Control
                 name="recommended_qnt_students"
                 type="number"
+                style={showErrorBorder('recommended_qnt_students')}
                 disabled={mode === 'edit' && method_wrote === 'по времени'}
                 placeholder="Кол-во студентов"
                 onChange={formik.handleChange}
                 value={formik.values.recommended_qnt_students}
               />
+              {showError('recommended_qnt_students')}
             </Form.Group>
           </Col>
-
         </Row>
         <Form.Group controlId="note">
           <Form.Label>Примечание</Form.Label>
           <Form.Control
             placeholder="Примечание"
             value={formik.values.note}
+            style={showErrorBorder('note')}
             onChange={formik.handleChange}
             as="textarea"
             rows="5"
           />
+          {showError('note')}
         </Form.Group>
         <div className={s.submitWrapper}>
           <Button
-            disabled={formik.isSubmitting && !status}
+            disabled={formik.isSubmitting }
             variant="primary"
             type="submit"
           >
-            {mode === 'create' && 'Создать'}
-            {mode === 'edit' && 'Сохранить'}
+            {formik.isSubmitting && (
+              <Spinner
+                as="span"
+                animation="border"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+                className="mr-2"
+              />
+            )}
+            {mode === 'create' && <span>Создать</span>}
+            {mode === 'edit' && <span>Сохранить</span>}
           </Button>
           <div className="ml-5">
             <FormAlert status={status} />

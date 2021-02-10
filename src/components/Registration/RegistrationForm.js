@@ -93,86 +93,79 @@ export const RegistrationForm = () => {
   const { errors, touched } = formik
 
   const groupOptions = groups.map((g) => <option key={g}>{g}</option>)
+
+  const showErrorBorder = (key) => errors[key] && touched[key] && errorFieldStyle
+  const showError = (key) =>
+    errors[key] && touched[key] ? (
+      <span className={s.error}>{errors[key]}</span>
+    ) : null
+
   return (
     <Form className={s.regForm} onSubmit={formik.handleSubmit}>
       <Form.Group controlId="last_name" className={s.fieldGroup}>
         <Form.Control
-          style={errors.last_name && touched.last_name && errorFieldStyle}
+          style={showErrorBorder('last_name')}
           name="last_name"
           type="text"
           placeholder="Введите фамилию*"
           onChange={formik.handleChange}
           value={formik.values.last_name}
         />
-        {errors.last_name && touched.last_name ? (
-          <span className={s.error}>{errors.last_name}</span>
-        ) : null}
+        {showError('last_name')}
       </Form.Group>
       <Form.Group controlId="first_name" className={s.fieldGroup}>
         <Form.Control
-          style={errors.first_name && touched.first_name && errorFieldStyle}
+          style={showErrorBorder('first_name')}
           name="first_name"
           type="text"
           placeholder="Введите имя*"
           onChange={formik.handleChange}
           value={formik.values.first_name}
         />
-        {errors.first_name && touched.first_name ? (
-          <span className={s.error}>{errors.first_name}</span>
-        ) : null}
+        {showError('first_name')}
       </Form.Group>
       <Form.Group controlId="middle_name" className={s.fieldGroup}>
         <Form.Control
           name="middle_name"
-          style={errors.middle_name && touched.middle_name && errorFieldStyle}
+          style={showErrorBorder('middle_name')}
           type="text"
           placeholder="Введите отчество"
           onChange={formik.handleChange}
           value={formik.values.middle_name}
         />
-        {errors.middle_name && touched.middle_name ? (
-          <span className={s.error}>{errors.middle_name}</span>
-        ) : null}
+        {showError('middle_name')}
       </Form.Group>
       <Form.Group controlId="email">
         <Form.Control
-          style={errors.email && touched.email && errorFieldStyle}
+          style={showErrorBorder('email')}
           name="email"
           placeholder="Email*"
           onChange={formik.handleChange}
           value={formik.values.email}
         />
-        {errors.email && touched.email ? (
-          <span className={s.error}>{errors.email}</span>
-        ) : null}
+        {showError('email')}
       </Form.Group>
       <Form.Group controlId="tel" className={s.fieldGroup}>
         <Form.Control
           name="tel"
-          style={errors.tel && touched.tel && errorFieldStyle}
+          style={showErrorBorder('tel')}
           type="tel"
           placeholder="Введите телефон"
           onChange={formik.handleChange}
           value={formik.values.tel}
         />
-        {errors.tel && touched.tel ? (
-          <span className={s.error}>{errors.tel}</span>
-        ) : null}
+        {showError('tel')}
       </Form.Group>
       <Form.Group controlId="employee_number">
         <Form.Control
-          style={
-            errors.employee_number && touched.employee_number && errorFieldStyle
-          }
+          style={showErrorBorder('employee_number')}
           name="employee_number"
           maxLength={6}
           placeholder="Табельный номер*"
           onChange={formik.handleChange}
           value={formik.values.employee_number}
         />
-        {errors.employee_number && touched.employee_number ? (
-          <span className={s.error}>{errors.employee_number}</span>
-        ) : null}
+        {showError('employee_number')}
       </Form.Group>
       <Form.Group controlId="role">
         <Form.Label>
@@ -201,7 +194,7 @@ export const RegistrationForm = () => {
         <Form.Group controlId="group">
           <Form.Control
             as="select"
-            style={errors.group && touched.group && errorFieldStyle}
+            style={showErrorBorder('group')}
             name="group"
             value={formik.values.group}
             onChange={formik.handleChange}
@@ -213,9 +206,7 @@ export const RegistrationForm = () => {
             </option>
             {groupOptions}
           </Form.Control>
-          {errors.group && touched.group ? (
-            <span className={s.error}>{errors.group}</span>
-          ) : null}
+          {showError('group')}
         </Form.Group>
       )}
 
@@ -233,9 +224,7 @@ export const RegistrationForm = () => {
           onChange={formik.handleChange}
           value={formik.values.password}
         />
-        {errors.password && touched.password ? (
-          <span className={s.error}>{errors.password}</span>
-        ) : null}
+        {showError('password')}
       </Form.Group>
       <Form.Group controlId="repeat_password">
         <Form.Control

@@ -47,33 +47,34 @@ export const LoginForm = () => {
 
   const { errors, touched } = formik
 
+  const showErrorBorder = (key) => errors[key] && touched[key] && errorFieldStyle
+  const showError = (key) =>
+    errors[key] && touched[key] ? (
+      <span className={s.error}>{errors[key]}</span>
+    ) : null
   return (
     <Form className={s.loginForm} onSubmit={formik.handleSubmit}>
       <Form.Group controlId="email">
         <Form.Control
-          style={errors.email && touched.email && errorFieldStyle}
+          style={showErrorBorder('email')}
           name="email"
           // type="email"
           placeholder="Email"
           onChange={formik.handleChange}
           value={formik.values.email}
         />
-        {errors.email && touched.email ? (
-          <span className={s.error}>{errors.email}</span>
-        ) : null}
+        {showError('email')}
       </Form.Group>
       <Form.Group controlId="password">
         <Form.Control
-          style={errors.password && touched.password && errorFieldStyle}
+          style={showErrorBorder('password')}
           name="password"
           type="password"
           placeholder="Пароль"
           onChange={formik.handleChange}
           value={formik.values.password}
         />
-        {errors.password && touched.password ? (
-          <span className={s.error}>{errors.password}</span>
-        ) : null}
+        {showError('password')}
       </Form.Group>
       <div className={s.wrapper}>
         <Form.Group controlId="rememberMe">
