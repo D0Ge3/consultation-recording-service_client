@@ -39,6 +39,7 @@ export const LoginForm = () => {
             msg: 'Неправильный логин или пароль!',
           })
         }
+        formik.setSubmitting(false)
       })
     },
   })
