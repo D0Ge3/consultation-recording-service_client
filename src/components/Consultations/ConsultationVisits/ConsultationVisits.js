@@ -32,11 +32,7 @@ export const ConsultationVisits = () => {
       <Container className="mt-4">
         <h5 className="text-center">Посещения</h5>
         <ConsultationInfo consultation={consultation} />
-        <VisitsTable
-          method_wrote={consultation.method_wrote}
-          id_consultation={id_consultation}
-          visits={visits}
-        />
+        <VisitsTable method_wrote={consultation.method_wrote} visits={visits} />
       </Container>
     )
   }
