@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getGroups, register } from '../../redux/actions/registrationActions'
 import { catchNetworkError } from '../../redux/actions/helpers/catchNetworkError'
 
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, Spinner } from 'react-bootstrap'
 
 import s from './Registration.module.css'
 
@@ -75,6 +75,7 @@ export const RegistrationForm = () => {
           } else {
             catchNetworkError(error, dispatch)
           }
+          formik.setSubmitting(false)
         })
     },
   })
@@ -250,8 +251,18 @@ export const RegistrationForm = () => {
           </span>
         ) : null}
       </Form.Group>
-      <Button variant="primary" type="submit">
-        Зарегистрироваться
+      <Button disabled={formik.isSubmitting} variant="primary" type="submit">
+        {formik.isSubmitting && (
+          <Spinner
+            as="span"
+            animation="border"
+            size="sm"
+            role="status"
+            aria-hidden="true"
+            className="mr-2"
+          />
+        )}
+        <span>Зарегистрироваться</span>
       </Button>
     </Form>
   )
