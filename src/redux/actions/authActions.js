@@ -1,6 +1,5 @@
 import { authAPI } from '../../api'
 import { instance } from '../../api/axiosInstance'
-import { setIsLoading } from './appActions'
 import { getUserData } from './profileActions'
 
 export const SET_AUTH = 'auth/SET_AUTH'
@@ -36,6 +35,6 @@ export const verify = () => async (dispatch) => {
     const res = await authAPI.verifyToken(token)
     return dispatch(getUserData()).then(() => dispatch(setAuth(true)))
   } catch (error) {
-    // if (error.status === )
+    // d
   }
 }

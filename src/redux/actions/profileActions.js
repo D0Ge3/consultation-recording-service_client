@@ -1,6 +1,5 @@
 import { profileAPI, settingsAPI } from '../../api'
-import { setAuth } from './authActions'
-import { authAPI } from '../../api';
+import { catchNetworkError } from './helpers/catchNetworkError'
 
 export const SET_USER_DATA = 'profile/SET_USER_DATA'
 export const SET_SUBJECTS = 'profile/SET_SUBJECTS'
@@ -16,7 +15,7 @@ export const getUserData = () => async (dispatch) => {
       dispatch(getSubjects())
     }
   } catch (error) {
-    console.log('err')
+    catchNetworkError(error, dispatch)
   }
 }
 
@@ -25,7 +24,7 @@ export const getSubjects = () => async (dispatch) => {
     const res = await profileAPI.getSubjects()
     dispatch(setSubjects(res.data.results))
   } catch (error) {
-    console.log('err')
+    catchNetworkError(error, dispatch)
   }
 }
 

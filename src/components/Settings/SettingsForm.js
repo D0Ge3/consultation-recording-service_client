@@ -4,6 +4,7 @@ import * as Yup from 'yup'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { updateUserData } from '../../redux/actions/profileActions'
+import { catchNetworkError } from '../../redux/actions/helpers/catchNetworkError'
 
 import { Form, Button } from 'react-bootstrap'
 
@@ -49,6 +50,7 @@ export const SettingsForm = () => {
             })
           }
           onError()
+          catchNetworkError(error, dispatch)
         })
     },
   })

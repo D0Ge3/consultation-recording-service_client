@@ -1,6 +1,7 @@
 import { consultationsAPI } from '../../api'
 import moment from 'moment'
 import { setIsLoading } from './appActions'
+import { catchNetworkError } from './helpers/catchNetworkError'
 
 export const SET_CONSULTATIONS = 'consultations/SET_CONSULTATIONS'
 export const SET_COUNT = 'consultations/SET_COUNT'
@@ -28,6 +29,7 @@ export const getConsultations = (filter, page, showLoader = true) => async (disp
   } catch (error) {
     console.log('err')
     showLoader && dispatch(setIsLoading(false))
+    catchNetworkError(error, dispatch)
   }
 }
 export const getMyConsultations = (filter, page, showLoader = true) => async (dispatch, getState) => {
@@ -48,6 +50,7 @@ export const getMyConsultations = (filter, page, showLoader = true) => async (di
   } catch (error) {
     console.log(error)
     showLoader && dispatch(setIsLoading(false))
+    catchNetworkError(error, dispatch)
   }
 }
 export const takeTicket = (id_consultation, data = {}) => async (dispatch, getState) => {
@@ -56,7 +59,7 @@ export const takeTicket = (id_consultation, data = {}) => async (dispatch, getSt
     const res = await consultationsAPI.takeTicket(id_consultation, data)
     dispatch(getConsultations('future', page, false))
   } catch (error) {
-    console.log('err')
+    catchNetworkError(error, dispatch)
   }
 }
 
@@ -68,7 +71,7 @@ export const deleteTicket = (id_consultation) => async (dispatch, getState) => {
     const res = await consultationsAPI.deleteTicket(id_consultation)
     dispatch(getMyConsultations('future', page, false))
   } catch (error) {
-    console.log('err')
+    catchNetworkError(error, dispatch)
   }
 }
 
@@ -80,7 +83,7 @@ export const deleteConsultation = (id_consultation) => async (dispatch, getState
     const res = await consultationsAPI.deleteConsultation(id_consultation)
     dispatch(getMyConsultations('future', page, false))
   } catch (error) {
-    console.log('err')
+    catchNetworkError(error, dispatch)
   }
 }
 
@@ -106,7 +109,7 @@ export const getConsultation = (id_consultation) => async (dispatch) => {
     const res = await consultationsAPI.getConsultation(id_consultation)
     dispatch(setSelectedConsultation(res.data))
   } catch (error) {
-    console.log('err')
+    catchNetworkError(error)
   }
 }
 
@@ -138,6 +141,6 @@ export const getFreeTimes = (id_consultation) => async (dispatch) => {
     const res = await consultationsAPI.getFreeTimes(id_consultation)
     dispatch(setFreeTimes(res.data))
   } catch (error) {
-    console.log('err')
+    catchNetworkError(error, dispatch)
   }
 }

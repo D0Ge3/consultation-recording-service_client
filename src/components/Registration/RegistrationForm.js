@@ -4,6 +4,7 @@ import { useFormik } from 'formik'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { getGroups, register } from '../../redux/actions/registrationActions'
+import { catchNetworkError } from '../../redux/actions/helpers/catchNetworkError'
 
 import { Form, Button } from 'react-bootstrap'
 
@@ -65,12 +66,14 @@ export const RegistrationForm = () => {
       dispatch(register(values))
         .then(() => formik.resetForm())
         .catch((error) => {
-          if (error.response) {
+          if (error.response && error.response.status === 400) {
             const errors = error.response.data
             formik.setErrors({
               ...errors,
               password: errors.password ? errors.password[0] : null,
             })
+          } else {
+            catchNetworkError(error, dispatch)
           }
         })
     },

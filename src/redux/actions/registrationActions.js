@@ -1,4 +1,5 @@
 import { registrationAPI } from '../../api'
+import { catchNetworkError } from './helpers/catchNetworkError'
 
 export const SET_REGISTRATION_STATUS = 'registration/SET_REGISTRATION_STATUS'
 export const SET_GROUPS = 'registration/SET_GROUPS'
@@ -15,6 +16,10 @@ export const register = (regData) => async (dispatch) => {
 }
 
 export const getGroups = () => async (dispatch) => {
-  const res = await registrationAPI.getGroups()
-  dispatch(setGroups(res.data))
+  try {
+    const res = await registrationAPI.getGroups()
+    dispatch(setGroups(res.data))
+  } catch (error) {
+    catchNetworkError(error, dispatch)
+  }
 }

@@ -4,6 +4,8 @@ import { useFormik } from 'formik'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 
+import { catchNetworkError } from '../../redux/actions/helpers/catchNetworkError'
+
 import { login } from '../../redux/actions/authActions'
 import { FormAlert } from '../../ui/FormAlert/FormAlert'
 
@@ -33,11 +35,13 @@ export const LoginForm = () => {
     onSubmit: (values) => {
       const { email, password, rememberMe } = values
       dispatch(login(email, password, rememberMe)).catch((error) => {
-        if (error.response.status === 401) {
+        if (error.response && error.response.status === 401) {
           formik.setStatus({
             status: 'error',
             msg: 'Неправильный логин или пароль!',
           })
+        } else {
+          catchNetworkError(error, dispatch)
         }
         formik.setSubmitting(false)
       })

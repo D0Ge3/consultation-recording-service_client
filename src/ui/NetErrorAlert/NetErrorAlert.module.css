@@ -1,0 +1,13 @@
+.toast {
+  position: fixed;
+  top: 60px;
+  right: calc(-1 * (100vw - 100%) + 20px);
+  overflow-x: hidden;
+}
+
+.body {
+  background-color: #dc3545;
+  color: white;
+  border-radius: 5px;
+  font-weight: bold;
+}

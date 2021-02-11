@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useFormik } from 'formik'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import * as Yup from 'yup'
 
 import { changePassword } from '../../redux/actions/profileActions'
@@ -9,6 +9,7 @@ import { Form, Button } from 'react-bootstrap'
 import { FormAlert } from '../../ui/FormAlert/FormAlert'
 
 import s from './Settings.module.css'
+import { catchNetworkError } from '../../redux/actions/helpers/catchNetworkError'
 
 const PasswordSchema = Yup.object().shape({
   current_password: Yup.string().required('Обязательное поле!'),
@@ -35,6 +36,7 @@ export const PasswordForm = () => {
             })
           }
           onError()
+          catchNetworkError(error, dispatch)
         })
     },
   })

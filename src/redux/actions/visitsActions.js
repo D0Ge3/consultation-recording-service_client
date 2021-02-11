@@ -1,4 +1,5 @@
 import { visitsAPI } from '../../api'
+import { catchNetworkError } from './helpers/catchNetworkError'
 
 export const SET_VISITS = 'visits/SET_VISITS'
 
@@ -9,7 +10,7 @@ export const getVisits = (id_consultation) => async (dispatch) => {
     const res = await visitsAPI.getVisits(id_consultation)
     dispatch(setVisits(res.data))
   } catch (error) {
-    console.log('err')
+    catchNetworkError(error, dispatch)
   }
 }
 
@@ -19,6 +20,6 @@ export const updateVisit = (id_wrote, is_visit) => async (dispatch, getState) =>
     const id_consultation = getState().visits.visits[0].id_consultation
     dispatch(getVisits(id_consultation))
   } catch (error) {
-    console.log('err')
+    catchNetworkError(error, dispatch)
   }
 }

@@ -16,6 +16,7 @@ import { Settings } from './components/Settings/Settings'
 import { Registration } from './components/Registration/Registration'
 import { Loader } from './ui/Loader/Loader'
 import { Container } from 'react-bootstrap'
+import { NetErrorAlert } from './ui/NetErrorAlert/NetErrorAlert'
 
 import './App.css'
 
@@ -23,6 +24,7 @@ export const App = () => {
   require('moment/locale/ru.js')
   const dispatch = useDispatch()
   const isInitialized = useSelector((state) => state.app.isInitialized)
+  const error = useSelector((state) => state.app.error)
   useEffect(() => {
     dispatch(initializeApp())
   }, [])
@@ -70,6 +72,7 @@ export const App = () => {
           <Loader />
         </Container>
       )}
+      {error && <NetErrorAlert error={error} />}
     </>
   )
 }

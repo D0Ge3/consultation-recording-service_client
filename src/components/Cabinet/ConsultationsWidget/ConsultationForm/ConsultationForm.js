@@ -11,6 +11,7 @@ import {
   setSelectedConsultation,
   updateConsultation,
 } from '../../../../redux/actions/consultationsActions'
+import { catchNetworkError } from '../../../../redux/actions/helpers/catchNetworkError'
 
 import { Form, Button, Container, Row, Col, Spinner } from 'react-bootstrap'
 import { Multiselect } from 'multiselect-react-dropdown'
@@ -106,6 +107,8 @@ export const ConsultationForm = ({ mode }) => {
         msg: 'Ошибка соединения. Повторите попытку',
       })
     }
+    catchNetworkError(error, dispatch)
+    formik.setSubmitting(false)
     setShowTimeInfo(false)
   }
   useEffect(() => {

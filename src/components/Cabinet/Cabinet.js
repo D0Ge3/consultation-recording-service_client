@@ -5,7 +5,6 @@ import { Redirect } from 'react-router-dom'
 import { Container, Row, Col } from 'react-bootstrap'
 import { UserProfile } from './UserProfile/UserProfile'
 import { ConsultationsWidget } from './ConsultationsWidget/ConsultationsWidget'
-import { Loader } from '../../ui/Loader/Loader'
 
 export const Cabinet = () => {
   const isAuth = useSelector((state) => state.auth.isAuth)
