@@ -3,10 +3,11 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useDispatch, useSelector } from 'react-redux'
 
+import { setIsShowFormStatus } from '../../redux/actions/appActions'
 import { updateUserData } from '../../redux/actions/profileActions'
 import { catchNetworkError } from '../../redux/actions/helpers/catchNetworkError'
 
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, Spinner } from 'react-bootstrap'
 
 import s from './Settings.module.css'
 import { FormAlert } from '../../ui/FormAlert/FormAlert'
@@ -30,6 +31,7 @@ const SettingsSchema = Yup.object().shape({
 export const SettingsForm = () => {
   const dispatch = useDispatch()
   const profile = useSelector((state) => state.profile)
+  const showFormAlert = useSelector((state) => state.app.isShowFormStatus)
   const formik = useFormik({
     initialValues: {
       last_name: profile.last_name,
@@ -51,6 +53,10 @@ export const SettingsForm = () => {
           }
           onError()
           catchNetworkError(error, dispatch)
+        })
+        .finally(() => {
+          formik.setSubmitting(false)
+          dispatch(setIsShowFormStatus(true))
         })
     },
   })
@@ -122,8 +128,18 @@ export const SettingsForm = () => {
         ) : null}
       </Form.Group>
       <div className={s.submitWrapper}>
-        <Button variant="primary" type="submit">
-          Сохранить
+        <Button disabled={formik.isSubmitting} variant="primary" type="submit">
+          {formik.isSubmitting && (
+            <Spinner
+              as="span"
+              animation="border"
+              size="sm"
+              role="status"
+              aria-hidden="true"
+              className="mr-2"
+            />
+          )}
+          <span>Сохранить</span>
         </Button>
         <div className={'ml-5'}>
           <FormAlert status={formik.status} />

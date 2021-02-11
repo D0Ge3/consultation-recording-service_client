@@ -11,6 +11,7 @@ import {
   setSelectedConsultation,
   updateConsultation,
 } from '../../../../redux/actions/consultationsActions'
+import { setIsShowFormStatus } from '../../../../redux/actions/appActions'
 import { catchNetworkError } from '../../../../redux/actions/helpers/catchNetworkError'
 
 import { Form, Button, Container, Row, Col, Spinner } from 'react-bootstrap'
@@ -49,6 +50,7 @@ export const ConsultationForm = ({ mode }) => {
   const selectedConsultation = useSelector(
     (state) => state.consultations.selectedConsultation
   )
+  const showFormAlert = useSelector((state) => state.app.isShowFormStatus)
 
   const formik = useFormik({
     initialValues: {
@@ -71,10 +73,15 @@ export const ConsultationForm = ({ mode }) => {
         dispatch(createConsultation(values))
           .then(() => onSave())
           .catch((error) => onError(error))
+          .finally(() => formik.setSubmitting(false))
       } else if (mode === 'edit') {
         dispatch(updateConsultation(values))
           .then(() => onSave())
           .catch((error) => onError(error))
+          .finally(() => {
+            formik.setSubmitting(false)
+            dispatch(setIsShowFormStatus(true))
+          })
       }
     },
   })
@@ -92,7 +99,6 @@ export const ConsultationForm = ({ mode }) => {
         msg: 'Консультация успешно сохранена',
       })
     }
-    formik.setSubmitting(false)
     setShowTimeInfo(false)
   }
   const onError = (error) => {
@@ -108,7 +114,6 @@ export const ConsultationForm = ({ mode }) => {
       })
     }
     catchNetworkError(error, dispatch)
-    formik.setSubmitting(false)
     setShowTimeInfo(false)
   }
   useEffect(() => {
@@ -367,7 +372,7 @@ export const ConsultationForm = ({ mode }) => {
         </Form.Group>
         <div className={s.submitWrapper}>
           <Button
-            disabled={formik.isSubmitting }
+            disabled={formik.isSubmitting}
             variant="primary"
             type="submit"
           >
@@ -384,9 +389,11 @@ export const ConsultationForm = ({ mode }) => {
             {mode === 'create' && <span>Создать</span>}
             {mode === 'edit' && <span>Сохранить</span>}
           </Button>
-          <div className="ml-5">
-            <FormAlert status={status} />
-          </div>
+          {showFormAlert && (
+            <div className="ml-5">
+              <FormAlert status={status} />
+            </div>
+          )}
         </div>
       </Form>
     </Container>

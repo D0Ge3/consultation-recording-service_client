@@ -1,15 +1,16 @@
 import React from 'react'
 import { useFormik } from 'formik'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import * as Yup from 'yup'
 
+import { setIsShowFormStatus } from '../../redux/actions/appActions'
 import { changePassword } from '../../redux/actions/profileActions'
+import { catchNetworkError } from '../../redux/actions/helpers/catchNetworkError'
 
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, Spinner } from 'react-bootstrap'
 import { FormAlert } from '../../ui/FormAlert/FormAlert'
 
 import s from './Settings.module.css'
-import { catchNetworkError } from '../../redux/actions/helpers/catchNetworkError'
 
 const PasswordSchema = Yup.object().shape({
   current_password: Yup.string().required('Обязательное поле!'),
@@ -18,6 +19,7 @@ const PasswordSchema = Yup.object().shape({
 
 export const PasswordForm = () => {
   const dispatch = useDispatch()
+  const showFormAlert = useSelector((state) => state.app.isShowFormStatus)
   const formik = useFormik({
     initialValues: {
       current_password: '',
@@ -37,6 +39,10 @@ export const PasswordForm = () => {
           }
           onError()
           catchNetworkError(error, dispatch)
+        })
+        .finally(() => {
+          formik.setSubmitting(false)
+          dispatch(setIsShowFormStatus(true))
         })
     },
   })
@@ -83,12 +89,24 @@ export const PasswordForm = () => {
         ) : null}
       </Form.Group>
       <div className={s.submitWrapper}>
-        <Button variant="primary" type="submit">
-          Сменить пароль
+        <Button disabled={formik.isSubmitting} variant="primary" type="submit">
+          {formik.isSubmitting && (
+            <Spinner
+              as="span"
+              animation="border"
+              size="sm"
+              role="status"
+              aria-hidden="true"
+              className="mr-2"
+            />
+          )}
+          <span>Сменить пароль</span>
         </Button>
-        <div className="ml-5">
-          <FormAlert status={formik.status} />
-        </div>
+        {showFormAlert && (
+          <div className="ml-5">
+            <FormAlert status={formik.status} />
+          </div>
+        )}
       </div>
     </Form>
   )

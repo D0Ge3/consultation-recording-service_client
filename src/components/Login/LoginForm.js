@@ -1,12 +1,14 @@
 import React from 'react'
 import * as Yup from 'yup'
 import { useFormik } from 'formik'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+
+import { login } from '../../redux/actions/authActions'
+import { setIsShowFormStatus } from '../../redux/actions/appActions'
 
 import { catchNetworkError } from '../../redux/actions/helpers/catchNetworkError'
 
-import { login } from '../../redux/actions/authActions'
 import { FormAlert } from '../../ui/FormAlert/FormAlert'
 
 import { Form, Button, Spinner } from 'react-bootstrap'
@@ -25,6 +27,7 @@ const LoginSchema = Yup.object().shape({
 
 export const LoginForm = () => {
   const dispatch = useDispatch()
+  const showFormAlert = useSelector((state) => state.app.isShowFormStatus)
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -34,17 +37,21 @@ export const LoginForm = () => {
     validationSchema: LoginSchema,
     onSubmit: (values) => {
       const { email, password, rememberMe } = values
-      dispatch(login(email, password, rememberMe)).catch((error) => {
-        if (error.response && error.response.status === 401) {
-          formik.setStatus({
-            status: 'error',
-            msg: 'Неправильный логин или пароль!',
-          })
-        } else {
-          catchNetworkError(error, dispatch)
-        }
-        formik.setSubmitting(false)
-      })
+      dispatch(login(email, password, rememberMe))
+        .catch((error) => {
+          if (error.response && error.response.status === 401) {
+            formik.setStatus({
+              status: 'error',
+              msg: 'Неправильный логин или пароль!',
+            })
+          } else {
+            catchNetworkError(error, dispatch)
+          }
+        })
+        .finally(() => {
+          formik.setSubmitting(false)
+          dispatch(setIsShowFormStatus(true))
+        })
     },
   })
 
@@ -52,7 +59,8 @@ export const LoginForm = () => {
 
   const { errors, touched } = formik
 
-  const showErrorBorder = (key) => errors[key] && touched[key] && errorFieldStyle
+  const showErrorBorder = (key) =>
+    errors[key] && touched[key] && errorFieldStyle
   const showError = (key) =>
     errors[key] && touched[key] ? (
       <span className={s.error}>{errors[key]}</span>
@@ -93,9 +101,11 @@ export const LoginForm = () => {
         </Form.Group>
         <Link to="/restore">Забыли пароль?</Link>
       </div>
-      <div className={'mb-2'}>
-        <FormAlert status={formik.status} />
-      </div>
+      {showFormAlert && (
+        <div className={'mb-2'}>
+          <FormAlert status={formik.status} />
+        </div>
+      )}
       <Button disabled={formik.isSubmitting} variant="primary" type="submit">
         {formik.isSubmitting && (
           <Spinner

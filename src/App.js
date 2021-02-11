@@ -25,6 +25,7 @@ export const App = () => {
   const dispatch = useDispatch()
   const isInitialized = useSelector((state) => state.app.isInitialized)
   const error = useSelector((state) => state.app.error)
+  const isAuth = useSelector((state) => state.auth.isAuth)
   useEffect(() => {
     dispatch(initializeApp())
   }, [])
@@ -37,6 +38,7 @@ export const App = () => {
           <Route path="/login">
             <Login />
           </Route>
+          {!isAuth && <Redirect to="/login" />}
           <Route path="/registration">
             <Registration />
           </Route>

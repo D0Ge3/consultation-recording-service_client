@@ -75,8 +75,8 @@ export const RegistrationForm = () => {
           } else {
             catchNetworkError(error, dispatch)
           }
-          formik.setSubmitting(false)
         })
+        .finally(() => formik.setSubmitting(false))
     },
   })
 
