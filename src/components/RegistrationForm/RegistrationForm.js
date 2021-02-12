@@ -8,7 +8,7 @@ import { catchNetworkError } from '../../redux/actions/helpers/catchNetworkError
 
 import { Form, Button, Spinner } from 'react-bootstrap'
 
-import s from './Registration.module.css'
+import s from './RegistrationForm.module.css'
 
 const RegistrationSchema = Yup.object().shape({
   last_name: Yup.string()

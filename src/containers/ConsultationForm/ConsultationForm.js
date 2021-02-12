@@ -10,16 +10,16 @@ import {
   getConsultation,
   setSelectedConsultation,
   updateConsultation,
-} from '../../../../redux/actions/consultationsActions'
-import { setIsShowFormStatus } from '../../../../redux/actions/appActions'
-import { catchNetworkError } from '../../../../redux/actions/helpers/catchNetworkError'
+} from '../../redux/actions/consultationsActions'
+import { setIsShowFormStatus } from '../../redux/actions/appActions'
+import { catchNetworkError } from '../../redux/actions/helpers/catchNetworkError'
 
 import { Form, Button, Container, Row, Col, Spinner } from 'react-bootstrap'
 import { Multiselect } from 'multiselect-react-dropdown'
 import Datetime from 'react-datetime'
 import { ConsultationTimeInfo } from './ConsultationTimeInfo'
 import { generateTimeTickets } from './utils/generateTimeTickets'
-import { FormAlert } from '../../../../ui/FormAlert/FormAlert'
+import { FormAlert } from '../../common/FormAlert/FormAlert'
 
 import 'react-datetime/css/react-datetime.css'
 import s from './ConsultationForm.module.css'

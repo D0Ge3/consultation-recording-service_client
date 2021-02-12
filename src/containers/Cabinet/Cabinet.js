@@ -1,8 +1,8 @@
 import React from 'react'
 
 import { Container, Row, Col } from 'react-bootstrap'
-import { UserProfile } from './UserProfile/UserProfile'
-import { ConsultationsWidget } from './ConsultationsWidget/ConsultationsWidget'
+import { UserProfile } from '../../components/UserProfile/UserProfile'
+import { ConsultationsWidget } from '../../components/ConsultationsWidget/ConsultationsWidget'
 
 export const Cabinet = () => {
   return (

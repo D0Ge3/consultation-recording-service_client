@@ -8,14 +8,14 @@ import {
   deleteConsultation,
   resetConsultations,
   setPageSize,
-} from '../../../redux/actions/consultationsActions'
+} from '../../redux/actions/consultationsActions'
 
 import { Button, Container } from 'react-bootstrap'
-import { Paginator } from '../../../ui/Paginator/Paginator'
+import { Paginator } from '../../common/Paginator/Paginator'
 
-import { ConsultationsList } from '../../../ui/ConsultationList/ConsultationsList'
+import { ConsultationsList } from '../../common/ConsultationList/ConsultationsList'
 import { Plus } from 'react-bootstrap-icons'
-import { Loader } from '../../../ui/Loader/Loader'
+import { Loader } from '../../common/Loader/Loader'
 
 export const ConsultationsWidget = () => {
   let history = useHistory()

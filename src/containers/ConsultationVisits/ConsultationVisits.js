@@ -2,17 +2,17 @@ import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { Container } from 'react-bootstrap'
-import { ConsultationInfo } from './ConsultationInfo/ConsultationInfo'
-import { Loader } from '../../../ui/Loader/Loader'
-
 import {
   getConsultation,
   setSelectedConsultation,
-} from '../../../redux/actions/consultationsActions'
-import { getVisits, setVisits } from '../../../redux/actions/visitsActions'
+} from '../../redux/actions/consultationsActions'
+import { getVisits, setVisits } from '../../redux/actions/visitsActions'
 
-import { VisitsTable } from './VisitsTable/VisitsTable'
+import { Container } from 'react-bootstrap'
+import { ConsultationInfo } from '../../components/ConsultationInfo/ConsultationInfo'
+import { Loader } from '../../common/Loader/Loader'
+
+import { VisitsTable } from '../../components/VisitsTable/VisitsTable'
 
 export const ConsultationVisits = () => {
   const dispatch = useDispatch()

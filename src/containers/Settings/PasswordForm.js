@@ -8,7 +8,7 @@ import { changePassword } from '../../redux/actions/profileActions'
 import { catchNetworkError } from '../../redux/actions/helpers/catchNetworkError'
 
 import { Form, Button, Spinner } from 'react-bootstrap'
-import { FormAlert } from '../../ui/FormAlert/FormAlert'
+import { FormAlert } from '../../common/FormAlert/FormAlert'
 
 import s from './Settings.module.css'
 

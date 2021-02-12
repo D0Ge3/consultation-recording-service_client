@@ -8,9 +8,9 @@ import { updateUserData } from '../../redux/actions/profileActions'
 import { catchNetworkError } from '../../redux/actions/helpers/catchNetworkError'
 
 import { Form, Button, Spinner } from 'react-bootstrap'
+import { FormAlert } from '../../common/FormAlert/FormAlert'
 
 import s from './Settings.module.css'
-import { FormAlert } from '../../ui/FormAlert/FormAlert'
 
 const SettingsSchema = Yup.object().shape({
   first_name: Yup.string()

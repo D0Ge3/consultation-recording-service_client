@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { ConsultationsList } from '../../ui/ConsultationList/ConsultationsList'
+import { ConsultationsList } from '../../common/ConsultationList/ConsultationsList'
 import {
   getMyConsultations,
   resetConsultations,
@@ -9,8 +9,8 @@ import {
 } from '../../redux/actions/consultationsActions'
 
 import { Container, ButtonGroup, Button } from 'react-bootstrap'
-import { Paginator } from '../../ui/Paginator/Paginator'
-import { Loader } from '../../ui/Loader/Loader'
+import { Paginator } from '../../common/Paginator/Paginator'
+import { Loader } from '../../common/Loader/Loader'
 
 export const Consultations = () => {
   const dispatch = useDispatch()

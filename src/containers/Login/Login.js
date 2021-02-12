@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 
 import { Container } from 'react-bootstrap'
-import { LoginForm } from './LoginForm'
+import { LoginForm } from '../../components/LoginForm/LoginForm'
 
 export const Login = () => {
   const isAuth = useSelector((state) => state.auth.isAuth)

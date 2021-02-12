@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 
-import { updateVisit } from '../../../../redux/actions/visitsActions'
+import { updateVisit } from '../../redux/actions/visitsActions'
 
 import { Dropdown, DropdownButton } from 'react-bootstrap'
 

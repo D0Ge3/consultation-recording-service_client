@@ -2,8 +2,8 @@ import React from 'react'
 import { Redirect } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
-import { Container, Col, Row, Alert } from 'react-bootstrap'
-import { RegistrationForm } from './RegistrationForm'
+import { Container, Alert } from 'react-bootstrap'
+import { RegistrationForm } from '../../components/RegistrationForm/RegistrationForm'
 
 import s from './Registration.module.css'
 

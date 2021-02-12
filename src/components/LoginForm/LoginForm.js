@@ -9,11 +9,11 @@ import { setIsShowFormStatus } from '../../redux/actions/appActions'
 
 import { catchNetworkError } from '../../redux/actions/helpers/catchNetworkError'
 
-import { FormAlert } from '../../ui/FormAlert/FormAlert'
+import { FormAlert } from '../../common/FormAlert/FormAlert'
 
 import { Form, Button, Spinner } from 'react-bootstrap'
 
-import s from './Login.module.css'
+import s from './LoginForm.module.css'
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string()
