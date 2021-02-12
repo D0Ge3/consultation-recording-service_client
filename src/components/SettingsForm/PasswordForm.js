@@ -9,9 +9,10 @@ import { catchNetworkError } from '../../redux/actions/helpers/catchNetworkError
 
 import { Form } from 'react-bootstrap'
 import { FormAlert } from '../../common/FormAlert/FormAlert'
+import { SpinnerButton } from '../../common/SpinnerButton/SpinnerButton'
+import { TextField } from '../../common/TextField/TextField'
 
 import s from './SettingsForm.module.css'
-import { SpinnerButton } from '../../common/SpinnerButton/SpinnerButton'
 
 const PasswordSchema = Yup.object().shape({
   current_password: Yup.string().required('Обязательное поле!'),
@@ -50,7 +51,6 @@ export const PasswordForm = () => {
 
   const { errors, touched } = formik
 
-  const errorFieldStyle = { border: '1px solid red' }
   const onSuccess = (msg = 'Пароль успешно изменен') => {
     formik.setStatus({ status: 'ok', msg })
   }
@@ -59,36 +59,22 @@ export const PasswordForm = () => {
   }
   return (
     <Form className={s.settingsForm} onSubmit={formik.handleSubmit}>
-      <Form.Group controlId="current_password">
-        <Form.Label>Текущий пароль</Form.Label>
-        <Form.Control
-          name="current_password"
-          style={
-            errors.current_password &&
-            touched.current_password &&
-            errorFieldStyle
-          }
-          type="password"
-          onChange={formik.handleChange}
-          value={formik.values.current_password}
-        />
-        {errors.current_password && touched.current_password ? (
-          <span className={s.error}>{errors.current_password}</span>
-        ) : null}
-      </Form.Group>
-      <Form.Group controlId="new_password">
-        <Form.Label>Новый пароль</Form.Label>
-        <Form.Control
-          name="new_password"
-          style={errors.new_password && touched.new_password && errorFieldStyle}
-          type="password"
-          onChange={formik.handleChange}
-          value={formik.values.new_password}
-        />
-        {errors.new_password && touched.new_password ? (
-          <span className={s.error}>{errors.new_password}</span>
-        ) : null}
-      </Form.Group>
+      <TextField
+        name="current_password"
+        type="password"
+        label="Текущий пароль"
+        onChange={formik.handleChange}
+        value={formik.values.current_password}
+        error={touched.current_password && errors.current_password}
+      />
+      <TextField
+        name="new_password"
+        type="password"
+        label="Новый пароль"
+        onChange={formik.handleChange}
+        value={formik.values.new_password}
+        error={touched.new_password && errors.new_password}
+      />
       <div className={s.submitWrapper}>
         <SpinnerButton
           disabled={formik.isSubmitting}

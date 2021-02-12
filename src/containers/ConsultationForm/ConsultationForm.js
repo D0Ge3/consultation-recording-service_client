@@ -14,16 +14,18 @@ import {
 import { setIsShowFormStatus } from '../../redux/actions/appActions'
 import { catchNetworkError } from '../../redux/actions/helpers/catchNetworkError'
 
-import { Form, Button, Container, Row, Col, Spinner } from 'react-bootstrap'
+import { Form, Container, Row, Col } from 'react-bootstrap'
 import { Multiselect } from 'multiselect-react-dropdown'
 import Datetime from 'react-datetime'
 import { ConsultationTimeInfo } from './ConsultationTimeInfo'
 import { generateTimeTickets } from './utils/generateTimeTickets'
 import { FormAlert } from '../../common/FormAlert/FormAlert'
+import { SpinnerButton } from '../../common/SpinnerButton/SpinnerButton'
+import { TextField } from '../../common/TextField/TextField'
+import { Radio } from '../../common/Radio/Radio'
 
 import 'react-datetime/css/react-datetime.css'
 import s from './ConsultationForm.module.css'
-import { SpinnerButton } from '../../common/SpinnerButton/SpinnerButton'
 
 const ConsultationSchema = Yup.object().shape({
   teacher_subject: Yup.array()
@@ -59,7 +61,7 @@ export const ConsultationForm = ({ mode }) => {
       end_time: '',
       recommended_qnt_students: '',
       note: '',
-      method_wrote: '',
+      method_wrote: 'свободный',
       consultation_type: 'Очная',
       time_on_one_student: null,
       location: '',
@@ -186,6 +188,20 @@ export const ConsultationForm = ({ mode }) => {
       return errors[key] && touched[key] && errorFieldStyle
     }
   }
+
+  const methodWroteOptions = [
+    {
+      id: 'свободный',
+      label: 'Свободный',
+      value: 'свободный',
+    },
+    {
+      id: 'по времени',
+      label: 'По времени',
+      value: 'по времени',
+    },
+  ]
+
   return (
     <Container className="mt-4">
       <h5 className="text-center">
@@ -193,11 +209,11 @@ export const ConsultationForm = ({ mode }) => {
         {mode === 'edit' && 'Редактирование '}
         консультации
       </h5>
-      <Form className={s.loginForm} onSubmit={formik.handleSubmit}>
+      <Form onSubmit={formik.handleSubmit}>
         <Row>
           <Col>
             <Form.Group controlId="teacher_subject">
-              <Form.Label>Дисциплины</Form.Label>
+              <Form.Label>Дисциплины*</Form.Label>
               <Multiselect
                 ref={multiselectRef}
                 options={subjects}
@@ -224,7 +240,7 @@ export const ConsultationForm = ({ mode }) => {
         <Row>
           <Col>
             <Form.Group controlId="start_time">
-              <Form.Label>Начало</Form.Label>
+              <Form.Label>Начало*</Form.Label>
               <Datetime
                 value={formik.values.start_time}
                 onChange={(v) => formik.setFieldValue('start_time', v)}
@@ -241,7 +257,7 @@ export const ConsultationForm = ({ mode }) => {
           </Col>
           <Col>
             <Form.Group controlId="end_time">
-              <Form.Label>Конец</Form.Label>
+              <Form.Label>Конец*</Form.Label>
               <Datetime
                 value={formik.values.end_time}
                 onChange={(v) => formik.setFieldValue('end_time', v)}
@@ -264,7 +280,7 @@ export const ConsultationForm = ({ mode }) => {
                 controlId="consultation_type"
                 className={s.typeCheckBox}
               >
-                <Form.Label>Тип консультации</Form.Label>
+                <Form.Label>Тип консультации*</Form.Label>
                 <Form.Check
                   id="Очная"
                   name="consultation_type"
@@ -291,86 +307,62 @@ export const ConsultationForm = ({ mode }) => {
                 />
                 {showError('consultation_type')}
               </Form.Group>
-              <Form.Group
-                controlId="method_wrote"
-                className={s.methodWroteCheckBox}
-              >
-                <Form.Label>Тип записи</Form.Label>
-                <Form.Check
-                  id="свободный"
-                  name="method_wrote"
-                  type="radio"
-                  disabled={mode === 'edit'}
-                  label="Свободный"
-                  value="свободный"
-                  onChange={formik.handleChange}
-                  checked={formik.values.method_wrote === 'свободный'}
-                />
-                <Form.Check
-                  id="по времени"
-                  name="method_wrote"
-                  type="radio"
-                  disabled={mode === 'edit'}
-                  label="По времени"
-                  value="по времени"
-                  onChange={formik.handleChange}
-                  checked={formik.values.method_wrote === 'по времени'}
-                />
-                {showError('method_wrote')}
-              </Form.Group>
+              <Radio
+                name="method_wrote"
+                label="Тип записи*"
+                disabledGroup={mode === 'edit'}
+                onChange={formik.handleChange}
+                options={methodWroteOptions}
+                style={{ width: '120px' }}
+                error={touched.method_wrote && errors.method_wrote}
+                value={formik.values.method_wrote}
+              />
             </div>
             {showTimeInfo && (
               <ConsultationTimeInfo time_on_one_student={time_on_one_student} />
             )}
           </Col>
           <Col>
-            <Form.Group controlId={type === 'Очная' ? 'location' : 'link'}>
-              <Form.Label>
-                {type === 'Очная' ? 'Место проведения' : 'Cсылка'}
-              </Form.Label>
-              <Form.Control
-                name={type === 'Очная' ? 'location' : 'link'}
-                type="text"
-                style={
-                  type === 'Очная'
-                    ? showErrorBorder('location')
-                    : showErrorBorder('link')
-                }
-                placeholder={type === 'Очная' ? 'Место проведения' : 'Cсылка'}
-                onChange={formik.handleChange}
-                value={
-                  type === 'Очная' ? formik.values.location : formik.values.link
-                }
-              />
-              {type === 'Очная' ? showError('location') : showError('link')}
-            </Form.Group>
-            <Form.Group controlId="recommended_qnt_students">
-              <Form.Label>Рекомендуемое кол-во студентов</Form.Label>
-              <Form.Control
-                name="recommended_qnt_students"
-                type="number"
-                style={showErrorBorder('recommended_qnt_students')}
-                disabled={mode === 'edit' && method_wrote === 'по времени'}
-                placeholder="Кол-во студентов"
-                onChange={formik.handleChange}
-                value={formik.values.recommended_qnt_students}
-              />
-              {showError('recommended_qnt_students')}
-            </Form.Group>
+            <TextField
+              name={type === 'Очная' ? 'location' : 'link'}
+              type="text"
+              placeholder={type === 'Очная' ? 'Место проведения' : 'Cсылка'}
+              label={type === 'Очная' ? 'Место проведения' : 'Cсылка'}
+              onChange={formik.handleChange}
+              value={
+                type === 'Очная' ? formik.values.location : formik.values.link
+              }
+              error={
+                type === 'Очная'
+                  ? touched.location && errors.location
+                  : touched.link && errors.link
+              }
+            />
+            <TextField
+              name="recommended_qnt_students"
+              type="number"
+              disabled={mode === 'edit' && method_wrote === 'по времени'}
+              placeholder="Кол-во студентов"
+              onChange={formik.handleChange}
+              value={formik.values.recommended_qnt_students}
+              label="Рекомендуемое кол-во студентов*"
+              error={
+                touched.recommended_qnt_students &&
+                errors.recommended_qnt_students
+              }
+            />
           </Col>
         </Row>
-        <Form.Group controlId="note">
-          <Form.Label>Примечание</Form.Label>
-          <Form.Control
-            placeholder="Примечание"
-            value={formik.values.note}
-            style={showErrorBorder('note')}
-            onChange={formik.handleChange}
-            as="textarea"
-            rows="5"
-          />
-          {showError('note')}
-        </Form.Group>
+        <TextField
+          name="note"
+          label="Примечание"
+          placeholder="Примечание"
+          value={formik.values.note}
+          onChange={formik.handleChange}
+          as="textarea"
+          rows="5"
+          error={touched.note && errors.note}
+        />
         <div className={s.submitWrapper}>
           <SpinnerButton
             disabled={formik.isSubmitting}

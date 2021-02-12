@@ -10,6 +10,9 @@ import { Form } from 'react-bootstrap'
 import { SpinnerButton } from '../../common/SpinnerButton/SpinnerButton'
 
 import s from './RegistrationForm.module.css'
+import { TextField } from '../../common/TextField/TextField'
+import { Radio } from '../../common/Radio/Radio'
+import { Select } from '../../common/Select/Select'
 
 const RegistrationSchema = Yup.object().shape({
   last_name: Yup.string()
@@ -93,165 +96,115 @@ export const RegistrationForm = () => {
     }
   }, [formik.values.role])
 
-  const errorFieldStyle = { border: '1px solid red' }
-
   const { errors, touched } = formik
 
-  const groupOptions = groups.map((g) => <option key={g}>{g}</option>)
-
-  const showErrorBorder = (key) => errors[key] && touched[key] && errorFieldStyle
-  const showError = (key) =>
-    errors[key] && touched[key] ? (
-      <span className={s.error}>{errors[key]}</span>
-    ) : null
-
+  const roleOptions = [
+    {
+      id: 'Студент',
+      label: 'Студент',
+      value: 'student',
+    },
+    {
+      id: 'Преподаватель',
+      label: 'Преподаватель',
+      value: 'teacher',
+    },
+  ]
   return (
     <Form className={s.regForm} onSubmit={formik.handleSubmit}>
-      <Form.Group controlId="last_name" className={s.fieldGroup}>
-        <Form.Control
-          style={showErrorBorder('last_name')}
-          name="last_name"
-          type="text"
-          placeholder="Введите фамилию*"
-          onChange={formik.handleChange}
-          value={formik.values.last_name}
-        />
-        {showError('last_name')}
-      </Form.Group>
-      <Form.Group controlId="first_name" className={s.fieldGroup}>
-        <Form.Control
-          style={showErrorBorder('first_name')}
-          name="first_name"
-          type="text"
-          placeholder="Введите имя*"
-          onChange={formik.handleChange}
-          value={formik.values.first_name}
-        />
-        {showError('first_name')}
-      </Form.Group>
-      <Form.Group controlId="middle_name" className={s.fieldGroup}>
-        <Form.Control
-          name="middle_name"
-          style={showErrorBorder('middle_name')}
-          type="text"
-          placeholder="Введите отчество"
-          onChange={formik.handleChange}
-          value={formik.values.middle_name}
-        />
-        {showError('middle_name')}
-      </Form.Group>
-      <Form.Group controlId="email">
-        <Form.Control
-          style={showErrorBorder('email')}
-          name="email"
-          placeholder="Email*"
-          onChange={formik.handleChange}
-          value={formik.values.email}
-        />
-        {showError('email')}
-      </Form.Group>
-      <Form.Group controlId="tel" className={s.fieldGroup}>
-        <Form.Control
-          name="tel"
-          style={showErrorBorder('tel')}
-          type="tel"
-          placeholder="Введите телефон"
-          onChange={formik.handleChange}
-          value={formik.values.tel}
-        />
-        {showError('tel')}
-      </Form.Group>
-      <Form.Group controlId="employee_number">
-        <Form.Control
-          style={showErrorBorder('employee_number')}
-          name="employee_number"
-          maxLength={6}
-          placeholder="Табельный номер*"
-          onChange={formik.handleChange}
-          value={formik.values.employee_number}
-        />
-        {showError('employee_number')}
-      </Form.Group>
-      <Form.Group controlId="role">
-        <Form.Label>
-          <span className={s.roleTitle}>Кто вы?</span>
-        </Form.Label>
-        <Form.Check
-          id="Студент"
-          name="role"
-          type="radio"
-          label="Студент"
-          value="student"
-          onChange={formik.handleChange}
-          checked={formik.values.role === 'student'}
-        />
-        <Form.Check
-          id="Преподаватель"
-          name="role"
-          type="radio"
-          label="Преподаватель"
-          value="teacher"
-          onChange={formik.handleChange}
-          checked={formik.values.role === 'teacher'}
-        />
-      </Form.Group>
+      <TextField
+        name="last_name"
+        type="text"
+        placeholder="Введите фамилию*"
+        onChange={formik.handleChange}
+        value={formik.values.last_name}
+        error={touched.last_name && errors.last_name}
+      />
+      <TextField
+        name="first_name"
+        type="text"
+        placeholder="Введите имя*"
+        onChange={formik.handleChange}
+        value={formik.values.first_name}
+        error={touched.first_name && errors.first_name}
+      />
+      <TextField
+        name="middle_name"
+        type="text"
+        placeholder="Введите отчество"
+        onChange={formik.handleChange}
+        value={formik.values.middle_name}
+        error={touched.middle_name && errors.middle_name}
+      />
+      <TextField
+        name="email"
+        placeholder="Email*"
+        onChange={formik.handleChange}
+        value={formik.values.email}
+        error={touched.email && errors.email}
+      />
+      <TextField
+        name="tel"
+        type="tel"
+        placeholder="Введите телефон"
+        onChange={formik.handleChange}
+        value={formik.values.tel}
+        error={touched.tel && errors.tel}
+      />
+      <TextField
+        name="employee_number"
+        maxLength={6}
+        placeholder="Табельный номер*"
+        onChange={formik.handleChange}
+        value={formik.values.employee_number}
+        error={touched.employee_number && errors.employee_number}
+      />
+      <Radio
+        name="role"
+        onChange={formik.handleChange}
+        value={formik.values.role}
+        label={'Кто вы?'}
+        labelStyle={{ fontWeight: 'bold' }}
+        options={roleOptions}
+      />
       {formik.values.role === 'student' && (
-        <Form.Group controlId="group">
-          <Form.Control
-            as="select"
-            style={showErrorBorder('group')}
-            name="group"
-            value={formik.values.group}
-            onChange={formik.handleChange}
-            placeholder="Группа"
-            custom
-          >
-            <option disabled value={''} key={''}>
-              Группа*
-            </option>
-            {groupOptions}
-          </Form.Control>
-          {showError('group')}
-        </Form.Group>
+        <Select
+          name="group"
+          value={formik.values.group}
+          onChange={formik.handleChange}
+          placeholder="Группа*"
+          options={groups}
+          error={touched.group && errors.group}
+        />
       )}
-
-      <Form.Group controlId="password">
-        <Form.Control
-          style={
-            (errors.password && touched.password) ||
-            (errors.repeat_password && touched.repeat_password)
-              ? errorFieldStyle
-              : {}
-          }
-          name="password"
-          type="password"
-          placeholder="Пароль*"
-          onChange={formik.handleChange}
-          value={formik.values.password}
-        />
-        {showError('password')}
-      </Form.Group>
-      <Form.Group controlId="repeat_password">
-        <Form.Control
-          style={
-            (errors.password && touched.password) ||
-            (errors.repeat_password && touched.repeat_password)
-              ? errorFieldStyle
-              : {}
-          }
-          name="repeat_password"
-          type="password"
-          placeholder="Повторите пароль*"
-          onChange={formik.handleChange}
-          value={formik.values.repeat_password}
-        />
-        {(errors.repeat_password && touched.repeat_password) ||
-        (errors.password && touched.password) ? (
-          <span className={s.error}>
-            {errors.repeat_password || errors.password}
-          </span>
-        ) : null}
-      </Form.Group>
+      <TextField
+        name="password"
+        type="password"
+        placeholder="Пароль*"
+        onChange={formik.handleChange}
+        value={formik.values.password}
+        error={
+          errors.password && touched.password
+            ? errors.password
+            : errors.repeat_password && touched.repeat_password
+            ? errors.repeat_password
+            : null
+        }
+      />
+      <TextField
+        name="repeat_password"
+        type="password"
+        placeholder="Повторите пароль*"
+        onChange={formik.handleChange}
+        value={formik.values.repeat_password}
+        error={
+          errors.password && touched.password
+            ? errors.password
+            : errors.repeat_password && touched.repeat_password
+            ? errors.repeat_password
+            : null
+        }
+      />
       <SpinnerButton
         disabled={formik.isSubmitting}
         variant="primary"

@@ -9,9 +9,10 @@ import { catchNetworkError } from '../../redux/actions/helpers/catchNetworkError
 
 import { Form } from 'react-bootstrap'
 import { FormAlert } from '../../common/FormAlert/FormAlert'
+import { SpinnerButton } from '../../common/SpinnerButton/SpinnerButton'
 
 import s from './SettingsForm.module.css'
-import { SpinnerButton } from '../../common/SpinnerButton/SpinnerButton'
+import { TextField } from '../../common/TextField/TextField'
 
 const SettingsSchema = Yup.object().shape({
   first_name: Yup.string()
@@ -64,7 +65,6 @@ export const SettingsForm = () => {
   })
   const { errors, touched } = formik
 
-  const errorFieldStyle = { border: '1px solid red' }
   const onSuccess = (msg = 'Настройки успешно сохранены') => {
     formik.setStatus({ status: 'ok', msg })
   }
@@ -73,66 +73,42 @@ export const SettingsForm = () => {
   }
   return (
     <Form className={s.settingsForm} onSubmit={formik.handleSubmit}>
-      <Form.Group controlId="last_name" className={s.fieldGroup}>
-        <Form.Label>
-          Фамилия<sup>*</sup>
-        </Form.Label>
-        <Form.Control
-          style={errors.last_name && touched.last_name && errorFieldStyle}
-          name="last_name"
-          type="text"
-          placeholder="Введите фамилию"
-          onChange={formik.handleChange}
-          value={formik.values.last_name}
-        />
-        {errors.last_name && touched.last_name ? (
-          <span className={s.error}>{errors.last_name}</span>
-        ) : null}
-      </Form.Group>
-      <Form.Group controlId="first_name" className={s.fieldGroup}>
-        <Form.Label>
-          Имя<sup>*</sup>
-        </Form.Label>
-        <Form.Control
-          style={errors.first_name && touched.first_name && errorFieldStyle}
-          name="first_name"
-          type="text"
-          placeholder="Введите имя"
-          onChange={formik.handleChange}
-          value={formik.values.first_name}
-        />
-        {errors.first_name && touched.first_name ? (
-          <span className={s.error}>{errors.first_name}</span>
-        ) : null}
-      </Form.Group>
-      <Form.Group controlId="middle_name" className={s.fieldGroup}>
-        <Form.Label>Отчество</Form.Label>
-        <Form.Control
-          name="middle_name"
-          style={errors.middle_name && touched.middle_name && errorFieldStyle}
-          type="text"
-          placeholder="Введите отчество"
-          onChange={formik.handleChange}
-          value={formik.values.middle_name}
-        />
-        {errors.middle_name && touched.middle_name ? (
-          <span className={s.error}>{errors.middle_name}</span>
-        ) : null}
-      </Form.Group>
-      <Form.Group controlId="tel" className={s.fieldGroup}>
-        <Form.Label>Телефон</Form.Label>
-        <Form.Control
-          name="tel"
-          style={errors.tel && touched.tel && errorFieldStyle}
-          type="tel"
-          placeholder="Введите телефон"
-          onChange={formik.handleChange}
-          value={formik.values.tel}
-        />
-        {errors.tel && touched.tel ? (
-          <span className={s.error}>{errors.tel}</span>
-        ) : null}
-      </Form.Group>
+      <TextField
+        name="last_name"
+        type="text"
+        placeholder="Введите фамилию"
+        onChange={formik.handleChange}
+        value={formik.values.last_name}
+        label="Фамилия*"
+        error={touched.last_name && errors.last_name}
+      />
+      <TextField
+        name="first_name"
+        type="text"
+        placeholder="Введите имя"
+        onChange={formik.handleChange}
+        value={formik.values.first_name}
+        label="Имя*"
+        error={touched.first_name && errors.first_name}
+      />
+      <TextField
+        name="middle_name"
+        type="text"
+        placeholder="Введите имя"
+        onChange={formik.handleChange}
+        value={formik.values.middle_name}
+        label="Отчество"
+        error={touched.middle_name && errors.middle_name}
+      />
+      <TextField
+        name="tel"
+        type="tel"
+        placeholder="Введите телефон"
+        onChange={formik.handleChange}
+        value={formik.values.tel}
+        label="Телефон"
+        error={touched.tel && errors.tel}
+      />
       <div className={s.submitWrapper}>
         <SpinnerButton
           disabled={formik.isSubmitting}

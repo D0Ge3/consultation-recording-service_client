@@ -19,10 +19,10 @@ export const Routes = ({ isInitialized, isAuth }) => {
           <Route path="/login">
             <Login />
           </Route>
-          {!isAuth && <Redirect to="/login" />}
           <Route path="/registration">
             <Registration />
           </Route>
+          {!isAuth && <Redirect to="/login" />}
           <Route path="/cabinet">
             <Cabinet />
           </Route>

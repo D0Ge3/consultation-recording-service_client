@@ -15,6 +15,8 @@ import { SpinnerButton } from '../../common/SpinnerButton/SpinnerButton'
 import { Form } from 'react-bootstrap'
 
 import s from './LoginForm.module.css'
+import { TextField } from '../../common/TextField/TextField'
+import { Checkbox } from '../../common/Checkbox/Checkbox'
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string()
@@ -57,50 +59,33 @@ export const LoginForm = () => {
     },
   })
 
-  const errorFieldStyle = { border: '1px solid red' }
-
   const { errors, touched } = formik
 
-  const showErrorBorder = (key) =>
-    errors[key] && touched[key] && errorFieldStyle
-  const showError = (key) =>
-    errors[key] && touched[key] ? (
-      <span className={s.error}>{errors[key]}</span>
-    ) : null
   return (
     <Form className={s.loginForm} onSubmit={formik.handleSubmit}>
-      <Form.Group controlId="email">
-        <Form.Control
-          style={showErrorBorder('email')}
-          name="email"
-          // type="email"
-          placeholder="Email"
-          onChange={formik.handleChange}
-          value={formik.values.email}
-        />
-        {showError('email')}
-      </Form.Group>
-      <Form.Group controlId="password">
-        <Form.Control
-          style={showErrorBorder('password')}
-          name="password"
-          type="password"
-          placeholder="Пароль"
-          onChange={formik.handleChange}
-          value={formik.values.password}
-        />
-        {showError('password')}
-      </Form.Group>
+      <TextField
+        name="email"
+        type="text"
+        placeholder="Email"
+        onChange={formik.handleChange}
+        value={formik.values.email}
+        error={touched.email && errors.email}
+      />
+      <TextField
+        name="password"
+        type="password"
+        placeholder="Пароль"
+        onChange={formik.handleChange}
+        value={formik.values.password}
+        error={touched.password && errors.password}
+      />
       <div className={s.wrapper}>
-        <Form.Group controlId="rememberMe">
-          <Form.Check
-            name="rememberMe"
-            type="checkbox"
-            label="Запомнить"
-            onChange={formik.handleChange}
-            value={formik.values.rememberMe}
-          />
-        </Form.Group>
+        <Checkbox
+          name="rememberMe"
+          label="Запомнить"
+          onChange={formik.handleChange}
+          value={formik.values.rememberMe}
+        />
         <Link to="/restore">Забыли пароль?</Link>
       </div>
       <SpinnerButton

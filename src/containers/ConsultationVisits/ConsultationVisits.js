@@ -11,7 +11,6 @@ import { getVisits, setVisits } from '../../redux/actions/visitsActions'
 import { Container } from 'react-bootstrap'
 import { ConsultationInfo } from '../../components/ConsultationInfo/ConsultationInfo'
 import { Loader } from '../../common/Loader/Loader'
-
 import { VisitsTable } from '../../components/VisitsTable/VisitsTable'
 
 export const ConsultationVisits = () => {
