@@ -7,10 +7,11 @@ import { setIsShowFormStatus } from '../../redux/actions/appActions'
 import { changePassword } from '../../redux/actions/profileActions'
 import { catchNetworkError } from '../../redux/actions/helpers/catchNetworkError'
 
-import { Form, Button, Spinner } from 'react-bootstrap'
+import { Form } from 'react-bootstrap'
 import { FormAlert } from '../../common/FormAlert/FormAlert'
 
-import s from './Settings.module.css'
+import s from './SettingsForm.module.css'
+import { SpinnerButton } from '../../common/SpinnerButton/SpinnerButton'
 
 const PasswordSchema = Yup.object().shape({
   current_password: Yup.string().required('Обязательное поле!'),
@@ -89,19 +90,13 @@ export const PasswordForm = () => {
         ) : null}
       </Form.Group>
       <div className={s.submitWrapper}>
-        <Button disabled={formik.isSubmitting} variant="primary" type="submit">
-          {formik.isSubmitting && (
-            <Spinner
-              as="span"
-              animation="border"
-              size="sm"
-              role="status"
-              aria-hidden="true"
-              className="mr-2"
-            />
-          )}
-          <span>Сменить пароль</span>
-        </Button>
+        <SpinnerButton
+          disabled={formik.isSubmitting}
+          variant="primary"
+          type="submit"
+        >
+          Сменить пароль
+        </SpinnerButton>
         {showFormAlert && (
           <div className="ml-5">
             <FormAlert status={formik.status} />

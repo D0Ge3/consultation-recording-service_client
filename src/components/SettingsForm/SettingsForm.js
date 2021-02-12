@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useDispatch, useSelector } from 'react-redux'
@@ -7,10 +7,11 @@ import { setIsShowFormStatus } from '../../redux/actions/appActions'
 import { updateUserData } from '../../redux/actions/profileActions'
 import { catchNetworkError } from '../../redux/actions/helpers/catchNetworkError'
 
-import { Form, Button, Spinner } from 'react-bootstrap'
+import { Form } from 'react-bootstrap'
 import { FormAlert } from '../../common/FormAlert/FormAlert'
 
-import s from './Settings.module.css'
+import s from './SettingsForm.module.css'
+import { SpinnerButton } from '../../common/SpinnerButton/SpinnerButton'
 
 const SettingsSchema = Yup.object().shape({
   first_name: Yup.string()
@@ -24,8 +25,9 @@ const SettingsSchema = Yup.object().shape({
   middle_name: Yup.string()
     .min(1, 'Слишком короткое!')
     .max(50, 'Слишком длинное!'),
-  tel: Yup.string()
-    .matches(/^[+][0-9]{11}$/, { message: 'Неправильный формат номера!' }),
+  tel: Yup.string().matches(/^[+][0-9]{11}$/, {
+    message: 'Неправильный формат номера!',
+  }),
 })
 
 export const SettingsForm = () => {
@@ -72,7 +74,9 @@ export const SettingsForm = () => {
   return (
     <Form className={s.settingsForm} onSubmit={formik.handleSubmit}>
       <Form.Group controlId="last_name" className={s.fieldGroup}>
-        <Form.Label>Фамилия<sup>*</sup></Form.Label>
+        <Form.Label>
+          Фамилия<sup>*</sup>
+        </Form.Label>
         <Form.Control
           style={errors.last_name && touched.last_name && errorFieldStyle}
           name="last_name"
@@ -86,7 +90,9 @@ export const SettingsForm = () => {
         ) : null}
       </Form.Group>
       <Form.Group controlId="first_name" className={s.fieldGroup}>
-        <Form.Label>Имя<sup>*</sup></Form.Label>
+        <Form.Label>
+          Имя<sup>*</sup>
+        </Form.Label>
         <Form.Control
           style={errors.first_name && touched.first_name && errorFieldStyle}
           name="first_name"
@@ -128,22 +134,18 @@ export const SettingsForm = () => {
         ) : null}
       </Form.Group>
       <div className={s.submitWrapper}>
-        <Button disabled={formik.isSubmitting} variant="primary" type="submit">
-          {formik.isSubmitting && (
-            <Spinner
-              as="span"
-              animation="border"
-              size="sm"
-              role="status"
-              aria-hidden="true"
-              className="mr-2"
-            />
-          )}
-          <span>Сохранить</span>
-        </Button>
-        <div className={'ml-5'}>
-          <FormAlert status={formik.status} />
-        </div>
+        <SpinnerButton
+          disabled={formik.isSubmitting}
+          variant="primary"
+          type="submit"
+        >
+          Сохранить
+        </SpinnerButton>
+        {showFormAlert && (
+          <div className={'ml-5'}>
+            <FormAlert status={formik.status} />
+          </div>
+        )}
       </div>
     </Form>
   )

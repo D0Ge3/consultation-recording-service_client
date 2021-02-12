@@ -23,6 +23,7 @@ import { FormAlert } from '../../common/FormAlert/FormAlert'
 
 import 'react-datetime/css/react-datetime.css'
 import s from './ConsultationForm.module.css'
+import { SpinnerButton } from '../../common/SpinnerButton/SpinnerButton'
 
 const ConsultationSchema = Yup.object().shape({
   teacher_subject: Yup.array()
@@ -371,24 +372,14 @@ export const ConsultationForm = ({ mode }) => {
           {showError('note')}
         </Form.Group>
         <div className={s.submitWrapper}>
-          <Button
+          <SpinnerButton
             disabled={formik.isSubmitting}
             variant="primary"
             type="submit"
           >
-            {formik.isSubmitting && (
-              <Spinner
-                as="span"
-                animation="border"
-                size="sm"
-                role="status"
-                aria-hidden="true"
-                className="mr-2"
-              />
-            )}
-            {mode === 'create' && <span>Создать</span>}
-            {mode === 'edit' && <span>Сохранить</span>}
-          </Button>
+            {mode === 'create' && 'Создать'}
+            {mode === 'edit' && 'Сохранить'}
+          </SpinnerButton>
           {showFormAlert && (
             <div className="ml-5">
               <FormAlert status={status} />

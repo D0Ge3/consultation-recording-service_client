@@ -3,8 +3,8 @@ import { Redirect } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 import { Container } from 'react-bootstrap'
-import { SettingsForm } from './SettingsForm'
-import { PasswordForm } from './PasswordForm'
+import { SettingsForm } from '../../components/SettingsForm/SettingsForm'
+import { PasswordForm } from '../../components/SettingsForm/PasswordForm'
 
 export const Settings = () => {
   const isAuth = useSelector((state) => state.auth.isAuth)

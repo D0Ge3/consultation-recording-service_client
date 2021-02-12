@@ -6,7 +6,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getGroups, register } from '../../redux/actions/registrationActions'
 import { catchNetworkError } from '../../redux/actions/helpers/catchNetworkError'
 
-import { Form, Button, Spinner } from 'react-bootstrap'
+import { Form } from 'react-bootstrap'
+import { SpinnerButton } from '../../common/SpinnerButton/SpinnerButton'
 
 import s from './RegistrationForm.module.css'
 
@@ -251,19 +252,13 @@ export const RegistrationForm = () => {
           </span>
         ) : null}
       </Form.Group>
-      <Button disabled={formik.isSubmitting} variant="primary" type="submit">
-        {formik.isSubmitting && (
-          <Spinner
-            as="span"
-            animation="border"
-            size="sm"
-            role="status"
-            aria-hidden="true"
-            className="mr-2"
-          />
-        )}
-        <span>Зарегистрироваться</span>
-      </Button>
+      <SpinnerButton
+        disabled={formik.isSubmitting}
+        variant="primary"
+        type="submit"
+      >
+        Зарегистрироваться
+      </SpinnerButton>
     </Form>
   )
 }

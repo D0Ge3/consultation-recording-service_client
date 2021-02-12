@@ -10,8 +10,9 @@ import { setIsShowFormStatus } from '../../redux/actions/appActions'
 import { catchNetworkError } from '../../redux/actions/helpers/catchNetworkError'
 
 import { FormAlert } from '../../common/FormAlert/FormAlert'
+import { SpinnerButton } from '../../common/SpinnerButton/SpinnerButton'
 
-import { Form, Button, Spinner } from 'react-bootstrap'
+import { Form } from 'react-bootstrap'
 
 import s from './LoginForm.module.css'
 
@@ -36,6 +37,7 @@ export const LoginForm = () => {
     },
     validationSchema: LoginSchema,
     onSubmit: (values) => {
+      formik.setStatus(null)
       const { email, password, rememberMe } = values
       dispatch(login(email, password, rememberMe))
         .catch((error) => {
@@ -101,24 +103,18 @@ export const LoginForm = () => {
         </Form.Group>
         <Link to="/restore">Забыли пароль?</Link>
       </div>
+      <SpinnerButton
+        disabled={formik.isSubmitting}
+        variant="primary"
+        type="submit"
+      >
+        Войти
+      </SpinnerButton>
       {showFormAlert && (
         <div className={'mb-2'}>
           <FormAlert status={formik.status} />
         </div>
       )}
-      <Button disabled={formik.isSubmitting} variant="primary" type="submit">
-        {formik.isSubmitting && (
-          <Spinner
-            as="span"
-            animation="border"
-            size="sm"
-            role="status"
-            aria-hidden="true"
-            className="mr-2"
-          />
-        )}
-        <span>Войти</span>
-      </Button>
     </Form>
   )
 }
