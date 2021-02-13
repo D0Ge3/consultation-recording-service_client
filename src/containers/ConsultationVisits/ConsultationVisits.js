@@ -31,20 +31,22 @@ export const ConsultationVisits = () => {
 
   return (
     <>
-      {consultation ? (
-        <Container className="mt-4">
-          <h5 className="text-center">Посещения</h5>
-          <ConsultationInfo consultation={consultation} />
-          <VisitsTable
-            method_wrote={consultation.method_wrote}
-            visits={visits}
-          />
-        </Container>
-      ) : (
-        <Container className="mt-4" style={{ width: '180px' }}>
-          <Loader />
-        </Container>
-      )}
+      <Container className="mt-4">
+        <h5 className="text-center">Посещения</h5>
+        {consultation ? (
+          <>
+            <ConsultationInfo consultation={consultation} />
+            <VisitsTable
+              method_wrote={consultation.method_wrote}
+              visits={visits}
+            />
+          </>
+        ) : (
+          <Container className="mt-4" style={{ width: '180px' }}>
+            <Loader />
+          </Container>
+        )}
+      </Container>
     </>
   )
 }
