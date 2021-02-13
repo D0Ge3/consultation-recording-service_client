@@ -14,7 +14,7 @@ export const Privacy = () => {
           paddingTop: '8px',
           paddingBottom: '12px',
         }}
-        onClick={() => history.push('/registration')}
+        onClick={() => history.goBack()}
         className="btn btn-lg btn-outline-primary"
       >
         <svg
