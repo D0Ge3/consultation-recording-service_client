@@ -6,16 +6,11 @@ export const SET_AUTH = 'auth/SET_AUTH'
 
 export const setAuth = (isAuth) => ({ type: SET_AUTH, isAuth })
 
-export const login = (email, password, rememberMe = false) => async (dispatch) => {
+export const login = (email, password) => async (dispatch) => {
   const res = await authAPI.getToken(email, password)
   if (res.status === 200) {
-    if (rememberMe) {
-      localStorage.setItem('access', res.data.access)
-      instance.defaults.headers.Authorization = `JWT ${localStorage.getItem('access')}`
-    } else {
-      sessionStorage.setItem('access', res.data.access)
-      instance.defaults.headers.Authorization = `JWT ${sessionStorage.getItem('access')}`
-    }
+    localStorage.setItem('access', res.data.access)
+    instance.defaults.headers.Authorization = `JWT ${localStorage.getItem('access')}`
   }
   dispatch(verify())
   return res

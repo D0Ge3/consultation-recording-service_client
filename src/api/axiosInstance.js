@@ -1,6 +1,6 @@
 import * as axios from 'axios'
 
-const token = sessionStorage.getItem('access') || localStorage.getItem('access')
+const token = localStorage.getItem('access')
 const baseUrl = 'http://127.0.0.1:8000/api'
 
 export const instance = axios.create({

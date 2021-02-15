@@ -35,13 +35,12 @@ export const LoginForm = () => {
     initialValues: {
       email: '',
       password: '',
-      rememberMe: false,
     },
     validationSchema: LoginSchema,
     onSubmit: (values) => {
       formik.setStatus(null)
-      const { email, password, rememberMe } = values
-      dispatch(login(email, password, rememberMe))
+      const { email, password } = values
+      dispatch(login(email, password))
         .catch((error) => {
           if (error.response && error.response.status === 401) {
             formik.setStatus({
@@ -79,7 +78,7 @@ export const LoginForm = () => {
         value={formik.values.password}
         error={touched.password && errors.password}
       />
-      <div className={s.wrapper}>
+      {/* <div className={s.wrapper}>
         <Checkbox
           name="rememberMe"
           label="Запомнить"
@@ -87,7 +86,7 @@ export const LoginForm = () => {
           value={formik.values.rememberMe}
         />
         <Link to="/restore">Забыли пароль?</Link>
-      </div>
+      </div> */}
       <SpinnerButton
         disabled={formik.isSubmitting}
         variant="primary"
