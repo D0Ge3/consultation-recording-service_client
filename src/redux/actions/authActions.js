@@ -32,7 +32,7 @@ export const verify = () => async (dispatch) => {
     ? localStorage.getItem('access')
     : sessionStorage.getItem('access')
   try {
-    const res = await authAPI.verifyToken(token)
+    await authAPI.verifyToken(token)
     return dispatch(getUserData()).then(() => dispatch(setAuth(true)))
   } catch (error) {
     // d

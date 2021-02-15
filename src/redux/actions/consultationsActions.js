@@ -56,7 +56,7 @@ export const getMyConsultations = (filter, page, showLoader = true) => async (di
 export const takeTicket = (id_consultation, data = {}) => async (dispatch, getState) => {
   try {
     const page = getState().consultations.page
-    const res = await consultationsAPI.takeTicket(id_consultation, data)
+    await consultationsAPI.takeTicket(id_consultation, data)
     dispatch(getConsultations('future', page, false))
   } catch (error) {
     catchNetworkError(error, dispatch)
@@ -68,7 +68,7 @@ export const deleteTicket = (id_consultation) => async (dispatch, getState) => {
     const currentPage = getState().consultations.page
     const consultationsLength = getState().consultations.consultations.length
     const page = consultationsLength === 1 ? currentPage - 1 : currentPage
-    const res = await consultationsAPI.deleteTicket(id_consultation)
+    await consultationsAPI.deleteTicket(id_consultation)
     dispatch(getMyConsultations('future', page, false))
   } catch (error) {
     catchNetworkError(error, dispatch)
@@ -80,14 +80,14 @@ export const deleteConsultation = (id_consultation) => async (dispatch, getState
     const currentPage = getState().consultations.page
     const consultationsLength = getState().consultations.consultations.length
     const page = consultationsLength === 1 ? currentPage - 1 : currentPage
-    const res = await consultationsAPI.deleteConsultation(id_consultation)
+    await consultationsAPI.deleteConsultation(id_consultation)
     dispatch(getMyConsultations('future', page, false))
   } catch (error) {
     catchNetworkError(error, dispatch)
   }
 }
 
-export const createConsultation = (data) => async (dispatch) => {
+export const createConsultation = (data) => async () => {
   const end_time = moment().set({
     year: data.start_time.get('year'),
     month: data.start_time.get('month'),
@@ -113,7 +113,7 @@ export const getConsultation = (id_consultation) => async (dispatch) => {
   }
 }
 
-export const updateConsultation = (data) => async (dispatch) => {
+export const updateConsultation = (data) => async () => {
   const end_time = moment().set({
     year: data.start_time.get('year'),
     month: data.start_time.get('month'),

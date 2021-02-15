@@ -11,8 +11,7 @@ export const UserProfile = () => {
   ))
 
   return (
-    // className="col-sm-12 col-md-12 col-lg-5 col-xl-5"
-    <div >
+    <div>
       <h4>
         {profile.last_name} {profile.first_name} {profile.middle_name}
       </h4>

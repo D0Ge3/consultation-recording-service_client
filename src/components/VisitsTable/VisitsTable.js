@@ -25,7 +25,6 @@ export const VisitsTable = ({ method_wrote, visits }) => {
               <th>ФИО</th>
               <th>Группа</th>
               {method_wrote === 'по времени' && <th>Время</th>}
-              {/* ниже style={{overflowWrap: 'anywhere'}} мб после добавления кнопки булет ок */}
               <th>Присутствие</th>
             </tr>
           </thead>
