@@ -79,12 +79,6 @@ export const LoginForm = () => {
         error={touched.password && errors.password}
       />
       {/* <div className={s.wrapper}>
-        <Checkbox
-          name="rememberMe"
-          label="Запомнить"
-          onChange={formik.handleChange}
-          value={formik.values.rememberMe}
-        />
         <Link to="/restore">Забыли пароль?</Link>
       </div> */}
       <SpinnerButton
