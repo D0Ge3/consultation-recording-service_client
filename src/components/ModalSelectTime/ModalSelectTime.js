@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { getFreeTimes, setFreeTimes, takeTicket } from '../../../../redux/actions/consultationsActions'
+import { getFreeTimes, setFreeTimes, takeTicket } from '../../redux/actions/consultationsActions'
 
 import { Modal, Button } from 'react-bootstrap'
 

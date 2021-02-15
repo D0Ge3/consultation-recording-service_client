@@ -1,9 +1,9 @@
 import React from 'react'
 
-import { ListGroup, Row, Button } from 'react-bootstrap'
-import { ConsultationDate } from './ConsultationDate'
-import { ConsultationParams } from './ConsultationParams'
-import { ConsultationOptions } from './ConsultationOptions'
+import { ListGroup, Row } from 'react-bootstrap'
+import { ConsultationDate } from './ConsultationDate/ConsultationDate'
+import { ConsultationParams } from './ConsultationParams/ConsultationParams'
+import { ConsultationOptions } from './ConsultationOptions/ConsultationOptions'
 
 export const ConsultationItem = ({ consultation, type = 'schedule', role, takeTicket, deleteItem, edit }) => {
   const {

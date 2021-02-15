@@ -1,7 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 
-import s from './ConsultationItem.module.css'
+import s from './ConsultationDate.module.css'
 
 export const ConsultationDate = ({ start_time, end_time, ticket_time }) => {
   const date = moment(start_time).format('dd, MMMM DD')

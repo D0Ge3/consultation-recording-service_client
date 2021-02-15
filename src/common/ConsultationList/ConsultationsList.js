@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { ListGroup } from 'react-bootstrap'
-import { ConsultationItem } from './ConsultationItem/ConsultationItem'
+import { ConsultationItem } from '../ConsultationItem/ConsultationItem'
 
 export const ConsultationsList = ({ type = 'schedule', role, consultations, takeTicket, deleteItem, edit }) => {
   const items = consultations.map((c) => (

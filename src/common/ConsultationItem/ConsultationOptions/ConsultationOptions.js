@@ -3,10 +3,10 @@ import { useHistory } from 'react-router-dom'
 
 import { Button } from 'react-bootstrap'
 import { PencilSquare, XCircle } from 'react-bootstrap-icons'
-import { ModalSelectTime } from './ModalSelectTime/ModalSelectTime'
-import { ModalConfirm } from './ModalConfirm/ModalConfirm'
+import { ModalSelectTime } from '../../../components/ModalSelectTime/ModalSelectTime'
+import { ModalConfirm } from '../../ModalConfirm/ModalConfirm'
 
-import s from './ConsultationItem.module.css'
+import s from './ConsultationOptions.module.css'
 
 export const ConsultationOptions = ({
   edit,
@@ -101,7 +101,9 @@ export const ConsultationOptions = ({
             <XCircle />
           </Button>
           <ModalConfirm
-            title={role === 'teacher' ? 'Удаление консультации' : 'Отмена записи'}
+            title={
+              role === 'teacher' ? 'Удаление консультации' : 'Отмена записи'
+            }
             body={
               role === 'teacher'
                 ? 'Вы уверены что хотите удалить консультацию?'

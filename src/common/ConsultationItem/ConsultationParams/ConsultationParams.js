@@ -7,7 +7,7 @@ import {
   PersonFill,
 } from 'react-bootstrap-icons'
 
-import s from './ConsultationItem.module.css'
+import s from './ConsultationParams.module.css'
 
 export const ConsultationParams = ({
   subjects,
