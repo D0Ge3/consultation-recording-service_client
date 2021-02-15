@@ -12,13 +12,11 @@ export const useStateCallback = (initialValues) => {
       return
     }
     if (typeof callbackRef.current === 'function') {
-      console.log('calling callback')
       callbackRef.current()
     }
   }, [value])
 
   let setValueCallback = useCallback((newValue, callback) => {
-    console.log('setValueCallback', newValue)
     callbackRef.current = callback
     setValue(newValue)
   }, [])
