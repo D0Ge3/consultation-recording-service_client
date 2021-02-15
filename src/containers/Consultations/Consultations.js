@@ -11,10 +11,11 @@ import {
 import { Container, ButtonGroup, Button } from 'react-bootstrap'
 import { Paginator } from '../../common/Paginator/Paginator'
 import { Loader } from '../../common/Loader/Loader'
+import { useStateCallback } from '../../hooks/useStateCallback'
 
 export const Consultations = () => {
   const dispatch = useDispatch()
-  let [mode, setMode] = useState('future')
+  let [mode, setMode] = useStateCallback('future')
   const role = useSelector((state) => state.profile.role)
   const consultations = useSelector(
     (state) => state.consultations.consultations
@@ -25,19 +26,16 @@ export const Consultations = () => {
   const pageSize = useSelector((state) => state.consultations.pageSize)
   useEffect(() => {
     dispatch(setPageSize(10))
-    changePage(1)
+    changePage(1, mode)
     return () => dispatch(resetConsultations())
   }, [])
-  useEffect(() => {
-    changePage(1)
-  }, [mode])
 
-  const changePage = (page) => {
+  const changePage = (page, mode) => {
     dispatch(getMyConsultations(mode, page))
   }
   const changeMode = (newMode) => {
     if (newMode !== mode) {
-      setMode(newMode)
+      setMode(newMode, () => changePage(1, newMode))
     }
   }
 
