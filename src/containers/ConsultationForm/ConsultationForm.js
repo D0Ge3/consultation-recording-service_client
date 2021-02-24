@@ -76,7 +76,10 @@ export const ConsultationForm = ({ mode }) => {
         dispatch(createConsultation(values))
           .then(() => onSave())
           .catch((error) => onError(error))
-          .finally(() => formik.setSubmitting(false))
+          .finally(() => {
+            formik.setSubmitting(false)
+            dispatch(setIsShowFormStatus(true))
+          })
       } else if (mode === 'edit') {
         dispatch(updateConsultation(values))
           .then(() => onSave())
