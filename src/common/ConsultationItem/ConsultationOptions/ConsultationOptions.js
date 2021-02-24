@@ -8,7 +8,7 @@ import { ModalConfirm } from '../../ModalConfirm/ModalConfirm'
 
 import s from './ConsultationOptions.module.css'
 
-export const ConsultationOptions = ({
+export let ConsultationOptions = ({
   edit,
   role,
   type,
@@ -118,3 +118,5 @@ export const ConsultationOptions = ({
     </div>
   )
 }
+
+ConsultationOptions = React.memo(ConsultationOptions)

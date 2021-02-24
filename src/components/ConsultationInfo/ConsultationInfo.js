@@ -12,7 +12,7 @@ import {
 
 import s from './ConsultationInfo.module.css'
 
-export const ConsultationInfo = ({ consultation }) => {
+export let ConsultationInfo = ({ consultation }) => {
   const {
     start_time,
     end_time,
@@ -80,3 +80,5 @@ export const ConsultationInfo = ({ consultation }) => {
     </>
   )
 }
+
+ConsultationInfo = React.memo(ConsultationInfo)

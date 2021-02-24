@@ -9,7 +9,7 @@ import {
 
 import s from './ConsultationParams.module.css'
 
-export const ConsultationParams = ({
+export let ConsultationParams = ({
   subjects,
   note,
   location,
@@ -74,3 +74,5 @@ export const ConsultationParams = ({
     </div>
   )
 }
+
+ConsultationParams = React.memo(ConsultationParams)
