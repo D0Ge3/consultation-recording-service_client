@@ -1,7 +1,7 @@
 import * as axios from 'axios'
 
 const token = localStorage.getItem('access')
-const baseUrl = 'http://127.0.0.1:8000/api'
+const baseUrl = process.env.REACT_APP_API_URL
 
 export const instance = axios.create({
   baseURL: baseUrl,
