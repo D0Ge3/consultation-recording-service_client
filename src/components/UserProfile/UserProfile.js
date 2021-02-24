@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 
 import s from './UserProfile.module.css'
 
-export const UserProfile = () => {
+export let UserProfile = () => {
   const profile = useSelector((state) => state.profile)
 
   let subjectsList = profile.subjects.map((s) => (

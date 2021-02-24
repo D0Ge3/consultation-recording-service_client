@@ -12,7 +12,6 @@ export const Paginator = ({
   portionSize,
 }) => {
   let pages = Array.from({ length: pagesCount }, (v, k) => k + 1)
-
   let maxPortion = pagesCount > 10 ? Math.ceil(pagesCount / portionSize) : 1
   let [portionNumber, setPortionNumber] = useState(1)
 

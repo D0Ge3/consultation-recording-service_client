@@ -33,6 +33,7 @@ export const Consultations = () => {
   const changePage = (page, mode) => {
     dispatch(getMyConsultations(mode, page))
   }
+  const changePagePaginator = (page) => dispatch(getMyConsultations(mode, page))
   const changeMode = (newMode) => {
     if (newMode !== mode) {
       setMode(newMode, () => changePage(1, newMode))
@@ -60,7 +61,7 @@ export const Consultations = () => {
       </ButtonGroup>
       <div className="mt-3 mb-3">
         <Paginator
-          onPageChange={changePage}
+          onPageChange={changePagePaginator}
           page={page}
           count={count}
           pagesCount={Math.ceil(count / pageSize)}

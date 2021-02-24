@@ -11,12 +11,10 @@ import { catchNetworkError } from '../../redux/actions/helpers/catchNetworkError
 
 import { FormAlert } from '../../common/FormAlert/FormAlert'
 import { SpinnerButton } from '../../common/SpinnerButton/SpinnerButton'
-
+import { TextField } from '../../common/TextField/TextField'
 import { Form } from 'react-bootstrap'
 
 import s from './LoginForm.module.css'
-import { TextField } from '../../common/TextField/TextField'
-import { Checkbox } from '../../common/Checkbox/Checkbox'
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string()
