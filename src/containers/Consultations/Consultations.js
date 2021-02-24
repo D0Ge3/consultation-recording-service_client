@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { ConsultationsList } from '../../common/ConsultationList/ConsultationsList'
@@ -33,7 +33,7 @@ export const Consultations = () => {
   const changePage = (page, mode) => {
     dispatch(getMyConsultations(mode, page))
   }
-  const changePagePaginator = (page) => dispatch(getMyConsultations(mode, page))
+  const changePagePaginator = useCallback((page) => dispatch(getMyConsultations(mode, page)), [mode])
   const changeMode = (newMode) => {
     if (newMode !== mode) {
       setMode(newMode, () => changePage(1, newMode))

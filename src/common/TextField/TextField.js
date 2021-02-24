@@ -4,7 +4,7 @@ import { Form } from 'react-bootstrap'
 
 import s from './TextField.module.css'
 
-export const TextField = ({ name, error, onChange, value, type, label, ...rest }) => {
+export let TextField = ({ name, error, onChange, value, type, label, ...rest }) => {
   const errorFieldStyle = { border: '1px solid red' }
 
   return (
@@ -22,3 +22,5 @@ export const TextField = ({ name, error, onChange, value, type, label, ...rest }
     </Form.Group>
   )
 }
+
+TextField = React.memo(TextField)

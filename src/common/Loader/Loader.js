@@ -1,7 +1,7 @@
 import React from 'react'
 import { Spinner } from 'react-bootstrap'
 
-export const Loader = () => {
+export let Loader = () => {
   return (
     <Spinner
       style={{ width: '150px', height: '150px' }}
@@ -13,3 +13,5 @@ export const Loader = () => {
     </Spinner>
   )
 }
+
+Loader = React.memo(Loader)

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import {
@@ -28,9 +28,9 @@ export const Schedule = () => {
     changePage(1)
     return () => dispatch(resetConsultations())
   }, [])
-  const changePage = (page) => {
+  const changePage = useCallback((page) => {
     dispatch(getConsultations('future', page))
-  }
+  }, [])
 
   return (
     <Container className="mt-4">

@@ -3,7 +3,7 @@ import { Pagination } from 'react-bootstrap'
 
 import s from './Paginator.module.css'
 
-export const Paginator = ({
+export let Paginator = ({
   onPageChange,
   page,
   count,
@@ -85,3 +85,5 @@ export const Paginator = ({
     </Pagination>
   )
 }
+
+Paginator = React.memo(Paginator)

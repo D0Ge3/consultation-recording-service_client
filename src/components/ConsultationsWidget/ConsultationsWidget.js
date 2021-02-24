@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 
@@ -25,9 +25,10 @@ export const ConsultationsWidget = () => {
     changePage(1)
     return () => dispatch(resetConsultations())
   }, [])
-  const changePage = (page) => {
+  const changePage = useCallback((page) => {
     dispatch(getMyConsultations('future', page))
-  }
+  }, [])
+
   const consultations = useSelector(
     (state) => state.consultations.consultations
   )
