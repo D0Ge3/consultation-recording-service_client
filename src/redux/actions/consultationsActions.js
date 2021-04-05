@@ -67,7 +67,10 @@ export const deleteTicket = (id_consultation) => async (dispatch, getState) => {
   try {
     const currentPage = getState().consultations.page
     const consultationsLength = getState().consultations.consultations.length
-    const page = consultationsLength === 1 ? currentPage - 1 : currentPage
+    const page =
+      consultationsLength === 1 && currentPage > 1
+        ? currentPage - 1
+        : currentPage
     await consultationsAPI.deleteTicket(id_consultation)
     dispatch(getMyConsultations('future', page, false))
   } catch (error) {
@@ -79,7 +82,10 @@ export const deleteConsultation = (id_consultation) => async (dispatch, getState
   try {
     const currentPage = getState().consultations.page
     const consultationsLength = getState().consultations.consultations.length
-    const page = consultationsLength === 1 ? currentPage - 1 : currentPage
+    const page =
+      consultationsLength === 1 && currentPage > 1
+        ? currentPage - 1
+        : currentPage
     await consultationsAPI.deleteConsultation(id_consultation)
     dispatch(getMyConsultations('future', page, false))
   } catch (error) {
