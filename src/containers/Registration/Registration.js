@@ -15,8 +15,9 @@ export const Registration = () => {
   ) : (
     <Container className="mt-4">
       {registrationStatus === 'OK' && (
-        <Alert variant="success" className={s.successAlert}>
-          Вы успешно зарегистрированы!
+        <Alert variant="warning" className={s.successAlert}>
+          Успешная регистрация! На вашу почту было отправлено письмо, содержащее
+          ссылку для активации аккаунта!
         </Alert>
       )}
       <h4 className="h4 font-weight-normal text-center">Регистрация</h4>

@@ -10,6 +10,8 @@ import { ConsultationForm } from './containers/ConsultationForm/ConsultationForm
 import { ConsultationVisits } from './containers/ConsultationVisits/ConsultationVisits'
 import { Settings } from './containers/Settings/Settings'
 import { Registration } from './containers/Registration/Registration'
+import { AccountActivation } from './containers/AccountActivation/AccountActivation'
+import { AuthRoute } from './hoc/AuthRoute'
 
 export const Routes = ({ isInitialized, isAuth }) => {
   return (
@@ -22,30 +24,35 @@ export const Routes = ({ isInitialized, isAuth }) => {
           <Route path="/registration">
             <Registration />
           </Route>
-          {!isAuth && <Redirect to="/login" />}
-          <Route path="/cabinet">
+          <AuthRoute path="/cabinet" isAuth={isAuth}>
             <Cabinet />
-          </Route>
-          <Route path="/settings">
+          </AuthRoute>
+          <AuthRoute path="/settings" isAuth={isAuth}>
             <Settings />
-          </Route>
-          <Route path="/schedule">
+          </AuthRoute>
+          <AuthRoute path="/schedule" isAuth={isAuth}>
             <Schedule />
-          </Route>
-          <Route path="/consultations">
+          </AuthRoute>
+          <AuthRoute path="/consultations" isAuth={isAuth}>
             <Consultations />
-          </Route>
-          <Route path="/consultation/create">
+          </AuthRoute>
+          <AuthRoute path="/consultation/create" isAuth={isAuth}>
             <ConsultationForm mode="create" />
-          </Route>
-          <Route path="/consultation/:id_consultation/edit">
+          </AuthRoute>
+          <AuthRoute path="/consultation/:id_consultation/edit" isAuth={isAuth}>
             <ConsultationForm mode="edit" />
-          </Route>
-          <Route path="/consultation/:id_consultation/visits">
+          </AuthRoute>
+          <AuthRoute
+            path="/consultation/:id_consultation/visits"
+            isAuth={isAuth}
+          >
             <ConsultationVisits />
-          </Route>
+          </AuthRoute>
           <Route path="/privacy">
             <Privacy />
+          </Route>
+          <Route path="/auth/activate/:uid/:token">
+            <AccountActivation />
           </Route>
           <Redirect from="/" to="/cabinet" />
         </Switch>
