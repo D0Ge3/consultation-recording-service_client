@@ -1,0 +1,25 @@
+.restoreForm {
+  margin: auto;
+  width: 330px;
+  height: 190px;
+  margin-top: 1.5rem!important;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.error {
+  display: block;
+  font-size: 14px;
+  text-align: left;
+  color: red;
+  margin-top: 5px;
+  padding: 0;
+}
+
+.successAlert {
+  margin: 0 auto;
+}

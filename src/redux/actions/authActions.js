@@ -58,3 +58,7 @@ export const activateAccount = (uid, token) => async (dispatch) => {
 export const resetPasswordReq = (email) => async () => {
   return await authAPI.resetPassword(email)
 }
+
+export const resetPasswordConfirm = (uid, token, new_password) => async () => {
+  return await authAPI.resetPasswordConfirm(uid, token, new_password)
+}
