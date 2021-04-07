@@ -40,8 +40,15 @@ export const RestoreConfirmationForm = () => {
         .then(() => {
           setSuccess(true)
         })
-        .catch(() => {
+        .catch((error) => {
           setSuccess(false)
+          if (error.response && error.response.status === 400) {
+            const errors = error.response.data
+            formik.setErrors({
+              ...errors,
+              password: errors.password ? errors.password[0] : null,
+            })
+          }
         })
         .finally(() => formik.setSubmitting(false))
     },
@@ -64,7 +71,7 @@ export const RestoreConfirmationForm = () => {
       )}
       <TextField
         name="new_password"
-        type="new_password"
+        type="password"
         placeholder="Новый пароль*"
         onChange={formik.handleChange}
         value={formik.values.new_password}
