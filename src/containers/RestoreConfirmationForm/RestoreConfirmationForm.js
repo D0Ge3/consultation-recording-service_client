@@ -45,8 +45,9 @@ export const RestoreConfirmationForm = () => {
           if (error.response && error.response.status === 400) {
             const errors = error.response.data
             formik.setErrors({
-              ...errors,
-              password: errors.password ? errors.password[0] : null,
+              // ...errors,
+              new_password: errors.new_password ? errors.new_password[0] : null,
+              // repeat_password: errors.password ? errors.password[0] : null,
             })
           }
         })
@@ -78,8 +79,6 @@ export const RestoreConfirmationForm = () => {
         error={
           errors.new_password && touched.new_password
             ? errors.new_password
-            : errors.repeat_password && touched.repeat_password
-            ? errors.repeat_password
             : null
         }
       />
@@ -92,8 +91,6 @@ export const RestoreConfirmationForm = () => {
         error={
           errors.new_password && touched.new_password
             ? errors.new_password
-            : errors.repeat_password && touched.repeat_password
-            ? errors.repeat_password
             : null
         }
       />
