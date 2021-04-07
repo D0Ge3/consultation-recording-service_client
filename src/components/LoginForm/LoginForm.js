@@ -76,16 +76,16 @@ export const LoginForm = () => {
         value={formik.values.password}
         error={touched.password && errors.password}
       />
-      {/* <div className={s.wrapper}>
+      <div className={s.wrapper}>
+        <SpinnerButton
+          disabled={formik.isSubmitting}
+          variant="primary"
+          type="submit"
+        >
+          Войти
+        </SpinnerButton>
         <Link to="/restore">Забыли пароль?</Link>
-      </div> */}
-      <SpinnerButton
-        disabled={formik.isSubmitting}
-        variant="primary"
-        type="submit"
-      >
-        Войти
-      </SpinnerButton>
+      </div>
       {showFormAlert && (
         <div className={'mb-2'}>
           <FormAlert status={formik.status} />

@@ -5,6 +5,7 @@ import { getUserData } from './profileActions'
 export const SET_AUTH = 'auth/SET_AUTH'
 export const SET_ACCOUNT_IS_ACTIVATE = 'auth/SET_ACCOUNT_IS_ACTIVATE'
 export const SET_IS_LOADING = 'auth/SET_IS_LOADING'
+export const SET_RESET_PASSWORD_IS_SEND = 'auth/SET_RESET_PASSWORD_IS_SEND'
 
 export const setAuth = (isAuth) => ({ type: SET_AUTH, isAuth })
 export const setAccountIsActivate = (isActivate) => ({
@@ -12,6 +13,7 @@ export const setAccountIsActivate = (isActivate) => ({
   isActivate,
 })
 export const setIsLoading = (isLoading) => ({ type: SET_IS_LOADING, isLoading })
+// eslint-disable-next-line
 
 export const login = (email, password) => async (dispatch) => {
   const res = await authAPI.getToken(email, password)
@@ -51,4 +53,8 @@ export const activateAccount = (uid, token) => async (dispatch) => {
     dispatch(setAccountIsActivate(false))
     dispatch(setIsLoading(false))
   }
+}
+
+export const resetPasswordReq = (email) => async () => {
+  return await authAPI.resetPassword(email)
 }

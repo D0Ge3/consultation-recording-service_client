@@ -1,7 +1,8 @@
-.loginForm {
+.restoreForm {
   margin: auto;
   width: 330px;
   height: 190px;
+  margin-top: 1.5rem!important;
 }
 
 .wrapper {
@@ -19,3 +20,6 @@
   padding: 0;
 }
 
+.successAlert {
+  margin: 0 auto;
+}

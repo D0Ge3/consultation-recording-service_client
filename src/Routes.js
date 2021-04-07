@@ -12,6 +12,7 @@ import { Settings } from './containers/Settings/Settings'
 import { Registration } from './containers/Registration/Registration'
 import { AccountActivation } from './containers/AccountActivation/AccountActivation'
 import { AuthRoute } from './hoc/AuthRoute'
+import { RestoreRequestForm } from './containers/RestoreRequestForm/RestoreRequestForm'
 
 export const Routes = ({ isInitialized, isAuth }) => {
   return (
@@ -53,6 +54,9 @@ export const Routes = ({ isInitialized, isAuth }) => {
           </Route>
           <Route path="/auth/activate/:uid/:token">
             <AccountActivation />
+          </Route>
+          <Route path="/restore">
+            <RestoreRequestForm />
           </Route>
           <Redirect from="/" to="/cabinet" />
         </Switch>

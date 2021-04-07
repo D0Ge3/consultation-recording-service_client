@@ -12,4 +12,13 @@ export const authAPI = {
     // eslint-disable-next-line
     return instance.post('/auth/users/activation/', { uid, token }).then((res) => res)
   },
+  resetPassword(email) {
+    // eslint-disable-next-line
+    return instance.post('/auth/users/reset_password/', { email }).then((res) => res)
+  },
+  resetPasswordConfirm(uid, token, new_password) {
+    return instance
+      .post('/auth/users/reset_password_confirm/', { uid, token, new_password })
+      .then((res) => res)
+  },
 }
